@@ -4736,8 +4736,8 @@ document.addEventListener('DOMContentLoaded', () => {
         position: absolute;
         top: 10px; left: 0;
         width: auto; 
-        min-width: 100%; /* กว้างเท่าช่องค้นหาเป็นอย่างน้อย */
-        max-width: 800px; /* ยืดไปทับตะกร้าได้ */
+        min-width: 100%; 
+        max-width: 800px; 
         max-height: calc(100vh - 200px);
         z-index: 2000;
         background-color: var(--white-color);
@@ -4745,7 +4745,7 @@ document.addEventListener('DOMContentLoaded', () => {
         border-radius: 8px;
         box-shadow: var(--shadow-hover);
         display: flex; flex-direction: column;
-        overflow-y: auto; overflow-x: auto; /* เผื่อหน่วยเยอะจนล้น */
+        overflow-y: auto; overflow-x: auto; 
     }
 
     /* 3. แถวสินค้า (Row) */
@@ -4756,10 +4756,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     .search-row:last-child { border-bottom: none; }
 
-    /* 4. เซลล์ตาราง (Cell) - โคลนนิ่งคลาส .search-item ดั้งเดิมมาเลย */
+    /* 4. เซลล์ตาราง (Cell) */
     .search-unit-cell {
-        padding: 0.75rem 1rem; /* ระยะห่างดั้งเดิม */
-        font-size: 0.88em; /* ขนาดฟอนต์ดั้งเดิม */
+        padding: 0.75rem 1rem; 
+        font-size: 0.88em; 
         cursor: pointer;
         display: flex; align-items: center; justify-content: space-between;
         border-right: 1px solid var(--border-color);
@@ -4777,13 +4777,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* โครงสร้างข้อความในเซลล์ */
-    .cell-info { display: flex; flex-direction: column; gap: 2px; }
+    .cell-info { display: flex; flex-direction: column; justify-content: center; gap: 2px; }
     .cell-price { font-weight: bold; color: var(--success-color); text-align: right; }
     .sub-text { font-size: 0.8em; color: var(--secondary-color); font-weight: normal; }
 
-    /* 5. สถานะ Hover และ Active (ใช้สี var(--primary-color) ดั้งเดิม) */
+    /* 5. สถานะ Hover และ Active */
     .search-unit-cell:hover {
-        background-color: #f8f9fa; /* สี hover อ่อนๆ แบบดั้งเดิม */
+        background-color: #f8f9fa; 
     }
     
     .search-unit-cell.active-unit {
@@ -4791,7 +4791,6 @@ document.addEventListener('DOMContentLoaded', () => {
         color: var(--white-color);
     }
     
-    /* เปลี่ยนสีตัวหนังสือรองให้เป็นสีขาวเมื่อโดน Select (เหมือนระบบเดิม) */
     .search-unit-cell.active-unit .cell-price,
     .search-unit-cell.active-unit .sub-text {
         color: var(--white-color);
@@ -4804,7 +4803,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Original System Sync UI Patch V14...");
+        console.log("Applying Clean Original Sync UI Patch V15...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4814,7 +4813,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return m ? parseInt(m[1], 10) : 1;
         };
 
-        // 1. เรนเดอร์ UI ให้เข้ากับดีไซน์เดิม
         app.displaySearchResults = function(results, query) {
             const resultsContainer = document.getElementById('search-results');
             resultsContainer.innerHTML = '';
@@ -4830,8 +4828,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     groupedMap.set(productUnit.productId, {
                         productId: productUnit.productId,
                         productName: productUnit.productName,
-                        productCode: productUnit.productCode,
-                        units: []
+                        units: [] // ไม่เอา productCode มาเก็บแล้วเพื่อให้คลีนขึ้น
                     });
                 }
                 groupedMap.get(productUnit.productId).units.push(productUnit);
@@ -4843,19 +4840,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'search-row';
 
-                // กล่องหลัก (ซ้ายสุด)
+                // กล่องหลัก (ซ้ายสุด) - 🌟 เอา รหัส และ / ออกแล้ว
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
                 
                 let html = `
                     <div class="search-unit-cell main-cell ${isMainActive}" data-pindex="${pIndex}" data-uindex="0">
-                        <div class="cell-info">
+                        <div class="cell-info" style="font-weight: 500;">
                             <span>${this.escapeHtml(group.productName)}</span>
-                            <span class="sub-text">${group.productCode || ''}</span>
                         </div>
                         <div class="cell-info" style="align-items: flex-end;">
                             <span class="cell-price">${this.formatPrice(mainUnit.price)}</span>
-                            <span class="sub-text">/ ${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
+                            <span class="sub-text">${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
                         </div>
                     </div>
                 `;
