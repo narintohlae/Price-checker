@@ -4725,13 +4725,13 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </div>
-    <style id="compact-inline-search-css">
+    <style id="ultra-compact-search-css">
     /* 1. แก้ Z-Index และปลดล็อก Overflow */
     .search-column { position: relative; z-index: 100 !important; }
     .cart-column { position: relative; z-index: 1 !important; }
     .search-column .card, #main-search-area { position: relative; overflow: visible !important; }
 
-    /* 2. กรอบผลลัพธ์ลอยทับตะกร้า (ปรับให้ Minimal ขึ้น) */
+    /* 2. กรอบผลลัพธ์ลอยทับตะกร้า */
     #search-results.has-results {
         position: absolute;
         top: 0; left: 0;
@@ -4743,7 +4743,7 @@ document.addEventListener('DOMContentLoaded', () => {
         border: none;
         pointer-events: none; 
         display: flex; flex-direction: column;
-        gap: 1px; /* ลดช่องว่างแถว */
+        gap: 2px; /* ช่องว่างระหว่างแถวสินค้านิดหน่อย */
         padding-top: 4px; padding-bottom: 20px;
         overflow-y: auto; overflow-x: hidden;
         scrollbar-width: none;
@@ -4753,53 +4753,67 @@ document.addEventListener('DOMContentLoaded', () => {
     /* 3. แถวแนวนอน */
     .search-row {
         display: flex; flex-direction: row;
-        gap: 0.3rem; /* ลดช่องว่างระหว่างกล่อง */
-        padding: 1px 0; 
+        gap: 0.25rem; /* ลดช่องว่างระหว่างกล่อง */
+        padding: 0; /* ลบ padding ออกให้แบนที่สุด */
         pointer-events: none; 
     }
 
-    /* 4. กล่องหน่วย (Minimal & Compact) */
+    /* 4. กล่องหน่วย (บังคับ 1 บรรทัด ความสูง 36px) */
     .unit-box {
         pointer-events: auto; 
         background: var(--white-color);
         border: 1px solid var(--border-color);
-        border-radius: 6px; /* โค้งน้อยลง ดูโปรขึ้น */
-        padding: 0.35rem 0.6rem; /* บีบขนาดบนล่างให้เล็กลง */
+        border-radius: 6px; 
+        padding: 0 0.6rem; /* ลบ padding บน-ล่าง */
+        height: 36px; /* 🌟 บังคับความสูงให้เพรียวบางบรรทัดเดียว */
         cursor: pointer;
         transition: all 0.1s ease;
-        display: flex; align-items: center;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.03); /* ลดเงา */
+        display: flex; 
+        align-items: center; /* ให้อยู่กึ่งกลางแนวตั้ง */
+        box-shadow: none; /* ลบเงาออกให้แบนเรียบ */
     }
 
     /* 4.1 กล่องหลัก (ซ้ายสุด) */
     .unit-box.main-box {
         justify-content: space-between;
         box-sizing: border-box !important; 
+        gap: 8px;
     }
     .main-box .p-name {
         font-weight: bold;
-        font-size: 0.95em; /* ลดขนาดฟอนต์ */
+        font-size: 0.95em; 
         color: var(--dark-text);
         white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        flex-grow: 1; /* ดันให้ชื่อกินพื้นที่สูงสุด */
     }
     .main-box .p-price {
         font-weight: bold;
-        font-size: 0.95em; /* ลดขนาดฟอนต์ */
+        font-size: 0.95em; 
         color: var(--success-color);
-        white-space: nowrap; flex-shrink: 0; margin-left: 8px;
+        white-space: nowrap; flex-shrink: 0;
     }
     .main-box .u-name {
-        font-size: 0.8em; color: var(--secondary-color); font-weight: normal;
+        font-size: 0.85em; color: var(--secondary-color); font-weight: normal;
     }
 
-    /* 4.2 กล่องหน่วยรอง (ขวามือ) */
+    /* 4.2 กล่องหน่วยรอง (ขวามือ) - 🌟 เปลี่ยนเป็นแนวนอนบรรทัดเดียว */
     .unit-box.alt-box {
-        flex-direction: column; justify-content: center;
-        min-width: 60px; /* เล็กลง */
+        flex-direction: row; /* เปลี่ยนจาก column เป็น row */
+        justify-content: center;
+        gap: 6px; /* ระยะห่างระหว่างชื่อหน่วยกับราคา */
+        min-width: auto; 
         background: #fcfcfc;
     }
-    .alt-box .alt-name { font-size: 0.75em; color: var(--secondary-color); margin-bottom: 1px; }
-    .alt-box .alt-price { font-size: 0.9em; font-weight: bold; color: var(--success-color); }
+    .alt-box .alt-name { 
+        font-size: 0.85em; 
+        color: var(--secondary-color); 
+        margin-bottom: 0; /* ลบ margin เดิมออก */
+    }
+    .alt-box .alt-price { 
+        font-size: 0.95em; 
+        font-weight: bold; 
+        color: var(--success-color); 
+    }
 
     /* 5. สถานะ Active / Hover */
     .unit-box:hover { border-color: var(--primary-color); background: #f4f8ff; }
@@ -4809,7 +4823,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .unit-box.active-unit {
         background: var(--primary-color) !important;
         border-color: var(--primary-color) !important;
-        box-shadow: 0 3px 8px rgba(0, 92, 191, 0.2); /* เงาบางๆ พอ */
+        box-shadow: 0 2px 8px rgba(0, 92, 191, 0.2); 
     }
     
     .unit-box.active-unit .p-name, .unit-box.active-unit .p-price, .unit-box.active-unit .alt-price { color: var(--white-color) !important; }
@@ -4822,7 +4836,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Compact Inline Hover UI & Keyboard Fix Patch V10...");
+        console.log("Applying Ultra Compact Single-Line UI Patch V11...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4832,7 +4846,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return m ? parseInt(m[1], 10) : 1;
         };
 
-        // 1. เรนเดอร์ UI
         app.displaySearchResults = function(results, query) {
             const resultsContainer = document.getElementById('search-results');
             resultsContainer.innerHTML = '';
@@ -4880,10 +4893,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 for (let i = 1; i < group.units.length; i++) {
                     const altUnit = group.units[i];
                     const isAltActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === i) ? 'active-unit' : '';
+                    // 🌟 เปลี่ยนโครงสร้าง HTML กล่องรองให้เรียงชิดกันแบบบรรทัดเดียว
                     html += `
                         <div class="unit-box alt-box ${isAltActive}" data-pindex="${pIndex}" data-uindex="${i}">
-                            <div class="alt-name">${this.escapeHtml(altUnit.pricingUnit.unitName)}</div>
-                            <div class="alt-price">${this.formatPrice(altUnit.price)}</div>
+                            <span class="alt-name">${this.escapeHtml(altUnit.pricingUnit.unitName)}</span>
+                            <span class="alt-price">${this.formatPrice(altUnit.price)}</span>
                         </div>
                     `;
                 }
@@ -4945,7 +4959,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         };
 
-        // 2. 🔥 ไม้ตาย: ดักจับคีย์บอร์ดด้วย Capture Phase เพื่อเอาชนะโค้ดเดิม
         app.myNewHandleSearchKeyDown = function(e) {
             const qty = this.getPendingQty();
 
@@ -5005,18 +5018,15 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         };
 
-        // 3. แทรกตัวเองเข้าไปเป็น Event Listener ก่อนโค้ดเก่าเสมอ
         const searchInput = document.getElementById('barcode-input');
         if (searchInput) {
             searchInput.addEventListener('keydown', function(e) {
                 const targetKeys = ['Enter', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'];
                 if (targetKeys.includes(e.key)) {
-                    // หยุดการทำงานของโค้ดเดิมทันที!
                     e.stopImmediatePropagation(); 
-                    // โยนไปให้ฟังก์ชันใหม่ที่เราเพิ่งเขียน
                     app.myNewHandleSearchKeyDown(e);
                 }
-            }, true); // true = Use Capture (ให้รันเป็นคิวแรกสุด)
+            }, true); 
         }
 
         document.addEventListener('click', (e) => {
