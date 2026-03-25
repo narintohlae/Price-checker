@@ -4842,12 +4842,17 @@ document.addEventListener('DOMContentLoaded', () => {
         background: #f4f8ff; 
     }
 
-.main-cell.active-unit {
-        background: var(--primary-color); /* 1. ปรับพื้นหลังให้เป็นสีทึบเหมือนหน่วยอื่นๆ */
-        border-radius: 8px; /* (ถ้าต้องการให้มุมโค้งมนเข้ากับกล่อง) */
+/* เมื่อหน่วยหลักถูกเลือก (ลูกศรชี้อยู่) */
+    .main-cell.active-unit {
+        /* เติม !important เข้าไปตรงนี้ครับ */
+        background: var(--primary-color) !important; 
+        border-radius: 8px;
     }
-    .main-cell.active-unit .product-name-single, .main-cell.active-unit .sub-text, .main-cell.active-unit .cell-price {
-        color: var(--white-color); /* 2. ปรับตัวอักษรเป็นสีขาวทั้งหมดเพื่อให้ตัดกับพื้นหลังที่เข้มขึ้น */
+    .main-cell.active-unit .product-name-single, 
+    .main-cell.active-unit .sub-text, 
+    .main-cell.active-unit .cell-price {
+        /* เติม !important ตรงนี้ด้วยเพื่อความชัวร์ */
+        color: var(--white-color) !important; 
     }
     
     /* เมื่อหน่วยเสริมถูกเลือก (กดลูกศรขวามาถึง) */
