@@ -4859,7 +4859,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Patch V20: Row-Popout Smart Reveal...");
+        console.log("Applying Patch: Row-Popout Smart Reveal (Price First)...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4898,7 +4898,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 rowDiv.className = 'search-row';
                 if (pIndex === this.state.selectedSearchIndex) rowDiv.classList.add('selected-row');
 
-                // 🌟 กล่องหลัก (บรรจุอยู่ในแถว)
+                // 🌟 กล่องหลัก (สลับ ราคา ขึ้นก่อน หน่วย และเอาเครื่องหมาย / ออก)
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
                 
@@ -4906,13 +4906,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="search-unit-cell main-cell ${isMainActive}" data-pindex="${pIndex}" data-uindex="0">
                         <span class="product-name-single" title="${this.escapeHtml(group.productName)}">${this.escapeHtml(group.productName)}</span>
                         <div class="price-unit-group">
-                            <span class="sub-text">/ ${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
                             <span class="cell-price">${this.formatPrice(mainUnit.price)}</span>
+                            <span class="sub-text">${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
                         </div>
                     </div>
                 `;
 
-                // 🌟 กล่องหน่วยเสริม (หุ้มด้วย alt-units-wrapper เพื่อให้ยื่นออกไปทางขวา)
+                // 🌟 กล่องหน่วยเสริม (สลับ ราคา ขึ้นก่อน หน่วย และเอาเครื่องหมาย / ออก)
                 if (group.units.length > 1) {
                     html += `<div class="alt-units-wrapper">`;
                     for (let i = 1; i < group.units.length; i++) {
@@ -4920,8 +4920,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         const isAltActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === i) ? 'active-unit' : '';
                         html += `
                             <div class="search-unit-cell alt-cell ${isAltActive}" data-pindex="${pIndex}" data-uindex="${i}">
-                                <span class="sub-text">${this.escapeHtml(altUnit.pricingUnit.unitName)}</span>
                                 <span class="cell-price">${this.formatPrice(altUnit.price)}</span>
+                                <span class="sub-text">${this.escapeHtml(altUnit.pricingUnit.unitName)}</span>
                             </div>
                         `;
                     }
