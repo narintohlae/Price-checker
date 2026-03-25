@@ -4726,25 +4726,28 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
 </div>
     <style id="original-sync-search-css">
-    /* 1. จัดการ Z-Index ให้ลอยข้ามฝั่งได้ */
-    .search-column { position: relative; z-index: 100 !important; }
-    .cart-column { position: relative; z-index: 1 !important; }
-    #main-search-area { position: relative; overflow: visible !important; }
+    /* 🚀 1. ทลายกำแพง Z-Index และปลดล็อก Overflow ขั้นเด็ดขาด */
+    .search-column { position: relative !important; z-index: 999999 !important; }
+    .search-column .card { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
+    #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
+
+    .cart-column { position: relative !important; z-index: 1 !important; }
+    .cart-column .card { position: relative !important; z-index: 1 !important; }
 
     /* 2. กล่องค้นหาลอยทับตะกร้า */
     #search-results.has-results {
         position: absolute;
         top: 10px; left: 0;
-        width: 800px; /* ยืดกล่องหลักให้ยาวทะลุไปฝั่งตะกร้า */
+        width: 800px; 
         max-width: 95vw; 
         max-height: calc(100vh - 200px);
-        z-index: 2000;
-        background-color: transparent; /* โปร่งใสเพื่อให้เห็นแค่แถวสินค้า */
+        z-index: 9999999 !important; /* ดันให้อยู่หน้าสุดของเว็บ */
+        background-color: transparent; 
         border: none;
         box-shadow: none;
         display: flex; flex-direction: column;
-        overflow-y: auto; overflow-x: hidden; 
-        pointer-events: none; /* ให้คลิกทะลุช่องว่างได้ */
+        overflow-y: auto; overflow-x: visible; /* ให้กล่องย่อยทะลุขวาได้ */
+        pointer-events: none; 
     }
 
     /* 3. แถวสินค้า (Row) */
@@ -4752,27 +4755,29 @@ document.addEventListener('DOMContentLoaded', () => {
         display: flex; flex-direction: row; flex-wrap: nowrap;
         border-bottom: 1px solid var(--border-color);
         background-color: var(--white-color);
-        pointer-events: none; /* ป้องกันการขวางเมาส์ในพื้นที่ว่าง */
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* เพิ่มเงาบางๆ ให้แต่ละแถว */
+        pointer-events: none; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* เพิ่มเงาให้แยกลอยจากตะกร้าชัดเจน */
     }
     .search-row:last-child { border-bottom: none; }
 
     /* 4. เซลล์ตาราง (Cell) */
     .search-unit-cell {
-        padding: 0.6rem 1rem; /* ปรับให้เพรียวขึ้นสำหรับบรรทัดเดียว */
+        padding: 0.6rem 1rem; 
         font-size: 0.88em; 
         cursor: pointer;
         display: flex; align-items: center; justify-content: space-between;
         border-right: 1px solid var(--border-color);
         transition: background-color 0.2s, color 0.2s;
         white-space: nowrap;
-        pointer-events: auto; /* ให้คลิกได้เฉพาะตัวกล่อง */
+        pointer-events: auto; 
         height: 38px;
         box-sizing: border-box;
+        position: relative; /* ให้ Z-index ทำงาน */
+        z-index: 2;
     }
     .search-unit-cell:last-child { border-right: none; border-radius: 0 6px 6px 0; }
 
-    /* 🌟 กล่องหลัก (ซ้ายสุด) - JS จะบังคับ Width ให้เท่าช่องค้นหา */
+    /* 🌟 กล่องหลัก (ซ้ายสุด) */
     .search-unit-cell.main-cell {
         flex: 0 0 auto; 
         gap: 15px;
@@ -4782,9 +4787,10 @@ document.addEventListener('DOMContentLoaded', () => {
     .search-unit-cell.alt-cell {
         flex: 0 0 auto; gap: 10px;
         background-color: #fdfdfd;
+        z-index: 3; /* ให้หน่วยรองลอยเด่นขึ้นอีก */
     }
 
-    /* โครงสร้างข้อความในเซลล์ (บรรทัดเดียว) */
+    /* โครงสร้างข้อความในเซลล์ */
     .product-name-single { 
         font-weight: 600; 
         color: var(--dark-text);
@@ -4803,15 +4809,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     .search-unit-cell.active-unit {
-        background-color: var(--primary-color);
-        color: var(--white-color);
-        border-color: var(--primary-color);
+        background-color: var(--primary-color) !important;
+        color: var(--white-color) !important;
+        border-color: var(--primary-color) !important;
     }
     
     .search-unit-cell.active-unit .product-name-single,
     .search-unit-cell.active-unit .cell-price,
     .search-unit-cell.active-unit .sub-text {
-        color: var(--white-color);
+        color: var(--white-color) !important;
     }
 </style>
 
@@ -4821,7 +4827,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Patch V16: Single-Line Main Unit & Hover Alt Units...");
+        console.log("Applying Patch V17: Z-Index Fixed & Single-Line Main Unit...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4840,7 +4846,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             this.state.selectedUnitIndex = 0;
 
-            // 🌟 ดึงความกว้างของช่องค้นหามาล็อคขนาดกล่องหลัก
             const searchInputEl = document.getElementById('barcode-input');
             const mainBoxWidth = searchInputEl ? searchInputEl.offsetWidth : 300;
 
@@ -4862,7 +4867,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'search-row';
 
-                // กล่องหลัก (ซ้ายสุด) - 🌟 แสดงเป็นบรรทัดเดียว และล็อค Width ให้เท่าช่องค้นหา
+                // กล่องหลัก (ซ้ายสุด)
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
                 
@@ -4876,7 +4881,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 `;
 
-                // กล่องรอง (ลอยทับตะกร้า)
+                // กล่องรอง (ลอยทับตะกร้าชัวร์ๆ)
                 for (let i = 1; i < group.units.length; i++) {
                     const altUnit = group.units[i];
                     const isAltActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === i) ? 'active-unit' : '';
