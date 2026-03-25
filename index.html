@@ -4725,131 +4725,77 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </div>
-    <style id="premium-seamless-search-css">
-    /* 1. Z-Index และ Overflow ของ Column ค้นหา */
+    <style id="original-sync-search-css">
+    /* 1. จัดการ Z-Index ให้ลอยข้ามฝั่งได้ */
     .search-column { position: relative; z-index: 100 !important; }
     .cart-column { position: relative; z-index: 1 !important; }
-    
-    /* 2. กรอบนอกสุด (ลอยทับตะกร้า) - 🌟 เพิ่ม Radius และเงาให้นุ่มนวล */
+    #main-search-area { position: relative; overflow: visible !important; }
+
+    /* 2. กล่องค้นหา ใช้สไตล์เดียวกับ Card เดิมของระบบ */
     #search-results.has-results {
         position: absolute;
-        top: 2px; /* ห่างจากช่องค้นหานิดหน่อย */
-        left: 0;
-        width: 800px; 
-        max-width: 95vw;
+        top: 10px; left: 0;
+        width: auto; 
+        min-width: 100%; /* กว้างเท่าช่องค้นหาเป็นอย่างน้อย */
+        max-width: 800px; /* ยืดไปทับตะกร้าได้ */
         max-height: calc(100vh - 200px);
         z-index: 2000;
-        background: var(--white-color);
-        
-        /* 🎨 เพิ่มมิติความมืออาชีพ */
-        border: 1px solid rgba(0,0,0,0.1); /* เส้นขอบบางลง */
-        border-radius: 8px; /* โค้งมนนุ่มนวล */
-        box-shadow: 0 10px 30px rgba(0,0,0,0.12); /* เงานุ่ม กว้าง */
-        
-        pointer-events: none; 
+        background-color: var(--white-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        box-shadow: var(--shadow-hover);
         display: flex; flex-direction: column;
-        gap: 0; 
-        padding: 0;
-        overflow-y: auto; overflow-x: hidden;
-        scrollbar-width: none;
+        overflow-y: auto; overflow-x: auto; /* เผื่อหน่วยเยอะจนล้น */
     }
-    #search-results::-webkit-scrollbar { display: none; }
 
     /* 3. แถวสินค้า (Row) */
     .search-row {
-        display: flex; flex-direction: row;
-        gap: 0; 
-        padding: 0; 
-        border-bottom: 1px solid #f1f3f5; /* เส้นคั่นบรรทัดสีอ่อนลง */
-        pointer-events: none; 
-        background: transparent;
-        transition: background-color 0.1s ease;
+        display: flex; flex-direction: row; flex-wrap: nowrap;
+        border-bottom: 1px solid var(--border-color);
+        background-color: var(--white-color);
     }
     .search-row:last-child { border-bottom: none; }
 
-    /* 4. กล่องหน่วย (Cell) - 🌟 ปรับขนาด Typography ให้ Professional */
-    .unit-box {
-        pointer-events: auto; 
-        background: transparent;
-        border: none;
-        border-radius: 0; 
-        padding: 0 0.9rem; /* เพิ่ม padding อีกนิด */
-        height: 40px; /* สูงขึ้นเล็กน้อย ดูไม่อึดอัด */
+    /* 4. เซลล์ตาราง (Cell) - โคลนนิ่งคลาส .search-item ดั้งเดิมมาเลย */
+    .search-unit-cell {
+        padding: 0.75rem 1rem; /* ระยะห่างดั้งเดิม */
+        font-size: 0.88em; /* ขนาดฟอนต์ดั้งเดิม */
         cursor: pointer;
-        transition: all 0.1s ease;
-        display: flex; align-items: center;
-        box-sizing: border-box !important;
+        display: flex; align-items: center; justify-content: space-between;
+        border-right: 1px solid var(--border-color);
+        transition: background-color 0.2s, color 0.2s;
+        white-space: nowrap;
+    }
+    .search-unit-cell:last-child { border-right: none; }
+
+    .search-unit-cell.main-cell {
+        flex: 1 1 100%; min-width: 260px;
+        gap: 15px;
+    }
+    .search-unit-cell.alt-cell {
+        flex: 0 0 auto; gap: 20px;
     }
 
-    /* 4.1 คอลัมน์หลัก (ซ้ายสุด) */
-    .unit-box.main-box {
-        justify-content: space-between;
-        gap: 10px;
-    }
-    .main-box .p-name {
-        font-weight: 600; /* นน. ปานกลาง */
-        font-size: 0.95em; 
-        color: var(--dark-text);
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        flex-grow: 1;
-    }
-    .main-box .p-price {
-        font-weight: 700; /* ราคาเน้นหนา */
-        font-size: 0.95em; 
-        color: var(--success-color);
-        white-space: nowrap; flex-shrink: 0;
-    }
-    .main-box .u-name {
-        font-size: 0.85em; color: var(--secondary-color); font-weight: 400;
-    }
+    /* โครงสร้างข้อความในเซลล์ */
+    .cell-info { display: flex; flex-direction: column; gap: 2px; }
+    .cell-price { font-weight: bold; color: var(--success-color); text-align: right; }
+    .sub-text { font-size: 0.8em; color: var(--secondary-color); font-weight: normal; }
 
-    /* 4.2 คอลัมน์หน่วยรอง (ขวามือ) */
-    .unit-box.alt-box {
-        flex-direction: row; 
-        justify-content: center;
-        gap: 8px; /* ห่างขึ้นนิดหน่อย */
-        min-width: auto; 
-        border-left: 1px solid #f1f3f5; /* เส้นคั่นสีอ่อน */
-    }
-    .alt-box .alt-name { font-size: 0.85em; color: var(--secondary-color); margin-bottom: 0; font-weight: 400;}
-    .alt-box .alt-price { font-size: 0.95em; font-weight: 600; color: var(--success-color); }
-
-    /* ================================= */
-    /* 🎨 🌟 สถานะ Highlights (New Version!) */
-    /* ================================= */
-    
-    /* Hover ด้วยเมาส์ (เซลล์เดียว) */
-    .unit-box:hover { background: #f8faff; }
-    
-    /* 1. เมื่อกดขึ้น/ลง เลือกสินค้า (แต่ยังไม่ได้เลือกหน่วยเสริม) */
-    /* 🌟 เปลี่ยนจากสีพื้นหลัง เป็นแค่กรอบสีน้ำเงินอ่อน เพื่อลดความลายตา */
-    .search-row.selected-row .main-box {
-        position: relative;
-    }
-    .search-row.selected-row .main-box::after {
-        content: '';
-        position: absolute;
-        top: 2px; left: 2px; right: 2px; bottom: 2px;
-        border: 2px solid rgba(0, 123, 255, 0.3); /* กรอบสีฟ้าอ่อนน้ำ */
-        border-radius: 6px;
-        pointer-events: none;
+    /* 5. สถานะ Hover และ Active (ใช้สี var(--primary-color) ดั้งเดิม) */
+    .search-unit-cell:hover {
+        background-color: #f8f9fa; /* สี hover อ่อนๆ แบบดั้งเดิม */
     }
     
-    /* 2. เมื่อกดซ้าย/ขวา เลือกหน่วยเสริม หรือโฟกัสหน่วยหลัก */
-    /* 🌟 ไฮไลท์สีน้ำเงินทึบ แต่ดูนุ่มนวลกว่าเดิม */
-    .unit-box.active-unit {
-        background: var(--primary-color) !important;
-        border: none !important;
+    .search-unit-cell.active-unit {
+        background-color: var(--primary-color);
+        color: var(--white-color);
     }
     
-    /* ลบกรอบ Selected Row ออกเมื่อเซลล์นั้น Active */
-    .search-row.selected-row .main-box.active-unit::after {
-        display: none;
+    /* เปลี่ยนสีตัวหนังสือรองให้เป็นสีขาวเมื่อโดน Select (เหมือนระบบเดิม) */
+    .search-unit-cell.active-unit .cell-price,
+    .search-unit-cell.active-unit .sub-text {
+        color: var(--white-color);
     }
-    
-    /* เปลี่ยนสีตัวหนังสือเป็นสีขาวเมื่อActive */
-    .unit-box.active-unit .p-name, .unit-box.active-unit .p-price, .unit-box.active-unit .alt-price { color: var(--white-color) !important; }
-    .unit-box.active-unit .u-name, .unit-box.active-unit .alt-name { color: rgba(255,255,255,0.85) !important; }
 </style>
 
 <script>
@@ -4858,7 +4804,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Premium Seamless Dropdown UI Patch V13...");
+        console.log("Applying Original System Sync UI Patch V14...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4868,6 +4814,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return m ? parseInt(m[1], 10) : 1;
         };
 
+        // 1. เรนเดอร์ UI ให้เข้ากับดีไซน์เดิม
         app.displaySearchResults = function(results, query) {
             const resultsContainer = document.getElementById('search-results');
             resultsContainer.innerHTML = '';
@@ -4877,15 +4824,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
             this.state.selectedUnitIndex = 0;
 
-            const searchInputEl = document.getElementById('barcode-input');
-            const mainBoxWidth = searchInputEl ? searchInputEl.offsetWidth : 300;
-
             const groupedMap = new Map();
             results.forEach((productUnit) => {
                 if (!groupedMap.has(productUnit.productId)) {
                     groupedMap.set(productUnit.productId, {
                         productId: productUnit.productId,
                         productName: productUnit.productName,
+                        productCode: productUnit.productCode,
                         units: []
                     });
                 }
@@ -4897,46 +4842,49 @@ document.addEventListener("DOMContentLoaded", function() {
             this.state.groupedSearchResults.forEach((group, pIndex) => {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'search-row';
-                if (pIndex === this.state.selectedSearchIndex) rowDiv.classList.add('selected-row');
 
+                // กล่องหลัก (ซ้ายสุด)
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
                 
                 let html = `
-                    <div class="unit-box main-box ${isMainActive}" data-pindex="${pIndex}" data-uindex="0" style="flex: 0 0 ${mainBoxWidth}px; width: ${mainBoxWidth}px; max-width: ${mainBoxWidth}px;">
-                        <div class="p-name" title="${this.escapeHtml(group.productName)}">${this.escapeHtml(group.productName)}</div>
-                        <div class="p-price">
-                            <span class="u-name">/ ${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
-                            <span class="u-val">${this.formatPrice(mainUnit.price)}</span>
+                    <div class="search-unit-cell main-cell ${isMainActive}" data-pindex="${pIndex}" data-uindex="0">
+                        <div class="cell-info">
+                            <span>${this.escapeHtml(group.productName)}</span>
+                            <span class="sub-text">${group.productCode || ''}</span>
+                        </div>
+                        <div class="cell-info" style="align-items: flex-end;">
+                            <span class="cell-price">${this.formatPrice(mainUnit.price)}</span>
+                            <span class="sub-text">/ ${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
                         </div>
                     </div>
                 `;
 
+                // กล่องรอง (แพ็ค, ลัง)
                 for (let i = 1; i < group.units.length; i++) {
                     const altUnit = group.units[i];
                     const isAltActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === i) ? 'active-unit' : '';
                     html += `
-                        <div class="unit-box alt-box ${isAltActive}" data-pindex="${pIndex}" data-uindex="${i}">
-                            <span class="alt-name">${this.escapeHtml(altUnit.pricingUnit.unitName)}</span>
-                            <span class="alt-price">${this.formatPrice(altUnit.price)}</span>
+                        <div class="search-unit-cell alt-cell ${isAltActive}" data-pindex="${pIndex}" data-uindex="${i}">
+                            <span>${this.escapeHtml(altUnit.pricingUnit.unitName)}</span>
+                            <span class="cell-price">${this.formatPrice(altUnit.price)}</span>
                         </div>
                     `;
                 }
 
                 rowDiv.innerHTML = html;
 
-                rowDiv.querySelectorAll('.unit-box').forEach(box => {
-                    box.onmouseenter = () => {
-                        // ปรับ State ให้ตรงกับที่เมาส์ชี้ เพื่อให้คีย์บอร์ดทำงานต่อได้
-                        app.state.selectedSearchIndex = parseInt(box.dataset.pindex, 10);
-                        app.state.selectedUnitIndex = parseInt(box.dataset.uindex, 10);
-                        app.updateSelectedSearchResult();
+                rowDiv.querySelectorAll('.search-unit-cell').forEach(cell => {
+                    cell.onmouseenter = () => {
+                        this.state.selectedSearchIndex = parseInt(cell.dataset.pindex, 10);
+                        this.state.selectedUnitIndex = parseInt(cell.dataset.uindex, 10);
+                        this.updateSelectedSearchResult();
                     };
                     
-                    box.onclick = (e) => {
+                    cell.onclick = (e) => {
                         e.stopPropagation();
-                        const targetPIndex = parseInt(box.dataset.pindex, 10);
-                        const targetUIndex = parseInt(box.dataset.uindex, 10);
+                        const targetPIndex = parseInt(cell.dataset.pindex, 10);
+                        const targetUIndex = parseInt(cell.dataset.uindex, 10);
                         
                         const qty = this.getPendingQty();
                         this.addToCart(this.state.groupedSearchResults[targetPIndex].units[targetUIndex], qty);
@@ -4962,22 +4910,18 @@ document.addEventListener("DOMContentLoaded", function() {
         app.updateSelectedSearchResult = function() {
             const rows = document.querySelectorAll('.search-row');
             rows.forEach((row, pIndex) => {
+                const cells = row.querySelectorAll('.search-unit-cell');
                 if (pIndex === this.state.selectedSearchIndex) {
-                    row.classList.add('selected-row');
-                    
-                    const boxes = row.querySelectorAll('.unit-box');
-                    boxes.forEach((box, uIndex) => {
+                    cells.forEach((cell, uIndex) => {
                         if (uIndex === this.state.selectedUnitIndex) {
-                            box.classList.add('active-unit');
-                            // เลื่อนจอมาโฟกัส (block: 'nearest' ลดการกระตุก)
-                            box.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); 
+                            cell.classList.add('active-unit');
+                            cell.scrollIntoView({ block: 'nearest', behavior: 'smooth', inline: 'nearest' }); 
                         } else {
-                            box.classList.remove('active-unit');
+                            cell.classList.remove('active-unit');
                         }
                     });
                 } else {
-                    row.classList.remove('selected-row');
-                    row.querySelectorAll('.unit-box').forEach(box => box.classList.remove('active-unit'));
+                    cells.forEach(cell => cell.classList.remove('active-unit'));
                 }
             });
         };
