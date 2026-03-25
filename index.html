@@ -4844,14 +4844,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* เมื่อหน่วยหลักถูกเลือก (ลูกศรชี้อยู่) */
     .main-cell.active-unit {
-        /* เติม !important เข้าไปตรงนี้ครับ */
-        background: var(--primary-color) !important; 
+        /* ใช้ rgba เพื่อดึงสีหลักมาทำโปร่งแสง 70% (ทำให้อ่อนลง 30%) */
+        background: rgba(0, 92, 191, 0.7) !important; 
         border-radius: 8px;
     }
     .main-cell.active-unit .product-name-single, 
     .main-cell.active-unit .sub-text, 
     .main-cell.active-unit .cell-price {
-        /* เติม !important ตรงนี้ด้วยเพื่อความชัวร์ */
         color: var(--white-color) !important; 
     }
     
