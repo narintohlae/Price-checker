@@ -4731,21 +4731,20 @@ document.addEventListener('DOMContentLoaded', () => {
     .cart-column { position: relative; z-index: 1 !important; }
     #main-search-area { position: relative; overflow: visible !important; }
 
-    /* 2. กล่องค้นหา ใช้สไตล์เดียวกับ Card เดิมของระบบ */
+    /* 2. กล่องค้นหาลอยทับตะกร้า */
     #search-results.has-results {
         position: absolute;
         top: 10px; left: 0;
-        width: auto; 
-        min-width: 100%; 
-        max-width: 800px; 
+        width: 800px; /* ยืดกล่องหลักให้ยาวทะลุไปฝั่งตะกร้า */
+        max-width: 95vw; 
         max-height: calc(100vh - 200px);
         z-index: 2000;
-        background-color: var(--white-color);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        box-shadow: var(--shadow-hover);
+        background-color: transparent; /* โปร่งใสเพื่อให้เห็นแค่แถวสินค้า */
+        border: none;
+        box-shadow: none;
         display: flex; flex-direction: column;
-        overflow-y: auto; overflow-x: auto; 
+        overflow-y: auto; overflow-x: hidden; 
+        pointer-events: none; /* ให้คลิกทะลุช่องว่างได้ */
     }
 
     /* 3. แถวสินค้า (Row) */
@@ -4753,44 +4752,63 @@ document.addEventListener('DOMContentLoaded', () => {
         display: flex; flex-direction: row; flex-wrap: nowrap;
         border-bottom: 1px solid var(--border-color);
         background-color: var(--white-color);
+        pointer-events: none; /* ป้องกันการขวางเมาส์ในพื้นที่ว่าง */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* เพิ่มเงาบางๆ ให้แต่ละแถว */
     }
     .search-row:last-child { border-bottom: none; }
 
     /* 4. เซลล์ตาราง (Cell) */
     .search-unit-cell {
-        padding: 0.75rem 1rem; 
+        padding: 0.6rem 1rem; /* ปรับให้เพรียวขึ้นสำหรับบรรทัดเดียว */
         font-size: 0.88em; 
         cursor: pointer;
         display: flex; align-items: center; justify-content: space-between;
         border-right: 1px solid var(--border-color);
         transition: background-color 0.2s, color 0.2s;
         white-space: nowrap;
+        pointer-events: auto; /* ให้คลิกได้เฉพาะตัวกล่อง */
+        height: 38px;
+        box-sizing: border-box;
     }
-    .search-unit-cell:last-child { border-right: none; }
+    .search-unit-cell:last-child { border-right: none; border-radius: 0 6px 6px 0; }
 
+    /* 🌟 กล่องหลัก (ซ้ายสุด) - JS จะบังคับ Width ให้เท่าช่องค้นหา */
     .search-unit-cell.main-cell {
-        flex: 1 1 100%; min-width: 260px;
+        flex: 0 0 auto; 
         gap: 15px;
+        border-radius: 6px 0 0 6px;
     }
+    /* 🌟 กล่องรอง (ลอยทับตะกร้า) */
     .search-unit-cell.alt-cell {
-        flex: 0 0 auto; gap: 20px;
+        flex: 0 0 auto; gap: 10px;
+        background-color: #fdfdfd;
     }
 
-    /* โครงสร้างข้อความในเซลล์ */
-    .cell-info { display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+    /* โครงสร้างข้อความในเซลล์ (บรรทัดเดียว) */
+    .product-name-single { 
+        font-weight: 600; 
+        color: var(--dark-text);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        flex-grow: 1;
+    }
+    .price-unit-group {
+        display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    }
     .cell-price { font-weight: bold; color: var(--success-color); text-align: right; }
-    .sub-text { font-size: 0.8em; color: var(--secondary-color); font-weight: normal; }
+    .sub-text { font-size: 0.85em; color: var(--secondary-color); font-weight: normal; }
 
     /* 5. สถานะ Hover และ Active */
     .search-unit-cell:hover {
-        background-color: #f8f9fa; 
+        background-color: #f0f7ff; 
     }
     
     .search-unit-cell.active-unit {
         background-color: var(--primary-color);
         color: var(--white-color);
+        border-color: var(--primary-color);
     }
     
+    .search-unit-cell.active-unit .product-name-single,
     .search-unit-cell.active-unit .cell-price,
     .search-unit-cell.active-unit .sub-text {
         color: var(--white-color);
@@ -4803,7 +4821,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Clean Original Sync UI Patch V15...");
+        console.log("Applying Patch V16: Single-Line Main Unit & Hover Alt Units...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4822,13 +4840,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
             this.state.selectedUnitIndex = 0;
 
+            // 🌟 ดึงความกว้างของช่องค้นหามาล็อคขนาดกล่องหลัก
+            const searchInputEl = document.getElementById('barcode-input');
+            const mainBoxWidth = searchInputEl ? searchInputEl.offsetWidth : 300;
+
             const groupedMap = new Map();
             results.forEach((productUnit) => {
                 if (!groupedMap.has(productUnit.productId)) {
                     groupedMap.set(productUnit.productId, {
                         productId: productUnit.productId,
                         productName: productUnit.productName,
-                        units: [] // ไม่เอา productCode มาเก็บแล้วเพื่อให้คลีนขึ้น
+                        units: [] 
                     });
                 }
                 groupedMap.get(productUnit.productId).units.push(productUnit);
@@ -4840,29 +4862,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'search-row';
 
-                // กล่องหลัก (ซ้ายสุด) - 🌟 เอา รหัส และ / ออกแล้ว
+                // กล่องหลัก (ซ้ายสุด) - 🌟 แสดงเป็นบรรทัดเดียว และล็อค Width ให้เท่าช่องค้นหา
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
                 
                 let html = `
-                    <div class="search-unit-cell main-cell ${isMainActive}" data-pindex="${pIndex}" data-uindex="0">
-                        <div class="cell-info" style="font-weight: 500;">
-                            <span>${this.escapeHtml(group.productName)}</span>
-                        </div>
-                        <div class="cell-info" style="align-items: flex-end;">
-                            <span class="cell-price">${this.formatPrice(mainUnit.price)}</span>
+                    <div class="search-unit-cell main-cell ${isMainActive}" data-pindex="${pIndex}" data-uindex="0" style="width: ${mainBoxWidth}px; max-width: ${mainBoxWidth}px;">
+                        <span class="product-name-single" title="${this.escapeHtml(group.productName)}">${this.escapeHtml(group.productName)}</span>
+                        <div class="price-unit-group">
                             <span class="sub-text">${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
+                            <span class="cell-price">${this.formatPrice(mainUnit.price)}</span>
                         </div>
                     </div>
                 `;
 
-                // กล่องรอง (แพ็ค, ลัง)
+                // กล่องรอง (ลอยทับตะกร้า)
                 for (let i = 1; i < group.units.length; i++) {
                     const altUnit = group.units[i];
                     const isAltActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === i) ? 'active-unit' : '';
                     html += `
                         <div class="search-unit-cell alt-cell ${isAltActive}" data-pindex="${pIndex}" data-uindex="${i}">
-                            <span>${this.escapeHtml(altUnit.pricingUnit.unitName)}</span>
+                            <span class="sub-text">${this.escapeHtml(altUnit.pricingUnit.unitName)}</span>
                             <span class="cell-price">${this.formatPrice(altUnit.price)}</span>
                         </div>
                     `;
