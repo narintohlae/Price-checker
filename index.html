@@ -4735,7 +4735,7 @@ document.addEventListener('DOMContentLoaded', () => {
     #search-results.has-results {
         position: absolute;
         top: 0; left: 0;
-        width: 100%; /* 🌟 กว้าง 100% ของคอลัมน์ซ้าย */
+        width: 100%; 
         max-height: calc(100vh - 180px);
         z-index: 9999999 !important;
         
@@ -4748,41 +4748,45 @@ document.addEventListener('DOMContentLoaded', () => {
         
         display: flex; flex-direction: column;
         padding: 4px 0; 
-        overflow: visible; /* 🌟 ปลดล็อกเพื่อให้หน่วยเสริมลอยทะลุกรอบได้ */
+        overflow: visible; 
     }
 
-    /* 3. แถวสินค้า (Row) */
+    /* 3. แถวสินค้า (Row) - 🌟 เพิ่มเส้นแบ่งบรรทัดที่ดูบางเบา */
     .search-row {
-        position: relative; /* สำคัญมาก: ให้หน่วยเสริมอ้างอิงตำแหน่งจากแถวนี้ */
+        position: relative; 
         width: 100%;
         display: flex; flex-direction: row;
         background: transparent;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* เส้นคั่นมินิมอล */
         transition: background 0.2s ease;
+    }
+    .search-row:last-child {
+        border-bottom: none; /* บรรทัดสุดท้ายไม่ต้องมีเส้น */
     }
     
     /* 4. กล่องหลัก (หน่วยแรก) */
     .main-cell {
         width: 100%;
-        padding: 0.6rem 1rem; 
+        padding: 0.7rem 1rem; /* เพิ่มช่องว่างแนวตั้งให้ดูโปร่งขึ้น */
         cursor: pointer;
         display: flex; align-items: center; justify-content: space-between;
         gap: 12px;
         box-sizing: border-box;
         border-radius: 8px;
-        margin: 0 4px; /* เว้นขอบนิดนึงให้ดูนุ่มนวล */
+        margin: 2px 4px; /* เว้นขอบไม่ให้ติดเส้นคั่นเกินไป */
         transition: background-color 0.15s;
     }
 
     /* 🌟 5. กล่องห่อหุ้มหน่วยเสริม (ลอยอยู่ด้านขวานอกกรอบ) */
     .alt-units-wrapper {
         position: absolute;
-        left: 100%; /* ดันออกไปชิดขวาสุดของแถว */
+        left: 100%; 
         top: 50%;
-        transform: translateY(-50%); /* ให้อยู่กึ่งกลางแนวตั้งของแถว */
-        display: none; /* ซ่อนไว้ก่อน */
+        transform: translateY(-50%); 
+        display: none; 
         align-items: center;
         gap: 6px;
-        padding-left: 8px; /* เว้นระยะห่างจากกล่องหลัก */
+        padding-left: 8px; 
         z-index: 10;
     }
 
@@ -4790,7 +4794,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .search-row.selected-row .alt-units-wrapper,
     .search-row:hover .alt-units-wrapper {
         display: flex;
-        animation: popRight 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; /* เด้งดึ๋งๆ */
+        animation: popRight 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     }
 
     @keyframes popRight {
@@ -4811,15 +4815,24 @@ document.addEventListener('DOMContentLoaded', () => {
         transition: all 0.2s ease;
     }
 
-    /* Typography */
+    /* Typography - 🌟 ปรับเป็นตัวบาง (Normal) ทั้งหมดเพื่อให้คลีนสุดๆ */
     .product-name-single { 
-        font-weight: 600; color: var(--dark-text);
+        font-weight: 400; /* เปลี่ยนจากหนา เป็นบาง */
+        color: var(--dark-text);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         flex-grow: 1; font-size: 0.95em;
     }
     .price-unit-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .cell-price { font-weight: 700; color: var(--success-color); font-size: 1em; }
-    .sub-text { font-size: 0.85em; color: var(--secondary-color); }
+    .cell-price { 
+        font-weight: 400; /* เปลี่ยนจากหนา เป็นบาง */
+        color: var(--success-color); 
+        font-size: 1em; 
+    }
+    .sub-text { 
+        font-weight: 400; 
+        font-size: 0.85em; 
+        color: var(--secondary-color); 
+    }
 
     /* ================================= */
     /* 🎨 สถานะ Active (Keyboard & Hover) */
@@ -4831,9 +4844,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* เมื่อหน่วยหลักถูกเลือก (ลูกศรชี้อยู่) */
     .main-cell.active-unit {
-        background: rgba(0, 123, 255, 0.1); /* สีฟ้าอ่อนนุ่มๆ */
+        background: rgba(0, 123, 255, 0.08); /* ปรับสีฟ้าให้อ่อนละมุนขึ้นอีก */
     }
-    .main-cell.active-unit .product-name-single, .main-cell.active-unit .sub-text {
+    .main-cell.active-unit .product-name-single, .main-cell.active-unit .sub-text, .main-cell.active-unit .cell-price {
         color: var(--primary-color);
     }
     
@@ -4846,7 +4859,7 @@ document.addEventListener('DOMContentLoaded', () => {
         background: var(--primary-color);
         border-color: var(--primary-color);
         box-shadow: 0 6px 16px rgba(0, 92, 191, 0.3);
-        transform: scale(1.05); /* ขยายใหญ่ขึ้นนิดนึงให้รู้ว่าเลือกอยู่ */
+        transform: scale(1.05); 
     }
     .alt-cell.active-unit .sub-text, .alt-cell.active-unit .cell-price {
         color: var(--white-color);
@@ -4859,7 +4872,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Patch: Row-Popout Smart Reveal (Price First)...");
+        console.log("Applying Patch V21: Thin Text & Divider Reveal...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4898,7 +4911,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 rowDiv.className = 'search-row';
                 if (pIndex === this.state.selectedSearchIndex) rowDiv.classList.add('selected-row');
 
-                // 🌟 กล่องหลัก (สลับ ราคา ขึ้นก่อน หน่วย และเอาเครื่องหมาย / ออก)
+                // 🌟 กล่องหลัก
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
                 
@@ -4912,7 +4925,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 `;
 
-                // 🌟 กล่องหน่วยเสริม (สลับ ราคา ขึ้นก่อน หน่วย และเอาเครื่องหมาย / ออก)
+                // 🌟 กล่องหน่วยเสริม
                 if (group.units.length > 1) {
                     html += `<div class="alt-units-wrapper">`;
                     for (let i = 1; i < group.units.length; i++) {
@@ -4979,7 +4992,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (pIndex === this.state.selectedSearchIndex) {
                     row.classList.add('selected-row');
                     
-                    // ให้แถวหลักเลื่อนตาม
                     row.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                     
                     const cells = row.querySelectorAll('.search-unit-cell');
@@ -4997,7 +5009,7 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         };
 
-        // 4. บังคับคีย์บอร์ด (กดยังไงก็ลื่น)
+        // 4. บังคับคีย์บอร์ด
         app.myNewHandleSearchKeyDown = function(e) {
             const qty = this.getPendingQty();
 
