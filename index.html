@@ -4725,8 +4725,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </div>
-    <style id="original-sync-search-css">
-    /* 🚀 1. ทลายกำแพง Z-Index และปลดล็อก Overflow ขั้นเด็ดขาด */
+    <style id="modern-2026-search-css">
+    /* 🚀 1. ทลายกำแพง Z-Index */
     .search-column { position: relative !important; z-index: 999999 !important; }
     .search-column .card { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
     #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
@@ -4734,90 +4734,113 @@ document.addEventListener('DOMContentLoaded', () => {
     .cart-column { position: relative !important; z-index: 1 !important; }
     .cart-column .card { position: relative !important; z-index: 1 !important; }
 
-    /* 2. กล่องค้นหาลอยทับตะกร้า */
+    /* 🎨 2. 2026 Glassmorphism Container (กระจกฝ้า) */
     #search-results.has-results {
         position: absolute;
-        top: 10px; left: 0;
-        width: 800px; 
+        top: 12px; left: 0;
+        width: max-content; /* ยืดตามเนื้อหา */
+        min-width: 100%;
         max-width: 95vw; 
-        max-height: calc(100vh - 200px);
-        z-index: 9999999 !important; /* ดันให้อยู่หน้าสุดของเว็บ */
-        background-color: transparent; 
-        border: none;
-        box-shadow: none;
-        display: flex; flex-direction: column;
-        overflow-y: auto; overflow-x: visible; /* ให้กล่องย่อยทะลุขวาได้ */
+        max-height: calc(100vh - 180px);
+        z-index: 9999999 !important;
+        
+        /* สไตล์ปี 2026 */
+        background: rgba(255, 255, 255, 0.85); /* ขาวโปร่งแสง */
+        backdrop-filter: blur(20px); /* เบลอพื้นหลัง */
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 16px; /* มุมโค้งมนขึ้น */
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.03); /* เงานุ่มลึก */
+        
+        display: flex; flex-direction: column; gap: 4px;
+        padding: 8px; /* เว้นขอบด้านในให้ดูมีราคา */
+        overflow-y: auto; overflow-x: visible;
         pointer-events: none; 
+        scrollbar-width: none; 
     }
+    #search-results::-webkit-scrollbar { display: none; }
 
-    /* 3. แถวสินค้า (Row) */
+    /* 3. แถวสินค้า (Row) - ไร้เส้นคั่น */
     .search-row {
         display: flex; flex-direction: row; flex-wrap: nowrap;
-        border-bottom: 1px solid var(--border-color);
-        background-color: var(--white-color);
+        align-items: center;
+        border-radius: 12px;
+        padding: 4px; /* เว้นระยะห่างให้เซลล์ข้างใน */
         pointer-events: none; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* เพิ่มเงาให้แยกลอยจากตะกร้าชัดเจน */
+        transition: background 0.2s ease;
     }
-    .search-row:last-child { border-bottom: none; }
+    
+    /* Hover แถวให้มีพื้นหลังจางๆ */
+    .search-row.selected-row {
+        background: rgba(0, 0, 0, 0.03);
+    }
 
-    /* 4. เซลล์ตาราง (Cell) */
+    /* 4. เซลล์ตาราง (Cell) แบบ Pills */
     .search-unit-cell {
-        padding: 0.6rem 1rem; 
-        font-size: 0.88em; 
+        padding: 0.5rem 1rem; 
+        font-size: 0.9em; 
         cursor: pointer;
         display: flex; align-items: center; justify-content: space-between;
-        border-right: 1px solid var(--border-color);
-        transition: background-color 0.2s, color 0.2s;
+        border-radius: 10px; /* มุมโค้งแบบ Pill */
+        transition: all 0.2s cubic-bezier(0.2, 0, 0, 1); /* Animation นุ่มนวล */
         white-space: nowrap;
         pointer-events: auto; 
-        height: 38px;
+        height: 42px; /* สูงขึ้นนิดให้กดง่าย */
         box-sizing: border-box;
-        position: relative; /* ให้ Z-index ทำงาน */
-        z-index: 2;
+        border: 1px solid transparent;
     }
-    .search-unit-cell:last-child { border-right: none; border-radius: 0 6px 6px 0; }
 
     /* 🌟 กล่องหลัก (ซ้ายสุด) */
     .search-unit-cell.main-cell {
         flex: 0 0 auto; 
-        gap: 15px;
-        border-radius: 6px 0 0 6px;
+        gap: 16px;
     }
-    /* 🌟 กล่องรอง (ลอยทับตะกร้า) */
+    
+    /* 🌟 กล่องรอง (ลอยทับตะกร้า) - สีเทาอ่อนๆ สไตล์ Tag */
     .search-unit-cell.alt-cell {
-        flex: 0 0 auto; gap: 10px;
-        background-color: #fdfdfd;
-        z-index: 3; /* ให้หน่วยรองลอยเด่นขึ้นอีก */
+        flex: 0 0 auto; gap: 12px;
+        background: rgba(0,0,0,0.04);
+        margin-left: 6px; /* เว้นช่องไฟระหว่างหน่วย */
     }
 
-    /* โครงสร้างข้อความในเซลล์ */
+    /* Typography ยุคใหม่ (สะอาดตา) */
     .product-name-single { 
         font-weight: 600; 
-        color: var(--dark-text);
+        color: #1f2937; /* ดำเทาดูแพง */
+        letter-spacing: -0.01em;
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         flex-grow: 1;
     }
     .price-unit-group {
-        display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+        display: flex; align-items: center; gap: 10px; flex-shrink: 0;
     }
-    .cell-price { font-weight: bold; color: var(--success-color); text-align: right; }
-    .sub-text { font-size: 0.85em; color: var(--secondary-color); font-weight: normal; }
+    .cell-price { 
+        font-weight: 700; 
+        color: #10b981; /* เขียว Modern */
+        text-align: right; 
+    }
+    .sub-text { 
+        font-size: 0.9em; 
+        color: #6b7280; 
+        font-weight: 500; 
+    }
 
-    /* 5. สถานะ Hover และ Active */
+    /* 5. สถานะ Active (สีเด่นแต่ดูนุ่ม) */
     .search-unit-cell:hover {
-        background-color: #f0f7ff; 
+        background: #ffffff; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     
     .search-unit-cell.active-unit {
-        background-color: var(--primary-color) !important;
-        color: var(--white-color) !important;
-        border-color: var(--primary-color) !important;
+        background: var(--primary-color) !important;
+        box-shadow: 0 6px 16px rgba(0, 92, 191, 0.25) !important;
+        transform: translateY(-1px); /* ยกลอยขึ้นนิดนึงตอนเลือก */
     }
     
     .search-unit-cell.active-unit .product-name-single,
     .search-unit-cell.active-unit .cell-price,
     .search-unit-cell.active-unit .sub-text {
-        color: var(--white-color) !important;
+        color: #ffffff !important;
     }
 </style>
 
@@ -4827,7 +4850,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const app = window.POS_APP;
         if (!app) return;
 
-        console.log("Applying Patch V17: Z-Index Fixed & Single-Line Main Unit...");
+        console.log("Applying Patch V18: 2026 Minimal & Modern UI...");
 
         app.state.selectedUnitIndex = 0;
 
@@ -4846,8 +4869,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
             this.state.selectedUnitIndex = 0;
 
+            // คำนวณความกว้างเพื่อบังคับกล่องหลัก
             const searchInputEl = document.getElementById('barcode-input');
-            const mainBoxWidth = searchInputEl ? searchInputEl.offsetWidth : 300;
+            // ลบขอบซ้ายขวาของ Container ให้ออกมาเป๊ะ
+            const mainBoxWidth = searchInputEl ? searchInputEl.offsetWidth - 24 : 300; 
 
             const groupedMap = new Map();
             results.forEach((productUnit) => {
@@ -4867,7 +4892,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const rowDiv = document.createElement('div');
                 rowDiv.className = 'search-row';
 
-                // กล่องหลัก (ซ้ายสุด)
+                // 🌟 กล่องหลัก
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
                 
@@ -4881,7 +4906,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     </div>
                 `;
 
-                // กล่องรอง (ลอยทับตะกร้าชัวร์ๆ)
+                // 🌟 กล่องรอง (ลอยทับตะกร้า)
                 for (let i = 1; i < group.units.length; i++) {
                     const altUnit = group.units[i];
                     const isAltActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === i) ? 'active-unit' : '';
@@ -4933,6 +4958,7 @@ document.addEventListener("DOMContentLoaded", function() {
             rows.forEach((row, pIndex) => {
                 const cells = row.querySelectorAll('.search-unit-cell');
                 if (pIndex === this.state.selectedSearchIndex) {
+                    row.classList.add('selected-row');
                     cells.forEach((cell, uIndex) => {
                         if (uIndex === this.state.selectedUnitIndex) {
                             cell.classList.add('active-unit');
@@ -4942,6 +4968,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                     });
                 } else {
+                    row.classList.remove('selected-row');
                     cells.forEach(cell => cell.classList.remove('active-unit'));
                 }
             });
