@@ -4746,7 +4746,7 @@ document.addEventListener('DOMContentLoaded', () => {
         /* 🌟 ปรับเส้นขอบกล่องใหญ่ให้อ่อนลง */
         border: 1px solid rgba(0, 0, 0, 0.08);
         border-radius: 12px; 
-        box-shadow: 0 12px 30px rgba(0,0,0,0.08); /* ปรับเงาให้นุ่มขึ้น */
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08); 
         
         display: flex; flex-direction: column;
         padding: 4px 0; 
@@ -4759,7 +4759,6 @@ document.addEventListener('DOMContentLoaded', () => {
         width: 100%;
         display: flex; flex-direction: row;
         background: transparent;
-        /* 🌟 เส้นคั่นระหว่างบรรทัดบางเบาที่สุด */
         border-bottom: 1px solid rgba(0, 0, 0, 0.03); 
         transition: background 0.2s ease;
     }
@@ -4784,7 +4783,7 @@ document.addEventListener('DOMContentLoaded', () => {
         border: 1px solid rgba(0, 0, 0, 0.06);
     }
 
-    /* 5. กล่องห่อหุ้มหน่วยเสริม (ลอยอยู่ด้านขวานอกกรอบ) */
+    /* 5. กล่องห่อหุ้มหน่วยเสริม (ลอยอยู่ด้านขวา) */
     .alt-units-wrapper {
         position: absolute;
         left: 100%; 
@@ -4792,31 +4791,42 @@ document.addEventListener('DOMContentLoaded', () => {
         transform: translateY(-50%); 
         display: none; 
         align-items: center;
-        gap: 6px;
-        padding-left: 8px; 
+        gap: 4px; /* ลดระยะห่างระหว่างปุ่มให้ดูเป็นก้อนเดียวกัน */
+        padding-left: 12px; /* เพิ่มพื้นที่สำหรับเส้นเชื่อม */
         z-index: 10;
+    }
+
+    /* 🌟 ลูกเล่นใหม่: เส้นเชื่อม (Connecting Line) 🌟 */
+    .alt-units-wrapper::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 12px;
+        height: 1px;
+        background-color: rgba(0, 0, 0, 0.1); /* เส้นเทาบางๆ */
+        z-index: -1;
     }
 
     .search-row.selected-row .alt-units-wrapper,
     .search-row:hover .alt-units-wrapper {
         display: flex;
-        animation: popRight 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+        animation: popRight 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     }
 
     @keyframes popRight {
-        0% { opacity: 0; transform: translate(-15px, -50%) scale(0.95); }
+        0% { opacity: 0; transform: translate(-10px, -50%) scale(0.95); }
         100% { opacity: 1; transform: translate(0, -50%) scale(1); }
     }
 
     /* 6. กล่องหน่วยเสริมแต่ละอัน (Pills) */
     .alt-cell {
         background: var(--white-color);
-        /* 🌟 ปรับกรอบกล่องเสริมให้จางลง (Hairline) */
         border: 1px solid rgba(0, 0, 0, 0.06);
         padding: 0.4rem 0.8rem;
         border-radius: 8px;
         display: flex; align-items: center; gap: 8px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* ปรับเงาให้นุ่มขึ้น */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.04); /* เงาบางเบา */
         cursor: pointer;
         white-space: nowrap;
         transition: all 0.2s ease;
@@ -4845,21 +4855,23 @@ document.addEventListener('DOMContentLoaded', () => {
     /* 🎨 สถานะ Active (Keyboard & Hover) */
     /* ================================= */
     
-    /* Hover ตอนชี้เมาส์ที่แถว */
-    .search-row:hover .main-cell, .search-row.selected-row .main-cell {
-        background: #f8f9fa; 
-        /* 🌟 กรอบตอน Hover เข้มขึ้นมาแค่นิดเดียว */
+    /* 🌟 เมื่อแถวถูกเลือก (Row Level) ให้รวบรวมเป็นกลุ่มเดียวกัน 🌟 */
+    .search-row:hover .main-cell, 
+    .search-row.selected-row .main-cell,
+    .search-row:hover .alt-cell,
+    .search-row.selected-row .alt-cell {
+        background: #f8f9fa; /* สีเทาอ่อนสุดๆ */
         border-color: rgba(0, 0, 0, 0.1);
     }
 
-    /* Hover ตอนชี้เมาส์ที่หน่วยเสริม */
+    /* Hover ตอนชี้เมาส์ที่หน่วยเสริมแต่ละอัน */
     .alt-cell:hover {
         border-color: rgba(0, 123, 255, 0.3); /* สีฟ้าอ่อนๆ */
-        background: #f0f7ff;
+        background: #f0f7ff !important;
         transform: translateY(-1px);
     }
 
-    /* 🌟 สถานะเมื่อถูกเลือก (Active) 🌟 */
+    /* 🌟 สถานะเมื่อถูกเลือกจริงๆ (Active Unit) 🌟 */
     .main-cell.active-unit,
     .alt-cell.active-unit {
         background: var(--primary-color) !important;
@@ -4879,7 +4891,6 @@ document.addEventListener('DOMContentLoaded', () => {
         color: var(--white-color) !important;
     }
 </style>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     setTimeout(function() {
