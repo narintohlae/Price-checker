@@ -4731,52 +4731,57 @@ document.addEventListener('DOMContentLoaded', () => {
     .search-column .card, #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
     .cart-column { position: relative !important; z-index: 1 !important; }
 
-    /* 🎨 2. กล่องผลลัพธ์หลัก (Dropdown Container) */
+    /* 🎨 2. กล่องผลลัพธ์หลัก (กว้างพอดีช่องค้นหาเป๊ะๆ) */
     #search-results.has-results {
         position: absolute;
         top: 0; left: 0;
         width: 100%; 
         max-height: calc(100vh - 180px);
         z-index: 950 !important;
-        background: rgba(255, 255, 255, 0.98); 
+        
+        background: rgba(255, 255, 255, 0.95); 
         backdrop-filter: blur(12px); 
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid var(--border-color);
         border-radius: 12px; 
-        box-shadow: 0 8px 24px rgba(0,0,0,0.12); 
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12); 
+        
         display: flex; flex-direction: column;
-        padding: 6px 0; 
-        overflow-y: auto;
-        overflow-x: visible; 
+        padding: 4px 0; 
+        overflow: visible; 
     }
 
-    /* 3. แถวสินค้า (Row) */
+    /* 3. แถวสินค้า (Row) - 🌟 เพิ่มเส้นแบ่งบรรทัดที่ดูบางเบา */
     .search-row {
         position: relative; 
         width: 100%;
         display: flex; flex-direction: row;
         background: transparent;
-        border-bottom: 1px solid var(--border-color);
-        transition: background-color 0.2s ease;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* เส้นคั่นมินิมอล */
+        transition: background 0.2s ease;
     }
-    .search-row:last-child { border-bottom: none; }
+    .search-row:last-child {
+        border-bottom: none; /* บรรทัดสุดท้ายไม่ต้องมีเส้น */
+    }
     
-    /* 4. กล่องหลัก (หน่วยแรก) */
+    /* 4. กล่องหลัก (หน่วยแรก) - 🌟 ปรับให้มีพื้นหลังขาวเหมือนหน่วยเสริม */
     .main-cell {
         width: 100%;
-        padding: 0.75rem 1rem;
+        padding: 0.7rem 1rem; 
         cursor: pointer;
         display: flex; align-items: center; justify-content: space-between;
         gap: 12px;
         box-sizing: border-box;
         border-radius: 8px;
-        margin: 2px 6px;
-        background: transparent; /* โปร่งใสเพื่อให้กลืนกับ Row */
-        border: 1px solid transparent;
-        transition: all 0.2s ease;
+        margin: 2px 4px; 
+        transition: background-color 0.15s;
+        
+        /* เพิ่มให้เหมือน alt-cell */
+        background: var(--white-color);
+        border: 1px solid var(--border-color);
     }
 
-    /* 🌟 5. กล่องห่อหุ้มหน่วยเสริม (Pop-out ขวามือ) */
+    /* 🌟 5. กล่องห่อหุ้มหน่วยเสริม (ลอยอยู่ด้านขวานอกกรอบ) */
     .alt-units-wrapper {
         position: absolute;
         left: 100%; 
@@ -4786,17 +4791,18 @@ document.addEventListener('DOMContentLoaded', () => {
         align-items: center;
         gap: 6px;
         padding-left: 8px; 
-        z-index: 1000;
+        z-index: 10;
     }
 
+    /* 🌟 โชว์หน่วยเสริม เฉพาะตอนแถวนี้ถูกเลือก หรือ Hover */
     .search-row.selected-row .alt-units-wrapper,
     .search-row:hover .alt-units-wrapper {
         display: flex;
-        animation: popRight 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+        animation: popRight 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
     }
 
     @keyframes popRight {
-        0% { opacity: 0; transform: translate(-10px, -50%) scale(0.98); }
+        0% { opacity: 0; transform: translate(-15px, -50%) scale(0.95); }
         100% { opacity: 1; transform: translate(0, -50%) scale(1); }
     }
 
@@ -4804,25 +4810,25 @@ document.addEventListener('DOMContentLoaded', () => {
     .alt-cell {
         background: var(--white-color);
         border: 1px solid var(--border-color);
-        padding: 0.45rem 0.8rem;
+        padding: 0.4rem 0.8rem;
         border-radius: 8px;
         display: flex; align-items: center; gap: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         cursor: pointer;
         white-space: nowrap;
         transition: all 0.2s ease;
     }
 
-    /* 7. Typography (ตัวหนังสือคลีนๆ อ่านง่าย) */
+    /* 7. Typography - 🌟 ปรับเป็นตัวบาง (Normal) ทั้งหมดเพื่อให้คลีนสุดๆ */
     .product-name-single { 
-        font-weight: 500;
+        font-weight: 400; 
         color: var(--dark-text);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         flex-grow: 1; font-size: 0.95em;
     }
-    .price-unit-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .price-unit-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .cell-price { 
-        font-weight: 600;
+        font-weight: 400; 
         color: var(--success-color); 
         font-size: 1em; 
     }
@@ -4833,35 +4839,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ================================= */
-    /* 🎨 สถานะ Focus & Active (แบบมืออาชีพ) */
+    /* 🎨 สถานะ Active (Keyboard & Hover) */
     /* ================================= */
     
-    /* Hover Row (เอาเมาส์วางที่แถว หรือใช้คีย์บอร์ดเลื่อนมา) */
-    .search-row:hover, .search-row.selected-row {
-        background-color: #f8f9fa; /* สีเทาอ่อนมากๆ ดูสะอาดตา */
-    }
-
+    /* Hover ตอนชี้เมาส์ที่แถว ให้พื้นหลังกล่องหลักเป็นสีเทาอ่อนๆ สบายตา */
     .search-row:hover .main-cell, .search-row.selected-row .main-cell {
-        border-color: #e2e8f0; /* สร้างกรอบบางๆ ให้กล่องหลักดูมีมิติขึ้น */
+        background: #f8f9fa; 
+        border-color: #e2e8f0;
     }
 
-    /* Hover Alt Cell (เอาเมาส์ชี้หน่วยเสริม) */
+    /* Hover ตอนชี้เมาส์ที่หน่วยเสริม */
     .alt-cell:hover {
         border-color: var(--primary-color);
-        background-color: #f0f7ff;
+        background: #f0f7ff;
+        transform: translateY(-1px);
     }
 
-    /* 🌟 ACTIVE UNIT (ชิ้นที่กำลังจะถูกเลือกเข้าตะกร้าเป๊ะๆ) 🌟 */
-    .search-unit-cell.active-unit {
+    /* 🌟 สถานะเมื่อถูกเลือก (Active) 🌟 
+       บังคับใช้ร่วมกันทั้งกล่องหลัก (.main-cell) และกล่องเสริม (.alt-cell) */
+    .main-cell.active-unit,
+    .alt-cell.active-unit {
         background: var(--primary-color) !important;
         border-color: var(--primary-color) !important;
-        box-shadow: 0 4px 12px rgba(0, 92, 191, 0.25) !important;
+        box-shadow: 0 6px 16px rgba(0, 92, 191, 0.3) !important;
     }
 
-    /* บังคับให้ตัวอักษรทุกตัวในกล่องที่ Active เป็นสีขาว 100% */
-    .search-unit-cell.active-unit .product-name-single,
-    .search-unit-cell.active-unit .cell-price,
-    .search-unit-cell.active-unit .sub-text {
+    /* ขยายขนาดนิดหน่อยเฉพาะกล่องเสริมตอน active ให้ดูมีมิติเด้งออกมา */
+    .alt-cell.active-unit {
+        transform: scale(1.05); 
+    }
+
+    /* บังคับเปลี่ยนสีตัวอักษรทุกตัวในกล่องที่ Active เป็นสีขาวล้วน 100% */
+    .main-cell.active-unit .product-name-single, 
+    .main-cell.active-unit .sub-text, 
+    .main-cell.active-unit .cell-price,
+    .alt-cell.active-unit .sub-text, 
+    .alt-cell.active-unit .cell-price {
         color: var(--white-color) !important;
     }
 </style>
