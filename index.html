@@ -1218,226 +1218,170 @@ input[type="radio"].radio, .radio{ width:16px; height:16px; border:var(--border)
     .summary-item:nth-child(3)::before { background: linear-gradient(90deg, var(--success-color), #00e676); }
     .summary-item:nth-child(4)::before { background: linear-gradient(90deg, #00aaff, #0055ff); }
 
-<style id="spatial-2026-ui-pack">
+<style id="modern-enterprise-ui-pack">
     /* =========================================
-       🚀 1. โครงสร้างหลัก (Z-Index ทะลุมิติ)
+       1. โครงสร้างหลัก 
        ========================================= */
     .search-column { position: relative !important; z-index: 900 !important; }
     .search-column .card, #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
     .cart-column { position: relative !important; z-index: 1 !important; }
 
     /* =========================================
-       🌌 2. ปุ่ม & Input (Holographic Glass)
-       ========================================= */
-    button {
-        border-radius: 14px !important;
-        font-weight: 600 !important;
-        background: rgba(255, 255, 255, 0.7) !important;
-        backdrop-filter: blur(10px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.8) !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.8) !important;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important; /* Spring effect */
-        color: #1e293b !important;
-    }
-    button:hover:not(:disabled) {
-        transform: translateY(-2px) scale(1.02) !important;
-        box-shadow: 0 10px 25px rgba(0, 92, 191, 0.15), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
-        border-color: rgba(0, 123, 255, 0.4) !important;
-    }
-    button:active:not(:disabled) { transform: scale(0.95) !important; }
-    
-    /* ปุ่มชำระเงิน (Neon Cyber Glow) */
-    button.finish-sale { 
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important; 
-        color: white !important; 
-        border: 1px solid #34d399 !important;
-        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.4) !important;
-    }
-    button.finish-sale:hover:not(:disabled) { box-shadow: 0 12px 30px rgba(16, 185, 129, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important; }
-    
-    button.clear-cart { 
-        background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%) !important; 
-        color: white !important; 
-        border: 1px solid #fb7185 !important;
-        box-shadow: 0 8px 20px rgba(244, 63, 94, 0.3) !important;
-    }
-
-    input, select {
-        border-radius: 14px !important;
-        background: rgba(255, 255, 255, 0.6) !important;
-        backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.5) !important;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.02), 0 2px 10px rgba(0,0,0,0.02) !important;
-        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
-        color: #0f172a !important;
-    }
-    input:focus, select:focus {
-        background: #ffffff !important;
-        border-color: #8b5cf6 !important;
-        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2), inset 0 1px 2px rgba(0,0,0,0.01) !important;
-        transform: translateY(-1px);
-    }
-
-    /* =========================================
-       🔮 3. หน้าต่าง Modals (3D Spatial Effect)
-       ========================================= */
-    .modal-overlay {
-        background: radial-gradient(circle at center, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-    }
-    .modal-content {
-        border-radius: 28px !important;
-        background: rgba(255, 255, 255, 0.85) !important;
-        backdrop-filter: blur(25px) !important;
-        -webkit-backdrop-filter: blur(25px) !important;
-        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
-        border: 1px solid rgba(255, 255, 255, 0.6) !important;
-        animation: spatialPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
-    }
-    @keyframes spatialPopIn {
-        from { opacity: 0; transform: perspective(1000px) translateZ(-100px) rotateX(5deg) scale(0.9); }
-        to { opacity: 1; transform: perspective(1000px) translateZ(0) rotateX(0) scale(1); }
-    }
-    .modal-header, .modal-footer { background: transparent !important; border-color: rgba(0, 0, 0, 0.05) !important; }
-
-    /* =========================================
-       🛸 4. ผลลัพธ์การค้นหา (Floating Islands Horizontal Accordion)
+       2. ผลลัพธ์การค้นหา (Cohesive Row)
        ========================================= */
     #search-results.has-results {
         position: absolute; top: 0; left: 0; width: 100%; 
         box-sizing: content-box !important; padding-right: 400px !important; margin-right: -400px !important; 
         max-height: calc(100vh - 180px); overflow-y: auto; overflow-x: hidden; 
         pointer-events: none; z-index: 950 !important; scrollbar-width: none; background: transparent; border: none;
-        display: flex; flex-direction: column; gap: 8px; /* เว้นระยะให้ลอยเป็นเกาะ */
-        filter: drop-shadow(0 15px 35px rgba(0,0,0,0.1)); 
-        padding-top: 12px; padding-left: 4px; /* เผื่อที่ให้กล่องเด้ง */
+        display: flex; flex-direction: column; gap: 6px; /* เว้นระยะห่างแต่ละแถว */
+        filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.06)); 
+        padding-top: 8px; padding-left: 2px;
     }
     #search-results.has-results::-webkit-scrollbar { display: none; }
 
-    /* แต่ละแถวเป็นแคปซูลแยกกัน (Floating Pills) */
+    /* แถวสินค้า (รวมเป็นก้อนเดียวกัน) */
     .search-row {
-        position: relative; width: max-content; min-width: calc(100% - 8px);
-        display: inline-flex; flex-direction: row; align-items: center;
-        background: rgba(255, 255, 255, 0.55); 
-        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        border-radius: 20px; /* มนกลิ๊ก */
-        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 1);
-        transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        position: relative; width: max-content; min-width: calc(100% - 4px);
+        display: inline-flex; flex-direction: row; align-items: stretch;
+        background: #ffffff; 
+        border: 1px solid #e2e8f0;
+        border-radius: 10px; /* โค้งมนกำลังดี */
+        transition: all 0.2s ease;
         pointer-events: auto; 
-        padding: 4px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        overflow: hidden; /* ให้ขอบมนตัดเนื้อหาข้างในพอดี */
     }
-    .search-row:first-child, .search-row:last-child { border-radius: 20px; border-bottom: 1px solid rgba(255,255,255,0.8); padding-bottom: 4px; padding-top: 4px;}
     
     .search-row:hover, .search-row.selected-row { 
-        background: rgba(255, 255, 255, 0.85); 
-        transform: translateY(-2px) scale(1.01);
+        border-color: #cbd5e1;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         z-index: 10;
-        box-shadow: 0 12px 24px rgba(0,0,0,0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
     }
 
+    /* กล่องข้อมูลหลัก */
     .main-cell {
-        flex-shrink: 0; width: auto; min-width: 260px;
-        padding: 0.7rem 1.2rem; cursor: pointer;
+        flex-shrink: 0; width: auto; min-width: 280px;
+        padding: 0.75rem 1.2rem; cursor: pointer;
         display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        box-sizing: border-box; border-radius: 16px;
-        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-        background: rgba(255, 255, 255, 0.9); border: 1px solid transparent;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        transition: background-color 0.15s ease;
+        background: transparent;
     }
 
-    /* ป้ายบอกจำนวน (Neon Animated Gradient) */
-    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-    
+    /* ป้ายบอกจำนวน (Minimal Pill) */
     .expand-indicator {
-        font-size: 0.75em; font-weight: 700;
-        background: linear-gradient(270deg, #8b5cf6, #3b82f6, #ec4899);
-        background-size: 200% 200%;
-        animation: gradientShift 3s ease infinite;
-        color: white;
-        padding: 4px 10px; border-radius: 12px;
-        display: inline-flex; align-items: center; gap: 4px; margin-left: 8px;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); white-space: nowrap; overflow: hidden;
-        box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+        font-size: 0.75em; font-weight: 600;
+        color: #64748b; background: #f1f5f9; 
+        padding: 2px 8px; border-radius: 999px;
+        display: inline-flex; align-items: center; gap: 4px; margin-left: auto;
+        transition: all 0.2s ease; white-space: nowrap; overflow: hidden;
+        border: 1px solid #e2e8f0;
     }
     .search-row:hover .expand-indicator, .search-row.selected-row .expand-indicator {
-        max-width: 0; opacity: 0; padding: 0; margin: 0; box-shadow: none; transform: scale(0.5);
+        max-width: 0; opacity: 0; padding: 0; margin: 0; border-width: 0;
     }
 
-    /* Accordion (Liquid Reveal) */
+    /* Accordion (ส่วนขยายที่ซ่อนอยู่) */
     .alt-units-wrapper {
-        display: flex; align-items: center; gap: 6px; 
+        display: flex; align-items: stretch; 
         max-width: 0; opacity: 0; overflow: hidden; 
-        padding: 0; margin-left: -20px; white-space: nowrap;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        background: rgba(255, 255, 255, 0.4); border-radius: 16px;
+        transition: max-width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
+        background: #f8fafc; /* สีพื้นหลังต่างจากกล่องหลักเล็กน้อย */
+        border-left: 1px solid transparent;
     }
     .search-row.selected-row .alt-units-wrapper, .search-row:hover .alt-units-wrapper {
-        max-width: 800px; opacity: 1; padding: 4px 6px; margin-left: 4px;
-        background: rgba(255, 255, 255, 0.7);
+        max-width: 800px; opacity: 1; 
+        border-left-color: #e2e8f0; /* แสดงเส้นคั่นเมื่อกางออก */
     }
 
+    /* กล่องหน่วยเสริมแต่ละอัน */
     .alt-cell {
-        background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(255,255,255,0.6);
-        padding: 0.5rem 1rem; border-radius: 14px; 
+        padding: 0.75rem 1rem; 
         display: flex; align-items: center; gap: 8px;
         cursor: pointer; white-space: nowrap;
-        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        transition: background-color 0.15s ease;
+        border-right: 1px solid #e2e8f0;
     }
+    .alt-cell:last-child { border-right: none; } /* ลบเส้นคั่นอันสุดท้าย */
 
-    .product-name-single { font-weight: 700; color: #0f172a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-grow: 1; font-size: 1em; letter-spacing: -0.2px; }
-    .price-unit-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .cell-price { font-weight: 800; color: #10b981; font-size: 1.1em; }
+    /* Typography */
+    .product-name-single { font-weight: 600; color: #1e293b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.95em; letter-spacing: -0.1px; }
+    .price-unit-group { display: flex; align-items: baseline; gap: 4px; flex-shrink: 0; }
+    .cell-price { font-weight: 700; color: #0f172a; font-size: 1.05em; } /* ใช้สีเข้มแทนสีเขียว ให้ดูภูมิฐาน */
     .sub-text { font-weight: 500; font-size: 0.85em; color: #64748b; }
 
-    /* สถานะ Active (Aurora Glow) */
-    .alt-cell:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 15px rgba(0, 123, 255, 0.15); border-color: #93c5fd; }
-
-    .main-cell.active-unit, .alt-cell.active-unit {
-        background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%) !important;
-        border: 1px solid #8b5cf6 !important;
-        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4), inset 0 1px 1px rgba(255,255,255,0.4) !important;
-        transform: translateY(-2px) scale(1.03) !important; 
-    }
-    .main-cell.active-unit .product-name-single, .main-cell.active-unit .sub-text, 
-    .main-cell.active-unit .cell-price, .alt-cell.active-unit .sub-text, .alt-cell.active-unit .cell-price {
-        color: #ffffff !important; text-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
-    }
-    
     /* =========================================
-       🔥 5. ของแถม: แท็บบิล & ตะกร้าให้เข้าชุด
+       3. สถานะ Hover & Active (เนียนๆ ไม่กระโดด)
        ========================================= */
-    #cart-tabs { padding: 4px; }
-    .tab-button {
-        background: rgba(255,255,255,0.5) !important; backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.7) !important;
-        border-radius: 14px !important; color: #475569;
-        font-weight: 600; padding: 0.6rem 1.2rem;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    .main-cell:hover { background: #f8fafc; }
+    .alt-cell:hover { background: #f1f5f9; }
+
+    /* สีเมื่อถูกเลือก (Focus/Active) - ใช้สี Primary อ่อนๆ */
+    .main-cell.active-unit, .alt-cell.active-unit {
+        background: #eff6ff !important; /* ฟ้าอ่อนมาก */
+        box-shadow: inset 0 0 0 1px var(--primary-color) !important; /* ใช้เส้นขอบด้านในแทนการเปลี่ยนสีพื้นหลังทึบ */
     }
-    .tab-button:hover { background: rgba(255,255,255,0.9) !important; transform: translateY(-2px) !important; box-shadow: 0 8px 15px rgba(0,0,0,0.05) !important; }
-    .tab-button.active {
-        color: #ffffff !important;
-        background: linear-gradient(135deg, #0f172a 0%, #334155 100%) !important; /* ดำหรูหรา */
-        border-color: #475569 !important;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.3), inset 0 1px 1px rgba(255,255,255,0.2) !important;
-        transform: translateY(-2px) scale(1.02) !important;
+    .main-cell.active-unit .product-name-single, 
+    .main-cell.active-unit .cell-price,
+    .alt-cell.active-unit .cell-price {
+        color: var(--primary-color) !important;
     }
+    .main-cell.active-unit .sub-text, .alt-cell.active-unit .sub-text {
+        color: #3b82f6 !important;
+    }
+
+    /* =========================================
+       4. ปรับ UI ทั่วไปให้เข้าชุด (Clean Edge)
+       ========================================= */
+    button {
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+        border: 1px solid rgba(0,0,0,0.05) !important;
+        transition: all 0.15s ease !important;
+    }
+    button:hover:not(:disabled) { transform: translateY(-1px) !important; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08) !important; }
+    button:active:not(:disabled) { transform: translateY(0) !important; }
     
-    .summary-item {
-        background: rgba(255,255,255,0.7) !important; backdrop-filter: blur(16px);
-        border: 1px solid rgba(255,255,255,0.8) !important;
-        border-radius: 20px !important;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.03) !important;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    input, select {
+        border-radius: 8px !important;
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
     }
-    .summary-item:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 35px rgba(0,0,0,0.08) !important; }
-    .summary-item::before { display: none !important; }
-</style>
+    input:focus, select:focus {
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+    }
+
+    /* แท็บบิล */
+    #cart-tabs { gap: 6px; }
+    .tab-button {
+        background: #ffffff !important; border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important; color: #475569; font-weight: 500;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
+    }
+    .tab-button:hover { background: #f8fafc !important; border-color: #cbd5e1 !important; }
+    .tab-button.active {
+        background: var(--primary-color) !important; color: #ffffff !important;
+        border-color: var(--primary-color) !important; font-weight: 600;
+    }
+
+    /* ตะกร้าและหน้าต่าง Modal */
+    #cart-items li {
+        border-radius: 8px !important; border: 1px solid #e2e8f0 !important;
+        margin-bottom: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.01) !important;
+    }
+    .modal-overlay { background-color: rgba(15, 23, 42, 0.5) !important; backdrop-filter: none !important; }
+    .modal-content {
+        border-radius: 12px !important; border: 1px solid #e2e8f0 !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+        animation: modalFadeUp 0.2s ease-out forwards !important;
+    }
+    @keyframes modalFadeUp {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 </style>
 <style>
 /* === Cart-aligned utility bar: app-sidebar + auth-status (Oct 18, 2025) === */
