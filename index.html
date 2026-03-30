@@ -1218,183 +1218,195 @@ input[type="radio"].radio, .radio{ width:16px; height:16px; border:var(--border)
     .summary-item:nth-child(3)::before { background: linear-gradient(90deg, var(--success-color), #00e676); }
     .summary-item:nth-child(4)::before { background: linear-gradient(90deg, #00aaff, #0055ff); }
 
-<style id="ultra-practical-ui-pack">
+<style id="hyper-practical-production-ui">
     /* =========================================
-       🛠️ 1. โครงสร้างหลักและ Z-Index
+       🛑 1. RESET: ปิดความสวยงามที่ไม่จำเป็นทั้งหมด
        ========================================= */
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /* โครงสร้างหลัก */
     .search-column { position: relative !important; z-index: 900 !important; }
     .search-column .card, #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
     .cart-column { position: relative !important; z-index: 1 !important; }
 
     /* =========================================
-       ⚡ 2. ผลลัพธ์การค้นหา (Instant Snap Accordion)
+       ⚡ 2. ผลลัพธ์การค้นหา (Strict Data Grid)
        ========================================= */
     #search-results.has-results {
         position: absolute; top: 0; left: 0; width: 100%; 
         box-sizing: content-box !important; padding-right: 400px !important; margin-right: -400px !important; 
-        max-height: calc(100vh - 180px); overflow-y: auto; overflow-x: hidden; 
-        pointer-events: none; z-index: 950 !important; 
+        max-height: calc(100vh - 150px); overflow-y: auto; overflow-x: hidden; 
+        pointer-events: none; z-index: 950 !important; scrollbar-width: auto; /* เปิด Scrollbar ให้เห็นชัดๆ */
         
-        background: transparent; border: none;
+        background: #ffffff; 
+        border: 2px solid #000000; /* กรอบดำหนาบอกขอบเขตชัดเจน */
         display: flex; flex-direction: column;
-        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15)); 
-        padding-top: 2px;
+        box-shadow: 5px 5px 0px rgba(0,0,0,0.2); /* เงาแบบ Solid เน้นมิติชัดๆ */
     }
 
-    /* แถวสินค้า: เน้นตารางม้าลายสลับสีให้อ่านง่าย */
+    /* แถวสินค้า (ตารางดิบๆ) */
     .search-row {
         position: relative; width: max-content; min-width: 100%;
         display: inline-flex; flex-direction: row; align-items: stretch;
         
         background: #ffffff; 
-        border: 1px solid #ced4da;
-        border-bottom: none; /* กันขอบซ้อนทับกัน */
+        border-bottom: 1px solid #cccccc; /* เส้นคั่นบางๆ */
         pointer-events: auto; 
-        transition: none !important; /* ปิด Transition ทิ้งทั้งหมด ทันใจ 100% */
     }
-    .search-row:nth-child(even) {
-        background: #f8f9fa; /* ลายม้าลาย */
-    }
-    .search-row:first-child { border-top-left-radius: 4px; border-top-right-radius: 4px; }
-    .search-row:last-child { border-bottom: 1px solid #ced4da; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+    /* ตารางม้าลายแบบจางๆ */
+    .search-row:nth-child(even) { background: #f4f4f4; }
     
-    /* 🎯 การระบุแถวที่กำลังถูกเลือก (High Contrast Focus) */
+    /* 🎯 โฟกัส (High Contrast: น้ำเงิน-ขาว-เหลือง) */
     .search-row:hover, .search-row.selected-row { 
-        background: #e6f2ff; /* ฟ้าอ่อนมาก ให้รู้ว่า Hover */
+        background: #0052cc !important; /* น้ำเงินเข้ม */
+        color: #ffffff !important;
         z-index: 10;
-        outline: 2px solid var(--primary-color); /* ตีเส้นขอบทับให้เด่นชัด */
-        outline-offset: -1px;
+        outline: 2px solid #000000; /* ตีเส้นขอบทับเวลาเลือก */
+        outline-offset: -2px;
     }
 
     /* เซลล์หลัก */
     .main-cell {
-        flex-shrink: 0; width: auto; min-width: 300px;
-        padding: 6px 12px; /* กระชับพื้นที่ */
+        flex-shrink: 0; width: auto; min-width: 320px;
+        padding: 4px 8px; /* บีบ Padding ให้แคบสุดๆ เน้นข้อมูล */
         cursor: pointer;
-        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
 
-    /* ป้ายบอกจำนวน: ทำเป็นแค่ Text ธรรมดา สี่เหลี่ยมๆ */
+    /* ป้ายบอกจำนวน (Text ธรรมดา) */
     .expand-indicator {
-        font-family: monospace; font-size: 0.85em; font-weight: bold;
-        color: #495057; background: #e9ecef; 
-        padding: 2px 6px; border: 1px solid #ced4da; border-radius: 2px;
+        font-family: ui-monospace, Consolas, "Courier New", monospace; font-size: 0.85em; font-weight: bold;
+        color: #000000; background: #e0e0e0; 
+        padding: 0 4px; border: 1px solid #999999;
         display: inline-flex; align-items: center; margin-left: auto;
     }
+    /* ซ่อนป้ายทันทีเมื่อเลือก */
     .search-row:hover .expand-indicator, .search-row.selected-row .expand-indicator {
-        display: none; /* หายวับทันที ไม่ต้องมีเฟด */
+        display: none; 
     }
 
-    /* Accordion: เปลี่ยนจากการยืดหด เป็น โผล่ขึ้นมาทันที (Instant Display) */
+    /* Accordion (โผล่พรวดทันที เป็นคอลัมน์ตารางต่อกัน) */
     .alt-units-wrapper {
-        display: none; /* ซ่อนแบบสนิท */
+        display: none; /* ซ่อนสนิท */
         align-items: stretch; 
-        background: #ffffff;
-        border-left: 2px solid var(--primary-color); /* เส้นคั่นว่านี่คือส่วนที่ขยายออกมา */
+        background: #e6f0ff; /* สีพื้นหลังเวลาไม่ Active */
+        border-left: 2px solid #000000; /* เส้นแบ่งหลัก/รอง */
     }
     .search-row.selected-row .alt-units-wrapper, .search-row:hover .alt-units-wrapper {
-        display: flex; /* โผล่ทันที ไม่กระตุก */
+        display: flex; /* โผล่ 0ms */
     }
 
     /* เซลล์หน่วยเสริม */
     .alt-cell {
-        padding: 6px 12px; 
+        padding: 4px 8px; 
         display: flex; align-items: center; gap: 8px;
         cursor: pointer; white-space: nowrap;
-        border-right: 1px solid #ced4da;
+        border-right: 1px solid #999999;
     }
     .alt-cell:last-child { border-right: none; }
 
-    /* Typography แบบเน้น Data */
-    .product-name-single { font-weight: 600; color: #212529; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.95em; }
+    /* =========================================
+       🔤 3. Typography (เน้นตัวเลข)
+       ========================================= */
+    .product-name-single { font-weight: bold; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .price-unit-group { display: flex; align-items: baseline; gap: 4px; flex-shrink: 0; }
-    .cell-price { font-weight: bold; color: #d32f2f; font-size: 1.1em; } /* สีแดงให้อ่านราคาง่าย */
-    .sub-text { font-weight: normal; font-size: 0.85em; color: #6c757d; }
-
-    /* =========================================
-       🔲 3. สถานะ Active (หน่วยที่ถูกเลือกจริงๆ)
-       ========================================= */
-    .main-cell.active-unit, .alt-cell.active-unit {
-        background: var(--primary-color) !important;
-        color: #ffffff !important;
-    }
-    .main-cell.active-unit .product-name-single, 
-    .main-cell.active-unit .cell-price,
-    .main-cell.active-unit .sub-text,
-    .alt-cell.active-unit .cell-price,
-    .alt-cell.active-unit .sub-text {
-        color: #ffffff !important;
-    }
-
-    /* =========================================
-       ⚙️ 4. UI องค์รวม (ลดความล้น, กลับสู่พื้นฐาน)
-       ========================================= */
-    /* การ์ดและตาราง */
-    .card {
-        border-radius: 4px !important;
-        border: 1px solid #ced4da !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
-    }
-
-    /* ตะกร้าสินค้า */
-    #cart-items li {
-        border-radius: 0 !important; 
-        border: none !important;
-        border-bottom: 1px solid #dee2e6 !important;
-        margin-bottom: 0 !important;
-        padding: 4px 8px !important;
-        transition: none !important; /* ปิดแอนิเมชัน */
-    }
-    #cart-items li:nth-child(even) { background-color: #f8f9fa !important; }
-    #cart-items li:hover { background-color: #e2eef9 !important; }
-    #cart-items .item-input { border: 1px solid #ced4da !important; border-radius: 2px !important; }
-
-    /* แท็บบิล */
-    #cart-tabs { gap: 2px; padding-bottom: 0; border-bottom: 1px solid #dee2e6; }
-    .tab-button {
-        background: #e9ecef !important; border: 1px solid #dee2e6 !important;
-        border-bottom: none !important; border-radius: 4px 4px 0 0 !important;
-        color: #495057; font-weight: bold; padding: 6px 12px;
-        transition: none !important;
-    }
-    .tab-button.active {
-        background: #ffffff !important; color: var(--primary-color) !important;
-        border-top: 3px solid var(--primary-color) !important;
-        margin-bottom: -1px; padding-bottom: 7px;
-    }
-
-    /* ปุ่มและ Input ทั่วไป */
-    button {
-        border-radius: 4px !important;
-        font-weight: bold !important;
-        box-shadow: none !important;
-        border: 1px solid rgba(0,0,0,0.1) !important;
-        transition: none !important;
-    }
-    button:hover:not(:disabled) { filter: brightness(0.9); }
-    button:active:not(:disabled) { transform: scale(0.98) !important; }
     
-    button.finish-sale { background: #28a745 !important; color: white !important; }
-    button.clear-cart { background: #dc3545 !important; color: white !important; }
+    /* ตัวเลขใช้ Monospace ทั้งหมด */
+    .cell-price { 
+        font-family: ui-monospace, Consolas, "Courier New", monospace; 
+        font-weight: bold; font-size: 16px; color: #d32f2f; /* แดงเข้ม */
+    } 
+    .sub-text { font-size: 12px; color: #666666; }
 
+    /* สีเมื่อถูกเลือก (Override) */
+    .search-row.selected-row .main-cell, .search-row.selected-row .alt-cell {
+        background: transparent !important; /* ให้ใช้สีของ .search-row แทน */
+    }
+    .search-row.selected-row .product-name-single { color: #ffffff !important; }
+    .search-row.selected-row .cell-price { color: #ffeb3b !important; /* สีเหลืองสว่างตัดกับพื้นน้ำเงิน */ }
+    .search-row.selected-row .sub-text { color: #cccccc !important; }
+
+    /* Active เฉพาะหน่วยที่ลูกศรชี้อยู่ */
+    .main-cell.active-unit, .alt-cell.active-unit {
+        background: #000000 !important; /* ดำสนิท */
+    }
+    .main-cell.active-unit .product-name-single { color: #ffffff !important; }
+    .main-cell.active-unit .cell-price, .alt-cell.active-unit .cell-price { color: #00ff00 !important; /* เขียวสะท้อนแสง */ }
+
+    /* =========================================
+       ⚙️ 4. UI องค์รวม (เหลี่ยม, ดิบ, ชัดเจน)
+       ========================================= */
+    .card {
+        border-radius: 0 !important;
+        border: 1px solid #000000 !important;
+        box-shadow: none !important;
+    }
+
+    /* ตะกร้าสินค้า (Data Table 100%) */
+    #cart-items li {
+        border-radius: 0 !important; border: none !important;
+        border-bottom: 1px solid #cccccc !important;
+        padding: 2px 4px !important; /* แคบสุดๆ */
+        font-size: 14px !important;
+    }
+    #cart-items li:nth-child(even) { background-color: #f9f9f9 !important; }
+    #cart-items li:hover { background-color: #e6f0ff !important; outline: 1px solid #0052cc; }
+    
+    /* Input ในตะกร้าและระบบ */
     input, select {
-        border-radius: 4px !important;
-        border: 1px solid #ced4da !important;
+        border-radius: 0 !important;
+        border: 1px solid #999999 !important;
+        padding: 4px 6px !important;
         background: #ffffff !important;
+        font-family: ui-monospace, Consolas, "Courier New", monospace !important; /* บังคับตัวเลขช่องกรอกเป็น Monospace */
     }
     input:focus, select:focus {
-        border-color: var(--primary-color) !important;
-        box-shadow: 0 0 0 2px rgba(0, 92, 191, 0.25) !important; /* วงแหวนโฟกัสมาตรฐาน */
-        outline: none;
+        border: 2px solid #0052cc !important; /* กรอบหนาเวลาพิมพ์ */
+        outline: none !important;
+        background: #ffffcc !important; /* พื้นหลังเหลืองอ่อนเวลากำลังพิมพ์ */
+    }
+    
+    .item-input { height: 24px !important; font-size: 14px !important; } /* ลดขนาดช่องกรอกในตะกร้า */
+
+    /* ปุ่มกด */
+    button {
+        border-radius: 0 !important; /* ทิ้งความโค้งมน */
+        font-weight: bold !important; text-transform: uppercase;
+        border: 1px solid #000000 !important;
+        box-shadow: 2px 2px 0px #000000 !important; /* ปุ่มแบบ Brutalism กดแล้วยุบ */
+    }
+    button:active:not(:disabled) {
+        transform: translate(2px, 2px) !important;
+        box-shadow: 0px 0px 0px #000000 !important;
+    }
+    
+    button.finish-sale { background: #107c41 !important; color: white !important; } /* สีเขียว Excel */
+    button.clear-cart { background: #d32f2f !important; color: white !important; }
+
+    /* แท็บบิล */
+    #cart-tabs { gap: 0; padding-bottom: 0; border-bottom: 2px solid #000000; }
+    .tab-button {
+        background: #e0e0e0 !important; border: 1px solid #000000 !important;
+        border-bottom: none !important; border-radius: 0 !important;
+        color: #000000; font-weight: bold; padding: 4px 12px;
+        box-shadow: none !important;
+    }
+    .tab-button.active {
+        background: #ffffff !important; color: #0052cc !important;
+        border-top: 4px solid #0052cc !important;
+        margin-bottom: -2px; padding-bottom: 6px;
     }
 
-    /* หน้าต่าง Modals (เบา สว่าง เร็ว) */
-    .modal-overlay { background-color: rgba(0, 0, 0, 0.5) !important; backdrop-filter: none !important; }
+    /* Modals */
+    .modal-overlay { background-color: rgba(0, 0, 0, 0.7) !important; backdrop-filter: none !important; }
     .modal-content {
-        border-radius: 6px !important; border: 1px solid #adb5bd !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-        animation: none !important; /* เปิดปุ๊บมาปั๊บ */
+        border-radius: 0 !important; border: 2px solid #000000 !important;
+        box-shadow: 8px 8px 0px rgba(0,0,0,0.5) !important;
     }
+    .modal-header, .modal-footer { background: #f4f4f4 !important; border-color: #000000 !important; }
 </style>
 <style>
 /* === Cart-aligned utility bar: app-sidebar + auth-status (Oct 18, 2025) === */
