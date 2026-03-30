@@ -1217,194 +1217,218 @@ input[type="radio"].radio, .radio{ width:16px; height:16px; border:var(--border)
     .summary-item:nth-child(2)::before { background: linear-gradient(90deg, var(--warning-color), #ff9800); }
     .summary-item:nth-child(3)::before { background: linear-gradient(90deg, var(--success-color), #00e676); }
     .summary-item:nth-child(4)::before { background: linear-gradient(90deg, #00aaff, #0055ff); }
-<style id="premium-ui-pack-full-system">
+
+<style id="minimal-modern-ui-pack">
     /* =========================================
-       ✨ 1. หน้าต่าง Modals (Glassmorphism & Spring)
+       1. โครงสร้างหลัก (ทลาย Z-Index)
        ========================================= */
-    .modal-overlay {
-        /* ฉากหลังเบลอสวยงาม */
-        background-color: rgba(15, 23, 42, 0.45) !important;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
-    .modal-content {
-        border-radius: 24px !important;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35) !important;
-        border: 1px solid rgba(255, 255, 255, 0.5) !important;
-        /* อนิเมชันเด้งดึ๋งตอนเปิด */
-        animation: modalSpringOpen 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    }
-    @keyframes modalSpringOpen {
-        0% { transform: scale(0.85) translateY(30px); opacity: 0; }
-        100% { transform: scale(1) translateY(0); opacity: 1; }
-    }
-    .modal-header {
-        background: rgba(255, 255, 255, 0.8);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-    }
-    .modal-footer {
-        background: rgba(248, 250, 252, 0.8) !important;
-        border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
-        border-bottom-left-radius: 24px;
-        border-bottom-right-radius: 24px;
-    }
+    .search-column { position: relative !important; z-index: 900 !important; }
+    .search-column .card, #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
+    .cart-column { position: relative !important; z-index: 1 !important; }
 
     /* =========================================
-       ✨ 2. ปุ่มกด (Interactive Premium Buttons)
+       2. ปุ่ม, Input และ UI ทั่วไป (Minimal Flat)
        ========================================= */
     button {
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.3px;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+        border-radius: 6px !important;
+        font-weight: 500 !important;
+        box-shadow: none !important;
+        border: 1px solid transparent !important;
+        transition: background-color 0.15s ease, border-color 0.15s ease !important;
+        transform: none !important; /* ปิดการเด้ง */
     }
     button:hover:not(:disabled) {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+        filter: brightness(0.92);
+        box-shadow: none !important;
     }
-    button:active:not(:disabled) {
-        transform: translateY(1px) scale(0.96) !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.06) !important;
-    }
+    button:active:not(:disabled) { transform: scale(0.98) !important; }
     
-    /* ปุ่มชำระเงิน / ยืนยัน (ไล่สี Gradient สวยๆ) */
-    button.finish-sale {
-        background: linear-gradient(135deg, var(--success-color) 0%, #20c997 100%) !important;
-        border: none !important;
-        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25) !important;
-    }
-    button.finish-sale:hover:not(:disabled) {
-        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4) !important;
-    }
-    /* ปุ่มล้างตะกร้า / ลบ (สีแดงไล่ระดับ) */
-    button.clear-cart {
-        background: linear-gradient(135deg, var(--danger-color) 0%, #ff6b6b 100%) !important;
-        border: none !important;
-        box-shadow: 0 4px 12px rgba(220, 53, 69, 0.25) !important;
-    }
+    button.finish-sale { background: var(--success-color) !important; color: white !important; }
+    button.clear-cart { background: var(--danger-color) !important; color: white !important; }
 
-    /* =========================================
-       ✨ 3. ช่องกรอกข้อมูล (Inputs & Selects)
-       ========================================= */
     input, select {
-        border-radius: 12px !important;
-        background: #f8fafc !important;
-        border: 1px solid #cbd5e1 !important;
-        transition: all 0.3s ease !important;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.01) !important;
-    }
-    input:hover, select:hover {
+        border-radius: 6px !important;
         background: #ffffff !important;
-        border-color: #94a3b8 !important;
+        border: 1px solid #d1d5db !important;
+        box-shadow: none !important;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
     }
     input:focus, select:focus {
-        background: #ffffff !important;
         border-color: var(--primary-color) !important;
-        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15) !important;
-        transform: translateY(-1px);
-    }
-    
-    /* กรอบค้นหาหลัก */
-    .search-column .card .input-with-icon input {
-        font-size: 1.1em;
-        padding-top: 12px; padding-bottom: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+        box-shadow: 0 0 0 3px rgba(0, 92, 191, 0.1) !important;
+        transform: none !important;
     }
 
     /* =========================================
-       ✨ 4. ตารางข้อมูล (History & Stock In)
+       3. แท็บบิล (Clean Line Tabs)
        ========================================= */
-    #history-table, .table {
-        border-collapse: separate;
-        border-spacing: 0;
-    }
-    #history-table th, .table th {
-        background: rgba(248, 250, 252, 0.9) !important;
-        backdrop-filter: blur(8px);
-        border-bottom: 2px solid #e2e8f0 !important;
-        text-transform: uppercase;
-        font-size: 0.85em !important;
-        letter-spacing: 0.5px;
-        color: #64748b;
-    }
-    #history-table tr, .table tbody tr, .product-list-row:not(.product-list-header) {
-        transition: all 0.25s ease !important;
-        background: #ffffff;
-    }
-    /* แถวตารางกระโดดขึ้นนิดๆ เวลา Hover */
-    #history-table tr:hover, .table tbody tr:hover, .product-list-row:not(.product-list-header):hover {
-        background: #f0f7ff !important;
-        transform: scale(1.005);
-        box-shadow: 0 4px 12px rgba(0, 123, 255, 0.08) !important;
-        z-index: 2; position: relative;
-        border-radius: 8px;
-    }
-
-    /* =========================================
-       ✨ 5. เมนูด้านข้าง (Sidebar Menu)
-       ========================================= */
-    .sidebar-btn {
-        border-radius: 12px !important;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-    }
-    .sidebar-btn:hover {
-        background: #f1f5f9 !important;
-        color: var(--primary-color) !important;
-        transform: translateX(4px); /* สไลด์ไปขวาเบาๆ */
-    }
-    .sidebar-btn.active {
-        background: linear-gradient(135deg, #eff6ff 0%, #e0eaf5 100%) !important;
-        color: var(--primary-color) !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-        border-left: 4px solid var(--primary-color) !important;
-        border-top-left-radius: 4px !important;
-        border-bottom-left-radius: 4px !important;
-    }
-
-    /* =========================================
-       ✨ 6. แถบเลื่อน (Custom Scrollbar สไตล์ macOS)
-       ========================================= */
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 10px;
-        border: 2px solid transparent;
-        background-clip: padding-box;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background-color: #94a3b8;
-    }
-
-    /* =========================================
-       ✨ 7. กล่องเวลาค้นหา (Quick Range Pills)
-       ========================================= */
-    #quick-range .btn-range {
-        border-radius: 20px !important;
-        padding: 0.5rem 1rem !important;
+    #cart-tabs { gap: 4px; padding-bottom: 0; }
+    .tab-button {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 2px solid transparent !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        color: #6b7280;
         font-weight: 500;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
+        padding: 0.6rem 1rem;
+        transform: none !important;
     }
-    #quick-range .btn-range.active {
+    .tab-button:hover { color: #374151; background: #f3f4f6 !important; }
+    .tab-button.active {
+        color: var(--primary-color) !important;
+        border-bottom: 2px solid var(--primary-color) !important;
+        font-weight: 600;
+        background: transparent !important;
+    }
+    .close-tab-btn {
+        background: transparent; color: #9ca3af;
+        border-radius: 4px; padding: 0 4px; margin-left: 6px;
+    }
+    .close-tab-btn:hover { background: #fee2e2 !important; color: #ef4444 !important; transform: none; }
+
+    /* =========================================
+       4. ตะกร้าและกล่องสรุปยอด (Thin Borders)
+       ========================================= */
+    .summary-item {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+        border-radius: 8px !important;
+        transform: none !important; /* ปิดการเด้ง */
+    }
+    .summary-item::before { display: none !important; } /* ลบแถบสีด้านบน */
+
+    #cart-items li {
+        background: #ffffff !important;
+        border: 1px solid #f3f4f6 !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        border-radius: 6px !important;
+        box-shadow: none !important;
+        transform: none !important;
+        margin-bottom: 4px;
+    }
+    #cart-items li:hover { background: #f9fafb !important; border-color: #d1d5db !important; }
+    .delete-item-btn { background: transparent; color: #ef4444; border-radius: 4px; }
+    .delete-item-btn:hover { background: #fee2e2; color: #dc2626; transform: none; }
+
+    /* =========================================
+       5. หน้าต่าง Modals (Snappy & Clean)
+       ========================================= */
+    .modal-overlay {
+        background-color: rgba(0, 0, 0, 0.4) !important; /* สีดำโปร่งแสงเรียบๆ ไม่เบลอ */
+        backdrop-filter: none !important;
+    }
+    .modal-content {
+        border-radius: 12px !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+        border: none !important;
+        animation: modalFadeIn 0.2s ease-out forwards !important;
+    }
+    @keyframes modalFadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-header, .modal-footer { background: #ffffff !important; border-color: #e5e7eb !important; }
+
+    /* =========================================
+       6. ผลลัพธ์การค้นหา (Minimal Horizontal Accordion)
+       ========================================= */
+    #search-results.has-results {
+        position: absolute; top: 0; left: 0; width: 100%; 
+        box-sizing: content-box !important;
+        padding-right: 400px !important; margin-right: -400px !important; 
+        max-height: calc(100vh - 180px);
+        overflow-y: auto; overflow-x: hidden; 
+        pointer-events: none; z-index: 950 !important;
+        scrollbar-width: none; background: transparent; border: none;
+        display: flex; flex-direction: column;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08)); 
+        padding-top: 4px;
+    }
+    #search-results.has-results::-webkit-scrollbar { display: none; }
+
+    .search-row {
+        position: relative; width: max-content; min-width: 100%;
+        display: inline-flex; flex-direction: row; align-items: center;
+        background: #ffffff; 
+        border-left: 1px solid #e5e7eb;
+        border-right: 1px solid #e5e7eb;
+        border-bottom: 1px solid #f3f4f6; 
+        transition: background-color 0.15s ease;
+        pointer-events: auto; 
+    }
+    .search-row:first-child { border-top: 1px solid #e5e7eb; border-top-left-radius: 8px; border-top-right-radius: 8px; }
+    .search-row:last-child { border-bottom: 1px solid #e5e7eb; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+    
+    .search-row:hover, .search-row.selected-row { background: #f9fafb; z-index: 10; transform: none; }
+
+    .main-cell {
+        flex-shrink: 0; width: auto; min-width: 250px;
+        padding: 0.6rem 1rem; cursor: pointer;
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        box-sizing: border-box; border-radius: 6px;
+        margin: 4px; transition: all 0.15s ease;
+        background: #ffffff; border: 1px solid #e5e7eb;
+        box-shadow: none;
+    }
+
+    /* ป้ายบอกจำนวน (เรียบๆ ไม่กระพริบ) */
+    .expand-indicator {
+        font-size: 0.75em; font-weight: 500;
+        color: #6b7280; background: #f3f4f6;
+        padding: 2px 6px; border-radius: 4px;
+        display: inline-flex; align-items: center; gap: 4px; margin-left: 8px;
+        transition: all 0.2s ease-out; white-space: nowrap; overflow: hidden;
+        border: none; animation: none !important;
+    }
+    .search-row:hover .expand-indicator, .search-row.selected-row .expand-indicator {
+        max-width: 0; opacity: 0; padding: 0; margin: 0;
+    }
+
+    /* Accordion กางออกแบบรวดเร็วและเรียบง่าย */
+    .alt-units-wrapper {
+        display: flex; align-items: center; gap: 4px; 
+        max-width: 0; opacity: 0; overflow: hidden; 
+        padding: 0; margin-left: 0; white-space: nowrap;
+        transition: all 0.25s ease-out; /* ลดเวลาให้ไวขึ้น ไม่มีย้วย */
+        background: transparent; border-radius: 6px;
+    }
+    .search-row.selected-row .alt-units-wrapper, .search-row:hover .alt-units-wrapper {
+        max-width: 800px; opacity: 1; padding: 4px; margin-left: 0;
+        background: transparent; box-shadow: none;
+    }
+
+    .alt-cell {
+        background: #ffffff; border: 1px solid #e5e7eb;
+        padding: 0.4rem 0.8rem; border-radius: 6px; 
+        display: flex; align-items: center; gap: 8px;
+        cursor: pointer; white-space: nowrap;
+        transition: all 0.15s ease; box-shadow: none;
+    }
+
+    .product-name-single { font-weight: 500; color: #374151; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-grow: 1; font-size: 0.95em; }
+    .price-unit-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .cell-price { font-weight: 600; color: var(--success-color); font-size: 1em; }
+    .sub-text { font-weight: 400; font-size: 0.85em; color: #9ca3af; }
+
+    /* สถานะ Active (สีทึบ เรียบๆ) */
+    .search-row:hover .main-cell, .search-row.selected-row .main-cell { border-color: #d1d5db; }
+    .alt-cell:hover { border-color: #93c5fd; background: #eff6ff; transform: none; }
+
+    .main-cell.active-unit, .alt-cell.active-unit {
         background: var(--primary-color) !important;
-        color: white !important;
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3) !important;
-        transform: scale(1.05);
+        border-color: var(--primary-color) !important;
+        box-shadow: none !important;
+        transform: none !important; 
     }
+    .main-cell.active-unit .product-name-single, .main-cell.active-unit .sub-text, 
+    .main-cell.active-unit .cell-price, .alt-cell.active-unit .sub-text, .alt-cell.active-unit .cell-price {
+        color: #ffffff !important; text-shadow: none !important;
+    }
+    .main-cell.active-unit .expand-indicator { background: rgba(255,255,255,0.2); color: #fff; }
 </style>
 </style>
-
-
-
-
-
 <style>
 /* === Cart-aligned utility bar: app-sidebar + auth-status (Oct 18, 2025) === */
 /* Tokens */
@@ -5067,183 +5091,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </div>
-<style id="row-popout-search-css">
-    /* 🚀 1. ทลายกำแพง Z-Index */
-    .search-column { position: relative !important; z-index: 900 !important; }
-    .search-column .card, #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
-    .cart-column { position: relative !important; z-index: 1 !important; }
 
-    /* 🎨 2. กล่องผลลัพธ์หลัก */
-    #search-results.has-results {
-        position: absolute; top: 0; left: 0; width: 100%; 
-        box-sizing: content-box !important;
-        padding-right: 400px !important; margin-right: -400px !important; 
-        max-height: calc(100vh - 180px);
-        overflow-y: auto; overflow-x: hidden; 
-        pointer-events: none; z-index: 950 !important;
-        scrollbar-width: none; 
-        background: transparent; border: none;
-        display: flex; flex-direction: column;
-        filter: drop-shadow(0 15px 35px rgba(0,0,0,0.08)); 
-        padding-top: 10px; /* เว้นที่ว่างด้านบนให้เงา */
-    }
-    #search-results.has-results::-webkit-scrollbar { display: none; }
-
-    /* 3. แถวสินค้า (Floating Card Effect) */
-    .search-row {
-        position: relative; 
-        width: max-content; min-width: 100%;
-        display: inline-flex; flex-direction: row; align-items: center;
-        
-        background: rgba(255, 255, 255, 0.7); 
-        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-        
-        border-left: 1px solid rgba(255, 255, 255, 0.8);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.04); 
-        
-        /* เปลี่ยนสีพื้นหลังนิดๆ เวลา Hover */
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        pointer-events: auto; 
-    }
-    .search-row:first-child {
-        border-top: 1px solid rgba(255, 255, 255, 0.8);
-        border-top-left-radius: 16px; border-top-right-radius: 16px;
-    }
-    .search-row:last-child {
-        border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
-        border-bottom: none;
-    }
-
-    /* เมื่อ Hover ทั้งแถวให้ยกตัวขึ้นเล็กน้อย */
-    .search-row:hover, .search-row.selected-row {
-        background: rgba(255, 255, 255, 0.95);
-        z-index: 10;
-        transform: translateY(-1px) scale(1.002);
-    }
-
-    /* 4. กล่องหลัก */
-    .main-cell {
-        flex-shrink: 0; width: auto; min-width: 260px;
-        padding: 0.8rem 1.2rem; 
-        cursor: pointer;
-        display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        box-sizing: border-box;
-        border-radius: 12px;
-        margin: 4px; 
-        transition: all 0.25s ease;
-        background: var(--white-color);
-        border: 1px solid rgba(0, 0, 0, 0.04);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-    }
-
-    /* 🌟 อนิเมชันกระเพื่อม (Pulse) ให้ป้ายบอกจำนวน 🌟 */
-    @keyframes softPulse {
-        0% { box-shadow: 0 0 0 0 rgba(0, 92, 191, 0.15); transform: scale(1); }
-        50% { box-shadow: 0 0 0 5px rgba(0, 92, 191, 0); transform: scale(1.05); }
-        100% { box-shadow: 0 0 0 0 rgba(0, 92, 191, 0); transform: scale(1); }
-    }
-
-    .expand-indicator {
-        font-size: 0.75em; font-weight: bold;
-        color: var(--primary-color);
-        background: linear-gradient(135deg, #e8f0fe 0%, #d4e3fc 100%);
-        padding: 4px 8px;
-        border-radius: 20px;
-        display: inline-flex; align-items: center; gap: 4px;
-        margin-left: 8px;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy hide */
-        white-space: nowrap; overflow: hidden;
-        animation: softPulse 2s infinite;
-        border: 1px solid rgba(255,255,255,0.6);
-    }
-    
-    .search-row:hover .expand-indicator,
-    .search-row.selected-row .expand-indicator {
-        max-width: 0; opacity: 0; padding: 0; margin: 0; border: none;
-        animation: none; transform: scale(0);
-    }
-
-    /* 🌟 5. Premium Horizontal Accordion Wrapper 🌟 */
-    .alt-units-wrapper {
-        display: flex; align-items: center; gap: 6px; 
-        
-        max-width: 0; opacity: 0; overflow: hidden; 
-        padding: 0; margin-left: -10px; /* ให้เริ่มจากจมลงไปในกล่องหลักนิดๆ */
-        white-space: nowrap;
-        
-        /* 🎯 อนิเมชันเด้งดึ๋งแบบ Apple (Spring Physics) */
-        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        
-        background: rgba(240, 244, 248, 0.6);
-        border-radius: 12px;
-    }
-
-    /* กางออกอย่างอลังการ */
-    .search-row.selected-row .alt-units-wrapper,
-    .search-row:hover .alt-units-wrapper {
-        max-width: 800px; opacity: 1;
-        padding: 6px; margin-left: 4px;
-        background: rgba(248, 249, 250, 0.85);
-        box-shadow: inset 3px 0 8px -3px rgba(0,0,0,0.04);
-    }
-
-    /* 6. กล่องหน่วยเสริมแต่ละอัน (Pills) */
-    .alt-cell {
-        background: var(--white-color);
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 0.5rem 0.9rem;
-        border-radius: 10px; 
-        display: flex; align-items: center; gap: 8px;
-        cursor: pointer; white-space: nowrap;
-        transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-    }
-
-    /* 7. Typography */
-    .product-name-single { 
-        font-weight: 600; color: #2d3748;
-        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        flex-grow: 1; font-size: 1em; letter-spacing: 0.2px;
-    }
-    .price-unit-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-    .cell-price { font-weight: bold; color: var(--success-color); font-size: 1.05em; }
-    .sub-text { font-weight: 500; font-size: 0.85em; color: #718096; }
-
-    /* ================================= */
-    /* 🎨 Premium Active & Hover States */
-    /* ================================= */
-    .search-row:hover .main-cell, 
-    .search-row.selected-row .main-cell {
-        border-color: rgba(0, 123, 255, 0.15);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    }
-
-    .alt-cell:hover {
-        border-color: rgba(0, 123, 255, 0.3); 
-        background: #f0f7ff;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
-    }
-
-    /* 💎 เปลี่ยน Active State เป็นแบบ Gradient Glow */
-    .main-cell.active-unit,
-    .alt-cell.active-unit {
-        background: linear-gradient(135deg, var(--primary-color) 0%, #00449e 100%) !important;
-        border-color: transparent !important;
-        box-shadow: 0 6px 15px rgba(0, 92, 191, 0.35) !important;
-        transform: scale(1.03) translateY(-1px); 
-    }
-
-    .main-cell.active-unit .product-name-single, 
-    .main-cell.active-unit .sub-text, 
-    .main-cell.active-unit .cell-price,
-    .alt-cell.active-unit .sub-text, 
-    .alt-cell.active-unit .cell-price {
-        color: #ffffff !important;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
-</style>
-</style>
 </style>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
