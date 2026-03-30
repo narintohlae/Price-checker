@@ -4777,82 +4777,102 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     </div>
 </div>
- <style id="row-popout-search-css">
-    /* 🚀 1. ทลายกำแพง Z-Index */
-    .search-column { position: relative !important; z-index: 900 !important; }
-    .search-column .card, #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
-    .cart-column { position: relative !important; z-index: 1 !important; }
+/* ===================================================
+       🌟 2026 Enterprise UI: Floating Action Menu
+    =================================================== */
 
-    /* 🎨 2. กล่องผลลัพธ์หลัก (แก้ไขระบบ Scroll ล้นจอ) */
-    #search-results.has-results {
+    /* 1. กล่องหลักแบบคลีนๆ */
+    .main-cell {
+        position: relative;
+        z-index: 10;
+        background: #ffffff;
+        border: 1px solid #e2e8f0; /* เส้นขอบบางๆ สไตล์โมเดิร์น */
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+        padding-right: 16px; /* เผื่อที่ให้ Indicator */
+        transition: all 0.2s ease;
+    }
+
+    /* 2. Indicator (เส้นจับด้านขวา) บอกใบ้แบบเรียบหรู */
+    .main-cell.has-alt-units::after {
+        content: '';
         position: absolute;
-        top: 0; left: 0;
-        width: 100%; 
-        
-        /* 🌟 MAGIC TRICK: ขยายพื้นที่รองรับ Pop-out ให้กว้างออกไปทางขวา 🌟 */
-        box-sizing: content-box !important;
-        padding-right: 400px !important; 
-        margin-right: -400px !important; 
-        
-        /* กำหนดความสูงให้ไม่ล้นจอ และเปิดใช้งานการเลื่อน (Scroll) */
-        max-height: calc(100vh - 180px);
-        overflow-y: auto;
-        overflow-x: hidden; 
-        
-        /* ป้องกันการคลิกโดนพื้นที่ล่องหน ให้ทะลุไปคลิกตะกร้าได้ */
-        pointer-events: none; 
-        z-index: 950 !important;
-        
-        /* ซ่อน Scrollbar ด้านขวาสุด เพื่อความสวยงาม */
-        scrollbar-width: none; 
-        
-        /* ย้าย Background ไปไว้ที่แถว (Row) เพื่อไม่ให้บังตะกร้า */
-        background: transparent;
-        border: none;
-        
-        display: flex; flex-direction: column;
-        
-        /* ใช้ drop-shadow สร้างเงารวมให้ทั้งหมด (แทน box-shadow เดิม) */
-        filter: drop-shadow(0 12px 24px rgba(0,0,0,0.08)); 
-    }
-    
-    /* ซ่อน Scrollbar ของ Chrome/Safari/Edge */
-    #search-results.has-results::-webkit-scrollbar {
-        display: none; 
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 16px;
+        background-color: #cbd5e1; /* สีเทาอ่อนๆ */
+        border-radius: 4px;
+        transition: all 0.2s ease;
     }
 
-    /* 3. แถวสินค้า (Row) - รับหน้าที่เป็นฉากหลังแทนกล่องใหญ่ */
-    .search-row {
-        position: relative; 
-        width: 100%; /* กว้างเท่ากับขนาดกล่องจริง ไม่รวม Padding 400px */
-        display: flex; flex-direction: row;
+    /* 3. ถาดเมนูย่อย (ลอยตัวออกมาอย่างอิสระ) */
+    .alt-units-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 100%; /* เริ่มต้นที่ขอบขวาพอดี */
         
-        /* ย้ายพื้นหลังและเส้นขอบมาไว้ที่บรรทัดแทน */
-        background: rgba(255, 255, 255, 0.95); 
-        backdrop-filter: blur(12px); 
-        -webkit-backdrop-filter: blur(12px);
+        /* ซ่อนโดยการย่อขนาดนิดนึง และขยับถอยหลังไปซ่อนใต้กล่องหลัก */
+        transform: translateY(-50%) translateX(-15px) scale(0.95);
+        transform-origin: left center;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px;
         
-        border-left: 1px solid rgba(0, 0, 0, 0.08);
-        border-right: 1px solid rgba(0, 0, 0, 0.08);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.03); 
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        /* เงาฟุ้งแบบสมจริง (Smooth Blur Shadow) */
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
         
-        transition: background 0.2s ease;
-        /* เปิดการรับคลิกเมาส์อีกครั้ง */
-        pointer-events: auto; 
+        z-index: 20;
+        /* Animation น้ำหนักสปริงแบบ Apple/Vercel */
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* 🌟 เมื่อ Active: สไลด์เมนูออกมา และละลาย Indicator ทิ้งไป 🌟 */
+    .search-row.selected-row .alt-units-wrapper,
+    .search-row:hover .alt-units-wrapper {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        /* สไลด์ออกมาเว้นระยะห่าง 8px */
+        transform: translateY(-50%) translateX(8px) scale(1); 
+    }
+
+    .search-row.selected-row .main-cell.has-alt-units::after,
+    .search-row:hover .main-cell.has-alt-units::after {
+        opacity: 0;
+        transform: translateY(-50%) scaleY(0.4); /* ยุบตัวลงและจางหายไป */
+    }
+
+    .search-row.selected-row .main-cell,
+    .search-row:hover .main-cell {
+        border-color: #cbd5e1;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    /* 4. สไตล์ของหน่วยย่อยด้านใน */
+    .alt-cell {
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 6px 10px;
+        transition: all 0.15s ease;
     }
     
-    /* ประกอบร่างแถวแรกและแถวสุดท้ายให้เป็นกล่องมนๆ เหมือนเดิม */
-    .search-row:first-child {
-        border-top: 1px solid rgba(0, 0, 0, 0.08);
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
-        padding-top: 4px;
-    }
-    .search-row:last-child {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08); 
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-        padding-bottom: 4px;
+    .alt-cell:hover, 
+    .alt-cell.active-unit {
+        background: #f1f5f9; /* พื้นหลังเทาฟ้าอ่อนๆ */
+        border-color: #e2e8f0;
+        color: var(--primary-color) !important;
+        transform: translateY(0); /* ยกเลิกการเด้งของเก่า ให้ดูนิ่งและแพงขึ้น */
     }
 
     /* 4. กล่องหลัก (หน่วยแรก) */
@@ -5079,18 +5099,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 rowDiv.className = 'search-row';
                 if (pIndex === this.state.selectedSearchIndex) rowDiv.classList.add('selected-row');
 
-// 🌟 กล่องหลัก
+// 🌟 กล่องหลัก (Minimalist 2026)
                 const mainUnit = group.units[0];
                 const isMainActive = (pIndex === this.state.selectedSearchIndex && this.state.selectedUnitIndex === 0) ? 'active-unit' : '';
-                
-                // เช็คว่ามีหน่วยย่อยหรือไม่ เพื่อใส่ Class
                 const altClass = group.units.length > 1 ? 'has-alt-units' : '';
                 
                 let html = `
                     <div class="search-unit-cell main-cell ${isMainActive} ${altClass}" data-pindex="${pIndex}" data-uindex="0">
                         <span class="product-name-single" title="${this.escapeHtml(group.productName)}">${this.escapeHtml(group.productName)}</span>
-                        <div class="price-unit-group" style="gap: 2px;">
-                            <span class="cell-price">${this.formatPrice(mainUnit.price)}</span>
+                        <div class="price-unit-group" style="gap: 6px;">
+                            <span class="cell-price" style="font-weight: 600;">${this.formatPrice(mainUnit.price)}</span>
                             <span class="sub-text">/${this.escapeHtml(mainUnit.pricingUnit.unitName)}</span>
                         </div>
                     </div>
