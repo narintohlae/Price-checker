@@ -1217,258 +1217,244 @@ input[type="radio"].radio, .radio{ width:16px; height:16px; border:var(--border)
     .summary-item:nth-child(2)::before { background: linear-gradient(90deg, var(--warning-color), #ff9800); }
     .summary-item:nth-child(3)::before { background: linear-gradient(90deg, var(--success-color), #00e676); }
     .summary-item:nth-child(4)::before { background: linear-gradient(90deg, #00aaff, #0055ff); }
-<style id="refined-technical-2026-ui">
+<style id="material-minimal-pos-ui">
     /* =========================================
-       ⚙️ 1. CORE VARIABLES (2026 Technical Palette)
+       🎨 1. MATERIAL DESIGN COLORS (2026 Palette)
        ========================================= */
     :root {
-        --tech-primary: #2563eb !important; /* น้ำเงินสว่าง (Focus & Accent) */
-        --tech-bg: #f4f4f5 !important;      /* พื้นหลังแอป สีเทาเนื้อด้าน */
-        --tech-surface: #ffffff !important; /* พื้นผิวกล่องทำงาน */
-        --tech-border: #e4e4e7 !important;  /* เส้นขอบบางเฉียบ */
-        --tech-text-main: #09090b !important; /* ดำคมกริบ */
-        --tech-text-muted: #71717a !important; /* เทาอ่านง่าย */
-        --tech-success: #10b981 !important; /* เขียวสด แจ่มชัด */
-        --tech-danger: #ef4444 !important;  /* แดงชัดเจน */
+        --md-primary: #0b57d0 !important;          /* น้ำเงิน Material */
+        --md-primary-container: #d3e3fd !important; /* ฟ้าพาสเทล (สำหรับแถวที่ถูกเลือก) */
+        --md-on-primary-container: #041e49 !important; /* น้ำเงินเข้ม (ตัวอักษรบนพื้นพาสเทล) */
+        --md-surface: #ffffff !important;           /* สีพื้นกล่อง */
+        --md-background: #f0f4f8 !important;        /* สีพื้นหลังจอ */
+        --md-outline: #e0e6ed !important;           /* เส้นคั่นเทาอ่อน */
+        --md-text-main: #1f1f1f !important;
+        --md-text-muted: #5f6368 !important;
+        --md-success: #146c43 !important;           /* เขียวถนอมสายตา */
+        --md-danger: #b3261e !important;            /* แดงถนอมสายตา */
     }
 
     * {
-        transition: none !important; /* ปิด Transition ทิ้งทั้งหมด ทันใจ 100% */
+        /* ความไว 0.1s ทำให้ตาไม่ลายจากภาพกระตุก แต่ก็เร็วทันใจคนพิมพ์ */
+        transition: background-color 0.1s ease, box-shadow 0.1s ease, color 0.1s ease !important;
         animation: none !important;
-        box-sizing: border-box;
+        border-radius: 8px !important; /* โค้งมนกำลังดี สไตล์ Material */
     }
 
     body {
-        background-color: var(--tech-bg) !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-        color: var(--tech-text-main) !important;
+        background-color: var(--md-background) !important;
+        color: var(--md-text-main) !important;
+        font-family: 'Sarabun', -apple-system, Roboto, sans-serif !important;
     }
 
-    /* โครงสร้าง Z-Index */
     .search-column { position: relative !important; z-index: 900 !important; }
     .search-column .card, #main-search-area { position: relative !important; z-index: 999999 !important; overflow: visible !important; }
     .cart-column { position: relative !important; z-index: 1 !important; }
 
     /* =========================================
-       🔲 2. กล่องการทำงานหลัก (Crisp Cards)
+       🔲 2. บล็อกการทำงาน (Paper Cards)
        ========================================= */
     .card {
-        border-radius: 8px !important;
-        border: 1px solid var(--tech-border) !important;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02) !important; /* เงาแบบ Micro-shadow */
-        background-color: var(--tech-surface) !important;
+        background-color: var(--md-surface) !important;
+        border: 1px solid var(--md-outline) !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important; /* เงาบางเฉียบ */
         padding: 16px !important;
+        border-radius: 16px !important;
     }
 
     h2, h3 {
-        color: var(--tech-text-main) !important;
-        border-bottom: 1px solid var(--tech-border) !important;
+        color: var(--md-text-main) !important;
+        border-bottom: 1px solid var(--md-outline) !important;
         padding-bottom: 12px !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.02em;
-        font-size: 1.25em !important;
+        font-weight: 600 !important;
     }
 
     /* =========================================
-       ⌨️ 3. อินพุตและปุ่ม (High-Precision Controls)
+       ⌨️ 3. ช่องกรอกข้อมูล & ปุ่ม (Tonal Components)
        ========================================= */
     input, select, textarea {
-        border-radius: 6px !important;
-        border: 1px solid #d4d4d8 !important;
-        background-color: #ffffff !important;
-        padding: 10px 12px !important;
-        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace !important;
-        font-size: 1.1em !important;
-        font-weight: 600 !important;
-        color: var(--tech-text-main) !important;
-        box-shadow: inset 0 1px 2px rgba(0,0,0,0.02) !important;
+        background-color: #f8f9fa !important;
+        border: 1px solid var(--md-outline) !important;
+        padding: 10px 14px !important;
+        font-size: 1.05em !important;
+        color: var(--md-text-main) !important;
+        border-radius: 8px !important;
     }
     input:focus, select:focus, textarea:focus {
-        border-color: var(--tech-primary) !important;
-        background-color: #fefce8 !important; /* พื้นเหลืองอ่อนสุดๆ ถนอมสายตา */
-        outline: none !important;
-        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important; /* วงแหวนโฟกัสมาตรฐาน 2026 */
+        background-color: #ffffff !important;
+        border-color: var(--md-primary) !important;
+        outline: 2px solid var(--md-primary) !important;
+        outline-offset: -1px;
+        box-shadow: none !important;
     }
 
-    button, .btn {
-        border-radius: 6px !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.01em !important;
-        border: 1px solid var(--tech-border) !important;
+    button {
+        font-weight: 500 !important;
+        border: 1px solid var(--md-outline) !important;
         background-color: #ffffff !important;
-        color: var(--tech-text-main) !important;
-        padding: 8px 16px !important;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+        color: var(--md-text-main) !important;
+        padding: 10px 18px !important;
+        border-radius: 20px !important; /* ปุ่มแคปซูล Material 3 */
         cursor: pointer;
     }
-    button:hover:not(:disabled) { background-color: #f4f4f5 !important; }
-    button:active:not(:disabled) { transform: translateY(1px) !important; box-shadow: none !important; }
+    button:hover:not(:disabled) { background-color: #f1f3f4 !important; }
+    button:active:not(:disabled) { background-color: #e8eaed !important; transform: scale(0.98) !important; }
 
-    button.finish-sale { background-color: var(--tech-success) !important; color: #ffffff !important; border: none !important; font-size: 1.1em !important; }
-    button.finish-sale:hover:not(:disabled) { background-color: #059669 !important; }
-    button.clear-cart { background-color: var(--tech-danger) !important; color: #ffffff !important; border: none !important; }
-    
-    .sidebar-btn { border: 1px solid transparent !important; box-shadow: none !important; background: transparent !important; }
-    .sidebar-btn:hover { background: #f4f4f5 !important; }
-    .sidebar-btn.active {
-        background: #f4f4f5 !important;
-        color: var(--tech-primary) !important;
-        border: 1px solid var(--tech-border) !important;
-    }
+    button.finish-sale { background-color: var(--md-success) !important; color: #ffffff !important; border: none !important; font-size: 1.1em !important; }
+    button.finish-sale:hover:not(:disabled) { background-color: #0f5132 !important; }
+    button.clear-cart { background-color: #fce8e6 !important; color: var(--md-danger) !important; border: none !important; }
+    button.clear-cart:hover:not(:disabled) { background-color: #fad2cf !important; }
 
     /* =========================================
-       ⚡ 4. ผลลัพธ์ค้นหา (Technical Data Grid)
+       ⚡ 4. ผลลัพธ์การค้นหา (Smooth Horizontal Accordion)
        ========================================= */
     #search-results.has-results {
         position: absolute; top: 0; left: 0; width: 100%; 
         box-sizing: content-box !important; padding-right: 400px !important; margin-right: -400px !important; 
         max-height: calc(100vh - 160px); overflow-y: auto; overflow-x: hidden; 
-        pointer-events: none; z-index: 950 !important; 
-        background: var(--tech-surface); 
-        border: 1px solid var(--tech-border);
-        border-radius: 8px;
-        box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1), 0 4px 10px -5px rgba(0,0,0,0.05);
+        pointer-events: none; z-index: 950 !important; scrollbar-width: none;
+        
+        background: transparent; border: none;
         display: flex; flex-direction: column;
-        padding: 4px;
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08)); 
+        padding-top: 4px;
     }
 
+    /* แถวสินค้ารวมเป็นก้อนเดียว */
     .search-row {
-        position: relative; width: max-content; min-width: calc(100% - 8px);
+        position: relative; width: max-content; min-width: 100%;
         display: inline-flex; flex-direction: row; align-items: stretch;
-        border-bottom: 1px solid var(--tech-border);
-        pointer-events: auto; background: var(--tech-surface);
-        margin-bottom: 2px; border-radius: 6px;
+        background: var(--md-surface);
+        border: 1px solid var(--md-outline);
+        border-bottom: none;
+        pointer-events: auto; 
     }
-    .search-row:last-child { border-bottom: none; }
+    .search-row:first-child { border-top-left-radius: 8px !important; border-top-right-radius: 8px !important; }
+    .search-row:last-child { border-bottom: 1px solid var(--md-outline); border-bottom-left-radius: 8px !important; border-bottom-right-radius: 8px !important; }
 
-    /* 🎯 2026 Focus State: Highlight ด้วยเส้นขอบซ้าย (Left Accent) และพื้นหลังเทาอ่อน */
+    /* 🎯 2026 Material Focus: นุ่มนวล ไม่แสบตา */
     .search-row:hover, .search-row.selected-row {
-        background: #f4f4f5 !important; 
-        box-shadow: inset 3px 0 0 var(--tech-primary) !important; /* เส้นน้ำเงินนำสายตา */
+        background: var(--md-primary-container) !important; /* พื้นพาสเทลฟ้าอ่อน */
+        border-color: #a8c7fa !important;
         z-index: 10;
     }
 
     .main-cell {
-        flex-shrink: 0; width: auto; min-width: 320px;
-        padding: 8px 12px; cursor: pointer;
+        flex-shrink: 0; width: auto; min-width: 280px;
+        padding: 8px 16px; cursor: pointer;
         display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
 
-    /* Accordion (Instant Flex) */
+    /* ป้ายบอกจำนวนแบบคลีนๆ */
+    .expand-indicator {
+        font-size: 0.8em; font-weight: 500;
+        color: var(--md-text-muted); background: #f1f3f4; 
+        padding: 2px 8px; border-radius: 12px !important;
+        display: inline-flex; align-items: center; margin-left: auto;
+    }
+    .search-row:hover .expand-indicator, .search-row.selected-row .expand-indicator { display: none; }
+
+    /* Accordion (โผล่ทันที ไม่มีย้วย) */
     .alt-units-wrapper {
         display: none; align-items: stretch; 
-        background: #fafafa; border-left: 1px dashed var(--tech-border);
+        background: transparent;
+        border-left: 1px solid #a8c7fa; /* เส้นคั่นบางๆ เวลากาง */
     }
     .search-row.selected-row .alt-units-wrapper, .search-row:hover .alt-units-wrapper { display: flex; }
 
-    .alt-cell { padding: 8px 12px; display: flex; align-items: center; gap: 12px; border-right: 1px dashed var(--tech-border); cursor: pointer; }
+    .alt-cell { padding: 8px 16px; display: flex; align-items: center; gap: 12px; border-right: 1px dashed #c2d7fa; cursor: pointer; }
     .alt-cell:last-child { border-right: none; }
 
-    /* Typography Data Grid */
-    .product-name-single { font-weight: 600; font-size: 1.05em; color: var(--tech-text-main); }
-    .cell-price { font-family: ui-monospace, SFMono-Regular, Consolas, monospace !important; font-weight: 700; font-size: 1.2em; color: var(--tech-text-main); }
-    .sub-text { font-size: 0.85em; color: var(--tech-text-muted); font-weight: 500; }
-    
-    .expand-indicator { background: #e4e4e7; color: #52525b; padding: 2px 6px; font-weight: 600; border-radius: 4px; font-size: 0.8em; }
-    .search-row:hover .expand-indicator, .search-row.selected-row .expand-indicator { display: none; }
-    
-    /* โฟกัสหน่วยย่อย (Inverse เฉพาะช่องที่เลือก) */
-    .main-cell.active-unit, .alt-cell.active-unit { background: var(--tech-text-main) !important; color: #ffffff !important; border-radius: 4px; }
-    .main-cell.active-unit .product-name-single, .main-cell.active-unit .sub-text, .main-cell.active-unit .cell-price,
-    .alt-cell.active-unit .sub-text, .alt-cell.active-unit .cell-price { color: #ffffff !important; }
+    /* Typography (ผสมธรรมดา + Monospace) */
+    .product-name-single { font-weight: 500; font-size: 1.05em; color: var(--md-text-main); }
+    .cell-price, .col-qty, .col-price, .col-total, .summary-item .value { 
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace !important; 
+        font-weight: 600; 
+    }
+    .cell-price { font-size: 1.15em; color: var(--md-danger); } /* แดงตุ่น สบายตา */
+    .sub-text { font-size: 0.85em; color: var(--md-text-muted); }
+
+    /* สีอักษรเวลา Focus (ปรับให้อ่านง่ายบนพื้นฟ้าอ่อน) */
+    .search-row.selected-row .product-name-single, .search-row:hover .product-name-single { color: var(--md-on-primary-container) !important; font-weight: 600; }
+    .search-row.selected-row .cell-price, .search-row:hover .cell-price { color: #0056b3 !important; } 
 
     /* =========================================
-       🛒 5. ตะกร้าสินค้า & แท็บ (Ledger View)
+       🛒 5. ตะกร้าสินค้า & แท็บ (Clean View)
        ========================================= */
-    #cart-tabs { gap: 4px; border-bottom: 1px solid var(--tech-border); padding-bottom: 0; margin-bottom: 12px; }
+    #cart-tabs { gap: 6px; padding-bottom: 0; border-bottom: 1px solid var(--md-outline); margin-bottom: 8px; }
     .tab-button {
-        background: #f4f4f5 !important; border: 1px solid var(--tech-border) !important;
-        border-bottom: none !important; border-radius: 6px 6px 0 0 !important;
-        color: var(--tech-text-muted); padding: 8px 16px; box-shadow: none !important;
+        background: transparent !important; border: none !important;
+        border-bottom: 3px solid transparent !important; border-radius: 0 !important;
+        color: var(--md-text-muted); padding: 8px 16px; font-weight: 500;
     }
     .tab-button.active {
-        background: var(--tech-surface) !important; color: var(--tech-primary) !important;
-        border-top: 3px solid var(--tech-primary) !important;
-        margin-bottom: -1px; padding-bottom: 9px; font-weight: 700;
+        color: var(--md-primary) !important;
+        border-bottom: 3px solid var(--md-primary) !important;
+        font-weight: 600;
     }
 
     .cart-header-row {
-        background: #fafafa; color: var(--tech-text-muted); font-weight: 600;
-        font-size: 0.9em; padding: 8px 12px !important; margin-bottom: 4px;
-        border-bottom: 1px solid var(--tech-border); border-radius: 6px;
+        background: transparent; color: var(--md-text-muted);
+        font-size: 0.9em; padding: 8px 12px !important; border: none; border-bottom: 1px solid var(--md-outline);
     }
     
-    #cart-items { border: none; background: var(--tech-surface); }
+    #cart-items { border: none; background: transparent; }
     #cart-items li {
-        border: none !important; border-bottom: 1px solid #f4f4f5 !important; 
+        border: none !important; border-bottom: 1px solid #f1f3f4 !important;
         padding: 6px 12px !important; border-radius: 4px !important;
-        font-family: ui-monospace, SFMono-Regular, Consolas, monospace !important;
-        font-size: 1.05em !important; font-weight: 500; color: var(--tech-text-main);
     }
-    #cart-items li:hover { background-color: #f8fafc !important; }
-    #cart-items li.highlight-quantity { background-color: #fefce8 !important; border-left: 4px solid #facc15 !important; }
+    #cart-items li:hover { background-color: #f8f9fa !important; }
+    #cart-items li.highlight-quantity { background-color: #fff8e1 !important; border-left: 4px solid #fbbc04 !important; }
     
     .item-input { 
-        border: 1px solid #e4e4e7 !important; border-radius: 4px !important;
-        height: 28px !important; font-size: 1.05em !important; background: #FFF !important; text-align: center;
+        border: 1px solid var(--md-outline) !important; 
+        background: #ffffff !important; border-radius: 6px !important;
+        height: 28px !important; text-align: center;
     }
     .col-price .item-input, .col-total .item-input { border: none !important; text-align: right; background: transparent !important; }
-    .col-total .item-input { font-size: 1.15em !important; font-weight: 700 !important; color: var(--tech-text-main) !important; }
-    
-    .delete-item-btn { background: transparent; color: var(--tech-text-muted); border: none !important; box-shadow: none !important; border-radius: 4px; }
-    .delete-item-btn:hover { background: #fee2e2; color: var(--tech-danger); }
+    .col-total .item-input { font-size: 1.15em !important; font-weight: bold !important; color: var(--md-text-main) !important; }
 
     /* =========================================
-       💰 6. สรุปยอด (Matte Dark Box)
+       💰 6. สรุปยอด (Soft Contrast)
        ========================================= */
-    .totals-section { background: #fafafa; border-top: 1px solid var(--tech-border); padding: 16px; margin-top: 12px; border-radius: 8px; }
-    .total-row { font-weight: 600; font-size: 1.2em; color: var(--tech-text-main); margin-bottom: 8px; }
+    .totals-section { background: transparent; border-top: 1px solid var(--md-outline); padding: 16px 0 0 0; margin-top: 12px; }
+    .total-row { color: var(--md-text-main); font-weight: 500; font-size: 1.1em; margin-bottom: 8px; }
     
-    /* กล่องยอดสุทธิลุค Enterprise 2026 */
+    /* กล่องยอดสุทธิ (Dark Surface สบายตา) */
     .total-row:nth-child(3) {
-        background: #09090b; color: #ffffff; /* ดำด้าน (Matte Black) */
-        padding: 16px 20px; border-radius: 8px;
+        background: #1e1e1e; /* สีเทาเข้มเกือบดำ ลดแสงแยงตา */
+        color: #ffffff;
+        padding: 16px; border-radius: 12px;
         display: flex; align-items: center; justify-content: space-between;
-        margin-top: 12px;
-        box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
     }
     #cart-total {
-        font-size: 3.2em !important; 
-        color: #10b981; /* สีเขียวมิ้นต์ (Cyber Emerald) อ่านง่ายตาไม่ล้า */
-        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-        font-weight: 700; letter-spacing: -0.05em; line-height: 1;
+        font-size: 2.8em !important; 
+        color: #81c995; /* สีเขียวมิ้นต์พาสเทล สว่างแต่อ่อนโยน */
+        letter-spacing: -1px;
     }
 
     /* =========================================
-       ⚙️ 7. หน้าต่าง Modals & Tables (Refined Data Core)
+       ⚙️ 7. Modals & Tables (Minimalist)
        ========================================= */
-    .modal-overlay { background-color: rgba(9, 9, 11, 0.6) !important; backdrop-filter: blur(2px) !important; }
+    .modal-overlay { background-color: rgba(32, 33, 36, 0.6) !important; backdrop-filter: none !important; }
     .modal-content {
-        border-radius: 12px !important; border: 1px solid rgba(255,255,255,0.1) !important;
-        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25) !important; 
-        background: var(--tech-surface) !important;
+        border-radius: 16px !important; border: none !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
     }
-    .modal-header { background: var(--tech-surface) !important; border-bottom: 1px solid var(--tech-border) !important; padding: 20px !important; }
-    .modal-header h3 { border: none !important; margin: 0 !important; }
-    .modal-footer { background: #fafafa !important; border-top: 1px solid var(--tech-border) !important; border-radius: 0 0 12px 12px; }
+    .modal-header { background: var(--md-surface) !important; border-bottom: 1px solid var(--md-outline) !important; padding: 20px !important; }
+    .modal-footer { background: #f8f9fa !important; border-top: 1px solid var(--md-outline) !important; border-radius: 0 0 16px 16px; }
 
-    /* ตาราง Data */
     .table th, #history-table th {
-        background: #f4f4f5 !important; color: var(--tech-text-muted) !important;
-        border-bottom: 1px solid var(--tech-border) !important; padding: 12px !important;
-        font-weight: 600 !important; font-size: 0.9em !important; text-transform: uppercase; letter-spacing: 0.05em;
+        background: transparent !important; color: var(--md-text-muted) !important;
+        border-bottom: 2px solid var(--md-outline) !important; padding: 12px !important; font-weight: 500 !important;
     }
     .table td, #history-table td {
-        border-bottom: 1px solid #f4f4f5 !important; padding: 12px !important;
-        font-family: ui-monospace, SFMono-Regular, Consolas, monospace !important;
-        color: var(--tech-text-main); font-weight: 500;
+        border-bottom: 1px solid #f1f3f4 !important; padding: 12px !important;
     }
-    .table tbody tr:hover, #history-table tbody tr:hover { background: #fafafa !important; }
+    .table tbody tr:hover, #history-table tbody tr:hover { background: #f8f9fa !important; }
 
-    /* Badges */
-    .auth-status-badge { border: 1px solid var(--tech-border) !important; background: var(--tech-surface) !important; border-radius: 6px !important; box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important; }
-    .summary-item { border: 1px solid var(--tech-border) !important; border-radius: 8px !important; box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important; background: var(--tech-surface) !important; }
-    .summary-item .value { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 700; color: var(--tech-text-main) !important; }
+    .auth-status-badge { border: 1px solid var(--md-outline) !important; border-radius: 16px !important; box-shadow: none !important; }
+    .summary-item { border: 1px solid var(--md-outline) !important; border-radius: 12px !important; box-shadow: none !important; }
 </style>
 <style>
 /* === Cart-aligned utility bar: app-sidebar + auth-status (Oct 18, 2025) === */
