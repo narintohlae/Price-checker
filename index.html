@@ -1070,297 +1070,306 @@ input[type="radio"].radio, .radio{ width:16px; height:16px; border:var(--border)
         display: none !important;
     }
 }
-<style id="windows-11-fluent-theme">
+<style id="material-minimal-2026-theme">
     /* =========================================================
-       🪟 WINDOWS 11 FLUENT DESIGN POS UI 🪟
-       Mica Backgrounds, Rounded Corners, and Clean Aesthetics
+       ✨ MATERIAL DESIGN MINIMAL 2026 (POS EDITION) ✨
+       Ultra-clean, Tonal Palettes, Organic Shapes, Zero Clutter
        ========================================================= */
 
     :root {
-        /* Windows 11 Light Mode Palette */
-        --win11-bg: #F3F3F3;             /* Mica Base Desktop */
-        --win11-surface: #FFFFFF;        /* App Card Background */
-        --win11-surface-hover: #F6F6F6;  /* Control Hover */
-        --win11-surface-pressed: #EDEDED;/* Control Pressed */
+        /* Material You / MD3+ Tonal Palette (Emerald & Slate) */
+        --md-sys-color-primary: #006c4c;
+        --md-sys-color-on-primary: #ffffff;
+        --md-sys-color-primary-container: #89f8c7;
+        --md-sys-color-on-primary-container: #002114;
         
-        --win11-accent: #0067C0;         /* Windows Accent Blue */
-        --win11-accent-hover: #005A9E;
-        --win11-accent-pressed: #004C87;
+        --md-sys-color-secondary: #4c6357;
+        --md-sys-color-on-secondary: #ffffff;
+        --md-sys-color-secondary-container: #cee9db;
+        --md-sys-color-on-secondary-container: #092016;
+
+        --md-sys-color-error: #ba1a1a;
+        --md-sys-color-error-container: #ffdad6;
+        --md-sys-color-on-error-container: #410002;
         
-        --win11-text: #191919;           /* Primary Text */
-        --win11-text-secondary: #5C5C5C; /* Secondary Text */
+        --md-sys-color-background: #fbfdf9;
+        --md-sys-color-surface: #fbfdf9;
+        --md-sys-color-surface-container: #f0f3ee;      /* Gray/Green tint background */
+        --md-sys-color-surface-container-high: #e9ece7; /* Card background */
+        --md-sys-color-surface-container-highest: #e3e6e1;
         
-        --win11-border: rgba(0, 0, 0, 0.06);       /* Subtle Borders */
-        --win11-border-bottom: rgba(0, 0, 0, 0.15); /* Controls bottom edge */
-        
-        --success-color: #0F7B0F;        /* Win11 Success Green */
-        --danger-color: #C42B1C;         /* Win11 Danger Red */
-        
-        --radius-window: 8px;
-        --radius-control: 4px;
-        
-        --shadow-flyout: 0 8px 16px rgba(0,0,0,0.14);
-        --shadow-card: 0 2px 4px rgba(0,0,0,0.04);
+        --md-sys-color-on-surface: #191c1d;
+        --md-sys-color-on-surface-variant: #3f484a;
+        --md-sys-color-outline: #6f797a;
+        --md-sys-color-outline-variant: #bfc8c9;
+
+        /* MD Shapes */
+        --md-sys-shape-corner-extra-large: 28px;
+        --md-sys-shape-corner-large: 16px;
+        --md-sys-shape-corner-full: 9999px;
+
+        /* MD Elevations (Soft, diffused shadows) */
+        --md-sys-elevation-1: 0px 1px 3px 1px rgba(0,0,0,0.1), 0px 1px 2px 0px rgba(0,0,0,0.06);
+        --md-sys-elevation-2: 0px 2px 6px 2px rgba(0,0,0,0.1), 0px 1px 2px 0px rgba(0,0,0,0.06);
+        --md-sys-elevation-3: 0px 4px 8px 3px rgba(0,0,0,0.1), 0px 1px 3px 0px rgba(0,0,0,0.06);
     }
 
     body {
-        background-color: var(--win11-bg) !important;
-        color: var(--win11-text) !important;
-        /* ใช้ฟอนต์หลักของ Windows */
-        font-family: "Segoe UI Variable", "Segoe UI", -apple-system, sans-serif !important; 
+        background-color: var(--md-sys-color-surface-container) !important;
+        color: var(--md-sys-color-on-surface) !important;
+        font-family: "Google Sans", "Sarabun", Roboto, sans-serif !important;
+        letter-spacing: 0.1px;
     }
 
-    /* --- Layout & Cards (App Windows) --- */
-    .app-layout { padding: 16px; gap: 16px; background-color: var(--win11-bg); }
+    /* --- Layout & Cards (Surface Containers) --- */
+    .app-layout { padding: 20px; gap: 20px; background-color: var(--md-sys-color-surface-container); }
     .search-column, .cart-column { padding: 0; }
 
     .card {
-        background-color: var(--win11-surface) !important;
-        border-radius: var(--radius-window) !important;
-        border: 1px solid var(--win11-border) !important;
-        box-shadow: var(--shadow-card) !important;
-        padding: 20px;
+        background-color: var(--md-sys-color-surface) !important;
+        border-radius: var(--md-sys-shape-corner-extra-large) !important;
+        border: none !important;
+        box-shadow: var(--md-sys-elevation-1) !important;
+        padding: 24px;
+        transition: box-shadow 0.2s ease;
     }
 
-    /* --- Headers --- */
+    /* --- Headers (Minimal Typography) --- */
     h2, h3 {
-        color: var(--win11-text) !important;
-        font-size: 1.25rem !important;
-        font-weight: 600 !important;
+        color: var(--md-sys-color-on-surface) !important;
+        font-size: 1.35rem !important;
+        font-weight: 500 !important;
         border-bottom: none !important;
-        margin-bottom: 16px !important;
+        margin-bottom: 24px !important;
         padding-bottom: 0 !important;
-        display: flex; align-items: center; gap: 8px;
+        display: flex; align-items: center; gap: 12px;
     }
-    h2 svg, h3 svg { color: var(--win11-text-secondary) !important; width: 20px; height: 20px; }
+    h2 svg, h3 svg { color: var(--md-sys-color-primary) !important; width: 24px; height: 24px; }
 
-    /* --- Inputs (Fluent Controls) --- */
+    /* --- Inputs (Material Filled Style) --- */
     input, select, .item-input, .form-group input#barcode-input {
-        background-color: rgba(255,255,255,0.7) !important;
-        color: var(--win11-text) !important;
-        border: 1px solid var(--win11-border) !important;
-        /* เอกลักษณ์ Win11 คือขอบล่างจะเข้มกว่านิดนึง */
-        border-bottom: 1px solid var(--win11-border-bottom) !important; 
-        border-radius: var(--radius-control) !important;
-        padding: 6px 12px !important;
-        font-size: 14px !important;
-        transition: all 0.1s ease-in-out !important;
+        background-color: var(--md-sys-color-surface-container-high) !important;
+        color: var(--md-sys-color-on-surface) !important;
+        border: none !important;
+        border-radius: var(--md-sys-shape-corner-full) !important;
+        padding: 14px 24px !important;
+        font-size: 16px !important;
+        transition: background-color 0.2s, box-shadow 0.2s !important;
         box-shadow: none !important;
         text-align: left;
     }
     .form-group input#barcode-input { 
-        padding: 8px 12px !important; 
-        font-size: 15px !important; 
-        border-radius: var(--radius-control) !important;
+        padding: 16px 24px !important; 
+        font-size: 18px !important; 
     }
     input:focus, select:focus, .form-group input#barcode-input:focus {
-        background-color: var(--win11-surface) !important;
-        border-color: var(--win11-border) !important;
-        /* เมื่อโฟกัส ขอบล่างจะกลายเป็นแถบสีน้ำเงิน 2px */
-        border-bottom: 2px solid var(--win11-accent) !important;
+        background-color: var(--md-sys-color-secondary-container) !important;
         outline: none !important;
-        padding-bottom: 5px !important; /* ชดเชยความหนาของขอบล่าง */
+        /* Focus ring using box-shadow instead of border to prevent layout shift */
+        box-shadow: 0 0 0 2px var(--md-sys-color-primary) inset !important;
     }
-    .form-group input#barcode-input:focus { padding-bottom: 7px !important; }
 
-    /* --- Standard Standard Buttons --- */
+    /* --- Buttons (Material Tonal & Filled) --- */
     button, .btn, .sidebar-btn {
-        background-color: var(--win11-surface) !important;
-        color: var(--win11-text) !important;
-        border: 1px solid var(--win11-border) !important;
-        border-bottom: 1px solid var(--win11-border-bottom) !important;
-        border-radius: var(--radius-control) !important;
-        padding: 6px 16px !important;
-        font-size: 14px !important;
-        font-weight: 400 !important;
+        background-color: var(--md-sys-color-surface-container-highest) !important;
+        color: var(--md-sys-color-on-surface) !important;
+        border: none !important;
+        border-radius: var(--md-sys-shape-corner-full) !important;
+        padding: 10px 20px !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
         cursor: pointer;
-        transition: background-color 0.1s ease-in-out !important;
+        transition: background-color 0.2s, opacity 0.2s !important;
         box-shadow: none !important;
-        transform: none !important; /* ปิดแอนิเมชันเด้งดึ๋ง */
+        transform: none !important; 
     }
-    button:hover, .btn:hover, .sidebar-btn:hover { background-color: var(--win11-surface-hover) !important; }
+    /* State Layer overlay effect */
+    button:hover, .btn:hover, .sidebar-btn:hover { 
+        background-color: var(--md-sys-color-outline-variant) !important; 
+    }
     button:active, .btn:active, .sidebar-btn:active { 
-        background-color: var(--win11-surface-pressed) !important; 
-        border-bottom: 1px solid var(--win11-border) !important; /* ขอบล่างยุบลง */
-        color: var(--win11-text-secondary) !important;
+        opacity: 0.8 !important; 
     }
 
-    /* --- Accent Button (Checkout / Primary) --- */
+    /* --- FAB / Primary Action Button (Checkout) --- */
     button.finish-sale {
-        background-color: var(--win11-accent) !important;
-        color: #FFFFFF !important;
-        border: 1px solid transparent !important;
-        border-bottom: 1px solid rgba(0,0,0,0.2) !important; /* Accent button มีขอบเงาล่างนิดๆ */
-        font-weight: 600 !important;
-        border-radius: var(--radius-control) !important;
+        background-color: var(--md-sys-color-primary) !important;
+        color: var(--md-sys-color-on-primary) !important;
+        font-weight: 500 !important;
+        border-radius: var(--md-sys-shape-corner-full) !important;
+        padding: 16px 32px !important;
+        font-size: 18px !important;
+        box-shadow: var(--md-sys-elevation-2) !important;
+        letter-spacing: 0.5px;
     }
-    button.finish-sale:hover { background-color: var(--win11-accent-hover) !important; }
-    button.finish-sale:active { 
-        background-color: var(--win11-accent-pressed) !important; 
-        border-bottom: 1px solid transparent !important;
-        color: rgba(255,255,255,0.8) !important;
+    button.finish-sale:hover { 
+        box-shadow: var(--md-sys-elevation-3) !important;
+        filter: brightness(1.1);
     }
+    button.clear-cart { 
+        background-color: var(--md-sys-color-error-container) !important; 
+        color: var(--md-sys-color-on-error-container) !important; 
+        box-shadow: none !important;
+    }
+    button.clear-cart:hover { background-color: #ffd2cc !important; }
 
-    /* Danger Button (Clear) */
-    button.clear-cart { background-color: var(--danger-color) !important; color: white !important; border: none !important;}
-    button.clear-cart:hover { filter: brightness(0.9) !important; }
-
-    /* --- Cart Items (ListView) --- */
+    /* --- Cart Items (Minimal List) --- */
     .cart-header-row {
         background: transparent !important;
         border: none !important;
-        border-bottom: 1px solid var(--win11-border) !important;
-        color: var(--win11-text-secondary) !important;
-        font-weight: 600 !important;
-        font-size: 13px !important;
-        padding: 8px 12px !important;
+        color: var(--md-sys-color-on-surface-variant) !important;
+        font-weight: 500 !important;
+        font-size: 14px !important;
+        padding: 12px 16px !important;
+        border-bottom: 1px solid var(--md-sys-color-outline-variant) !important;
     }
+    #cart-items { margin-top: 8px !important; }
     #cart-items li {
         background-color: transparent !important;
         border: none !important;
-        border-radius: var(--radius-control) !important; /* Selection แบบมน */
-        padding: 6px 12px !important;
-        margin: 2px 0 !important;
-        color: var(--win11-text) !important;
-        transition: background-color 0.1s !important;
+        border-radius: var(--md-sys-shape-corner-large) !important;
+        padding: 10px 16px !important;
+        margin: 4px 0 !important;
+        color: var(--md-sys-color-on-surface) !important;
+        transition: background-color 0.2s !important;
     }
-    #cart-items li:hover { background-color: var(--win11-surface-hover) !important; }
+    #cart-items li:hover { background-color: var(--md-sys-color-surface-container-high) !important; }
     
-    /* Highlight */
-    #cart-items li.highlight-quantity { background-color: #FFF4CE !important; border-left: none !important; }
+    #cart-items li.highlight-quantity { 
+        background-color: var(--md-sys-color-secondary-container) !important; 
+        border-left: none !important; 
+    }
 
-    /* --- Search Results Dropdown (Flyout) --- */
+    /* --- Search Results Dropdown (Elevated Card) --- */
     #search-results.has-results {
-        background: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(20px) !important; /* Acrylic/Mica Effect */
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid var(--win11-border) !important;
-        border-radius: var(--radius-window) !important;
-        box-shadow: var(--shadow-flyout) !important;
-        padding: 4px !important;
-        position: absolute; top: calc(100% + 4px); left: 0; width: 100%; z-index: 1000;
-        max-height: 50vh; overflow-y: auto; overflow-x: hidden;
+        background: var(--md-sys-color-surface) !important;
+        border: none !important;
+        border-radius: var(--md-sys-shape-corner-extra-large) !important;
+        box-shadow: var(--md-sys-elevation-3) !important;
+        padding: 12px !important;
+        position: absolute; top: calc(100% + 8px); left: 0; width: 100%; z-index: 1000;
+        max-height: 55vh; overflow-y: auto; overflow-x: hidden;
     }
     .search-row {
         background: transparent !important;
         border: none !important;
-        border-radius: var(--radius-control) !important;
+        border-radius: var(--md-sys-shape-corner-large) !important;
         margin: 2px 0 !important; padding: 0 !important;
         display: flex; flex-direction: column;
     }
     .main-cell { 
-        padding: 8px 12px !important; 
+        padding: 14px 20px !important; 
         border: none !important; 
-        border-radius: var(--radius-control) !important; 
+        border-radius: var(--md-sys-shape-corner-large) !important; 
         background: transparent !important;
     }
     
-    /* Hover state for list items in Win11 */
     .search-row:hover, .search-row.selected-row, .main-cell.active-unit {
-        background-color: var(--win11-surface-hover) !important;
+        background-color: var(--md-sys-color-surface-container-highest) !important;
     }
-    /* Indicator สีน้ำเงินเข้มเล็กๆ ด้านซ้ายมือเวลาถูกโฟกัส */
-    .main-cell.active-unit {
-        position: relative;
-    }
-    .main-cell.active-unit::before {
-        content: ''; position: absolute; left: 0; top: 25%; height: 50%; width: 3px;
-        background-color: var(--win11-accent); border-radius: 4px;
-    }
-
-    .alt-units-wrapper { padding: 0 12px 8px 12px !important; background: transparent !important; border: none !important; display: flex; gap: 4px;}
+    .main-cell.active-unit { background-color: var(--md-sys-color-primary-container) !important; }
+    
+    .alt-units-wrapper { padding: 0 20px 12px 20px !important; background: transparent !important; border: none !important; display: flex; gap: 8px;}
     .alt-cell {
-        background: var(--win11-surface) !important;
-        border: 1px solid var(--win11-border) !important;
-        border-radius: var(--radius-control) !important;
-        padding: 4px 8px !important;
-        color: var(--win11-text) !important;
-        font-size: 13px !important;
+        background: var(--md-sys-color-surface-container-high) !important;
+        border: none !important;
+        border-radius: var(--md-sys-shape-corner-large) !important;
+        padding: 8px 16px !important;
+        color: var(--md-sys-color-on-surface) !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
     }
+    .alt-cell:hover { background: var(--md-sys-color-outline-variant) !important; }
     .alt-cell.active-unit { 
-        background: var(--win11-surface-pressed) !important; 
-        border-color: var(--win11-border-bottom) !important; 
+        background: var(--md-sys-color-secondary) !important; 
+        color: var(--md-sys-color-on-secondary) !important;
     }
+    .alt-cell.active-unit .sub-text, .alt-cell.active-unit .cell-price { color: var(--md-sys-color-on-secondary) !important; }
 
-    .product-name-single { font-weight: 600; color: var(--win11-text); }
-    .cell-price { font-weight: 600; color: var(--win11-text); }
-    .sub-text { font-size: 12px; color: var(--win11-text-secondary); }
+    .product-name-single { font-weight: 500; font-size: 16px; color: var(--md-sys-color-on-surface); }
+    .cell-price { font-weight: 500; color: var(--md-sys-color-primary); font-size: 16px; }
+    .sub-text { font-size: 13px; color: var(--md-sys-color-on-surface-variant); }
     .expand-indicator { display: none !important; }
 
-    /* --- Tabs (Pivot UI) --- */
-    #cart-tabs { border-bottom: none !important; padding-bottom: 0 !important; margin-bottom: 8px !important;}
+    /* --- Segmented Buttons (Tabs) --- */
+    #cart-tabs { 
+        border-bottom: none !important; 
+        padding-bottom: 0 !important; 
+        margin-bottom: 16px !important;
+        display: flex; gap: 8px;
+    }
     .tab-button {
-        background: transparent !important;
+        background: var(--md-sys-color-surface-container-high) !important;
         border: none !important;
-        border-radius: var(--radius-control) !important;
-        margin-right: 2px !important;
-        padding: 6px 12px !important;
-        color: var(--win11-text-secondary) !important;
-        font-size: 14px !important;
-        font-weight: 400 !important;
+        border-radius: var(--md-sys-shape-corner-full) !important;
+        margin: 0 !important;
+        padding: 10px 24px !important;
+        color: var(--md-sys-color-on-surface-variant) !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
     }
-    .tab-button:hover { background: var(--win11-surface-hover) !important; color: var(--win11-text) !important;}
+    .tab-button:hover { background: var(--md-sys-color-surface-container-highest) !important; }
     .tab-button.active {
-        background: transparent !important;
-        color: var(--win11-text) !important;
-        font-weight: 600 !important;
-        position: relative;
-    }
-    /* แถบเส้นใต้บอกสถานะ Active แบบ Windows 11 Settings */
-    .tab-button.active::after {
-        content: ''; position: absolute; bottom: 0; left: 25%; right: 25%; height: 3px;
-        background-color: var(--win11-accent); border-radius: 3px 3px 0 0;
+        background: var(--md-sys-color-secondary-container) !important;
+        color: var(--md-sys-color-on-secondary-container) !important;
     }
 
-    /* --- Totals Section --- */
+    /* --- Totals Section (Minimal Divider) --- */
     .totals-section {
         background: transparent !important;
         border: none !important;
-        border-top: 1px solid var(--win11-border) !important;
-        padding: 16px 0 0 0 !important;
-        margin-top: 16px !important;
+        border-top: 1px solid var(--md-sys-color-outline-variant) !important;
+        padding: 24px 0 0 0 !important;
+        margin-top: 24px !important;
     }
     #cart-total { 
-        color: var(--win11-text) !important; 
-        font-size: 28px !important; 
-        font-weight: 600 !important; 
+        color: var(--md-sys-color-on-surface) !important; 
+        font-size: 32px !important; 
+        font-weight: 400 !important; 
+        letter-spacing: -0.5px;
     }
 
     /* --- Modals (Dialogs) --- */
     .modal-overlay { 
-        background-color: rgba(0,0,0,0.3) !important; 
-        /* ไม่เบลอหนักเกินไปเพื่อให้หน้าต่างดูคม */
-        backdrop-filter: blur(2px) !important; 
+        background-color: rgba(0, 0, 0, 0.4) !important; 
+        backdrop-filter: blur(2px);
     }
     .modal-content {
-        background-color: rgba(255, 255, 255, 0.98) !important;
-        backdrop-filter: blur(20px) !important;
-        border: 1px solid var(--win11-border) !important;
-        border-radius: var(--radius-window) !important;
-        box-shadow: var(--shadow-flyout) !important;
+        background-color: var(--md-sys-color-surface-container-high) !important;
+        border: none !important;
+        border-radius: var(--md-sys-shape-corner-extra-large) !important;
+        box-shadow: var(--md-sys-elevation-3) !important;
         padding: 0 !important;
+        overflow: hidden;
     }
-    .modal-header { background: transparent !important; padding: 16px 20px 8px 20px !important; border-bottom: none !important;}
-    .modal-header h3 { margin: 0 !important; color: var(--win11-text) !important; font-size: 18px !important; }
-    .modal-body { padding: 0 20px 20px 20px !important; }
+    .modal-header { background: transparent !important; padding: 24px 24px 16px 24px !important; border-bottom: none !important;}
+    .modal-header h3 { margin: 0 !important; font-size: 24px !important; color: var(--md-sys-color-on-surface) !important;}
+    .modal-body { padding: 0 24px 24px 24px !important; }
     .modal-footer { 
-        background: var(--win11-surface-hover) !important; 
-        border-top: 1px solid var(--win11-border) !important; 
-        padding: 16px 20px !important; 
-        border-radius: 0 0 var(--radius-window) var(--radius-window);
+        background: transparent !important; 
+        border-top: none !important; 
+        padding: 16px 24px 24px 24px !important; 
     }
 
-    /* --- Windows 11 Scrollbars --- */
-    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    /* Status Badges */
+    .auth-status-badge {
+        background: var(--md-sys-color-secondary-container) !important;
+        color: var(--md-sys-color-on-secondary-container) !important;
+        border: none !important;
+        border-radius: var(--md-sys-shape-corner-full) !important;
+        padding: 6px 16px !important;
+        font-weight: 500 !important;
+    }
+
+    /* --- Scrollbars (Invisible/Minimal) --- */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { 
-        background-color: rgba(0, 0, 0, 0.2); 
-        border: 3px solid var(--win11-surface); /* สร้างช่องว่างให้ขอบดูบางลง */
-        border-radius: 10px; 
+        background-color: var(--md-sys-color-outline-variant); 
+        border-radius: var(--md-sys-shape-corner-full); 
     }
-    ::-webkit-scrollbar-thumb:hover { background-color: rgba(0, 0, 0, 0.4); }
+    ::-webkit-scrollbar-thumb:hover { background-color: var(--md-sys-color-outline); }
 </style>
-
 <style id="mobile-pro-overrides">
 @supports (padding: max(0px)) {
   :root {
