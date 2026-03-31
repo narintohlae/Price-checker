@@ -1324,20 +1324,20 @@ h2 .auth-status-badge.offline .dot { background: #999; }
 </style>
 <style id="ipad-pos-theme">
     /* ====================================================
-       iPAD / TABLET OPTIMIZED POS THEME (CLEAN & MINIMAL)
+       iPAD / TABLET OPTIMIZED POS THEME (WIDER CART)
        ==================================================== */
     
     :root {
         /* iOS System Colors */
-        --primary-color: #007AFF; /* iOS Blue */
-        --success-color: #34C759; /* iOS Green */
-        --danger-color: #FF3B30;  /* iOS Red */
-        --warning-color: #FFCC00; /* iOS Yellow */
+        --primary-color: #007AFF; 
+        --success-color: #34C759; 
+        --danger-color: #FF3B30;  
+        --warning-color: #FFCC00; 
         
-        --light-bg: #F2F2F7;      /* iOS System Grouped Background */
+        --light-bg: #F2F2F7;      
         --white-color: #FFFFFF;
-        --dark-text: #1C1C1E;     /* iOS Label */
-        --secondary-color: #8E8E93; /* iOS Secondary Label */
+        --dark-text: #1C1C1E;     
+        --secondary-color: #8E8E93; 
         --border-color: #C6C6C8;
         
         --radius-lg: 20px;
@@ -1350,7 +1350,7 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Sarabun", sans-serif !important;
         background-color: var(--light-bg) !important;
         -webkit-font-smoothing: antialiased;
-        overscroll-behavior-y: none; /* ป้องกันการดึงหน้าจอเด้ง (Rubber-band) บน iPad */
+        overscroll-behavior-y: none; 
         font-size: 1.1em;
     }
 
@@ -1361,9 +1361,9 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         letter-spacing: -0.5px;
     }
 
-    /* 2. Layout Proportions */
+    /* 2. Layout Proportions (ปรับตะกร้าให้ใหญ่กว่าค้นหา) */
     .app-layout {
-        grid-template-columns: 55% 45% !important; /* แบ่งสัดส่วนจอ iPad ให้ฝั่งตะกร้ากว้างขึ้น */
+        grid-template-columns: 38% 62% !important; /* ค้นหา 38% | ตะกร้า 62% */
         padding: 16px;
         gap: 16px;
         box-sizing: border-box;
@@ -1374,7 +1374,7 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         padding: 0 !important;
     }
 
-    /* 3. Card Elements (iOS Surface) */
+    /* 3. Card Elements */
     .card {
         border-radius: var(--radius-lg) !important;
         border: none !important;
@@ -1383,11 +1383,11 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         padding: 20px !important;
     }
 
-    /* 4. Touch-Friendly Inputs (ช่องค้นหา) */
+    /* 4. Touch-Friendly Inputs */
     #barcode-input {
         height: 52px;
         border-radius: var(--radius-md);
-        background-color: #7676801F; /* iOS Search Bar Fill */
+        background-color: #7676801F; 
         border: none !important;
         font-size: 1.2rem;
         padding: 0 16px 0 40px;
@@ -1404,11 +1404,11 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         width: 20px; height: 20px;
     }
 
-    /* 5. ตารางตะกร้าสินค้า (Cart Grid) */
+    /* 5. ตารางตะกร้าสินค้า (ขยายช่อง Input ให้ใหญ่ขึ้นตามพื้นที่) */
     .cart-header-row {
         display: grid !important;
-        /* ซ่อนลำดับ (#) เพื่อเพิ่มพื้นที่ให้ชื่อสินค้าบนจอสัมผัส */
-        grid-template-columns: 0px 3fr 100px 100px 110px 48px !important;
+        /* ขยายช่อง จำนวน, ราคา, รวม ให้กว้างขึ้น */
+        grid-template-columns: 0px 3.5fr 110px 110px 130px 52px !important;
         padding: 12px 0 !important;
         border-bottom: 1px solid #E5E5EA !important;
         color: var(--secondary-color);
@@ -1421,7 +1421,7 @@ h2 .auth-status-badge.offline .dot { background: #999; }
     }
     #cart-items li {
         display: grid !important;
-        grid-template-columns: 0px 3fr 100px 100px 110px 48px !important;
+        grid-template-columns: 0px 3.5fr 110px 110px 130px 52px !important;
         align-items: center;
         padding: 16px 0 !important;
         border-bottom: 1px solid #E5E5EA !important;
@@ -1437,12 +1437,12 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         margin-bottom: 4px;
     }
 
-    /* 6. Inputs ภายในตะกร้า (ตัวเลข) */
+    /* 6. Inputs ภายในตะกร้า */
     .col-qty .item-input, .col-price .item-input, .col-total .item-input {
         font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
     .col-qty .item-input {
-        height: 44px; /* ขนาดเป้าหมายนิ้วมือขั้นต่ำของ Apple */
+        height: 44px; 
         width: 100% !important;
         border-radius: 8px;
         background-color: #F2F2F7;
@@ -1462,13 +1462,13 @@ h2 .auth-status-badge.offline .dot { background: #999; }
     }
     .col-total .item-input {
         color: var(--dark-text);
-        font-size: 1.2rem;
+        font-size: 1.25rem;
     }
 
     /* ปุ่มลบสินค้า */
     .delete-item-btn {
-        width: 40px !important;
-        height: 40px !important;
+        width: 44px !important;
+        height: 44px !important;
         background-color: #FFEBEB !important;
         color: var(--danger-color) !important;
         border-radius: 50% !important;
@@ -1480,7 +1480,7 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         transform: scale(0.9);
     }
 
-    /* 7. สรุปยอดและปุ่ม (Totals & Actions) */
+    /* 7. สรุปยอดและปุ่ม */
     .totals-section {
         background-color: #F2F2F7;
         border-radius: var(--radius-md);
@@ -1516,19 +1516,19 @@ h2 .auth-status-badge.offline .dot { background: #999; }
 
     .button-group-2 {
         display: grid !important;
-        grid-template-columns: 1fr 2fr !important; /* สัดส่วนปุ่มชำระเงิน */
+        grid-template-columns: 1fr 2fr !important; 
         gap: 16px;
         margin-top: 20px !important;
     }
     .button-group-2 button {
-        height: 64px !important; /* ปุ่มใหญ่ จิ้มง่าย */
+        height: 64px !important; 
         font-size: 1.3rem !important;
         border-radius: var(--radius-md);
         font-weight: 600;
         border: none;
     }
     button.finish-sale {
-        background-color: var(--primary-color) !important; /* ใช้สีฟ้าน้ำทะเล Apple */
+        background-color: var(--primary-color) !important; 
         color: white;
     }
     button.finish-sale:active {
@@ -1544,7 +1544,7 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         transform: scale(0.98);
     }
 
-    /* 8. Tabs (แท็บบิลด้านบนตะกร้า) */
+    /* 8. Tabs */
     .cart-tabs-container {
         border-bottom: none;
         margin-bottom: 16px;
@@ -1564,7 +1564,7 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
     }
 
-    /* 9. Scrollbars ให้ออกมาเนียนๆ แบบ iOS */
+    /* 9. Scrollbars */
     ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -1577,7 +1577,7 @@ h2 .auth-status-badge.offline .dot { background: #999; }
         border-radius: 10px;
     }
     
-    /* 10. Modals ชำระเงิน */
+    /* 10. Modals */
     .modal-content {
         border-radius: var(--radius-lg);
         background: rgba(255,255,255,0.95);
