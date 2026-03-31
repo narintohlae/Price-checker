@@ -1322,283 +1322,292 @@ h2 .auth-status-badge.offline .dot { background: #999; }
     cursor: pointer;
 }
 </style>
-<style id="ipad-native-pos-theme">
+<style id="iphone-pos-2026-theme">
     /* ====================================================
-       APPLE iPAD NATIVE POS THEME (MASTER EDITION)
-       ออกแบบตาม Apple Human Interface Guidelines
+       2026 FUTURE-PROOF POS (iPhone / Mobile-First)
+       Glassmorphism + Neon Fusion + Floating Hub
        ==================================================== */
     
     :root {
-        /* iOS System Colors */
-        --ios-bg: #F2F2F7;          /* Grouped Background */
-        --ios-card: #FFFFFF;        /* Card Surface */
-        --ios-blue: #007AFF;        /* Primary Action */
-        --ios-green: #34C759;       /* Pay / Success */
-        --ios-red: #FF3B30;         /* Destructive */
-        --ios-text: #000000;        /* Primary Text */
-        --ios-gray: #8E8E93;        /* Secondary Text */
-        --ios-light-gray: #E5E5EA;  /* Light Fill */
-        --ios-separator: #C6C6C8;   /* Borders */
+        --space-bg: #0b0c10;
+        --glass-bg: rgba(255, 255, 255, 0.05);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --neon-cyan: #00f3ff;
+        --neon-green: #00ff88;
+        --neon-red: #ff0055;
+        --text-main: #ffffff;
+        --text-muted: #8b93a5;
     }
 
-    /* 1. Reset & Native iOS Typography */
+    /* 1. รีเซ็ตทั้งหน้าให้เป็น Mobile App ผิวกระจก */
     body {
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Sarabun", sans-serif !important;
-        background-color: var(--ios-bg) !important;
-        color: var(--ios-text);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Sarabun", sans-serif !important;
+        background-color: var(--space-bg) !important;
+        background-image: radial-gradient(circle at top right, rgba(0, 243, 255, 0.15), transparent 40%),
+                          radial-gradient(circle at bottom left, rgba(0, 255, 136, 0.1), transparent 40%);
+        color: var(--text-main);
         margin: 0;
-        /* ป้องกันหน้าจอเด้งดึ๋งเวลาเอานิ้วไถบน iPad */
-        overscroll-behavior: none;
-        -webkit-font-smoothing: antialiased;
+        overflow: hidden; /* ห้ามเลื่อนทั้งหน้า */
+        /* ใช้ dvh เพื่อให้พอดีจอ iPhone แท้ๆ */
+        height: 100dvh; 
+        overscroll-behavior-y: none;
     }
 
-    h2, h3, h4 {
-        color: var(--ios-text) !important;
-        font-weight: 700;
-        border: none !important;
-        margin-top: 0;
-        letter-spacing: -0.5px;
-    }
+    h2, h3, h4 { display: none !important; } /* ซ่อนหัวข้อที่กินพื้นที่บนมือถือ */
 
-    /* 2. Main Layout (แบ่งจอ 40 : 60 แบบแอป iPad) */
+    /* 2. จัดโครงสร้างเป็น "บน (ค้นหา) - กลาง (ตะกร้า) - ล่าง (จ่ายเงิน)" */
     .app-layout {
         display: flex !important;
-        flex-direction: row !important;
-        height: 100vh !important;
-        padding: 16px; /* ระยะห่างขอบจอมาตรฐาน iPad */
-        gap: 16px;
-        box-sizing: border-box;
+        flex-direction: column !important;
+        height: 100dvh !important;
+        padding: 0 !important;
+        gap: 0 !important;
     }
 
-    .search-column { width: 40% !important; padding: 0 !important; display: flex; flex-direction: column; }
-    .cart-column   { width: 60% !important; padding: 0 !important; display: flex; flex-direction: column; }
-
-    /* พื้นหลังบัตร (Cards) แบบมนเรียบเนียน */
     .card {
-        background-color: var(--ios-card) !important;
-        border-radius: 16px !important;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.04) !important;
-        border: none !important;
-        padding: 20px !important;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        box-sizing: border-box;
-    }
-
-    /* =========================================
-       ฝั่งซ้าย: ค้นหาสินค้า
-       ========================================= */
-    #barcode-input {
-        height: 50px;
-        font-size: 1.1rem;
-        border-radius: 12px;
-        background-color: rgba(118, 118, 128, 0.12) !important; /* iOS Search Bar */
-        border: none !important;
-        padding: 0 16px 0 40px;
-        color: var(--ios-text);
-        margin-bottom: 16px;
-    }
-    #barcode-input:focus {
-        background-color: rgba(118, 118, 128, 0.18) !important;
-        outline: none;
-        box-shadow: none !important;
-    }
-
-    #main-search-area {
-        flex-grow: 1;
-        overflow-y: auto;
-        min-height: 0; /* ล็อกไม่ให้ทะลุจอ */
-    }
-
-    .search-item {
-        padding: 16px 12px !important;
-        border-bottom: 1px solid var(--ios-separator) !important;
-        font-size: 1.1rem;
-    }
-    .search-item .price {
-        color: var(--ios-text) !important;
-        font-weight: 600;
-    }
-
-    /* =========================================
-       ฝั่งขวา: ตะกร้าสินค้า
-       ========================================= */
-    .cart-tabs-container {
-        border-bottom: none !important;
-        margin-bottom: 12px;
-        display: flex;
-        gap: 8px;
-    }
-    .tab-button {
-        background: var(--ios-light-gray);
-        color: var(--ios-text);
-        border: none;
-        border-radius: 10px;
-        padding: 10px 18px;
-        font-size: 1rem;
-        font-weight: 600;
-    }
-    .tab-button.active {
-        background: var(--ios-text);
-        color: var(--ios-card);
-    }
-    #add-new-tab-btn {
-        background: var(--ios-light-gray);
-        border: none;
-        border-radius: 10px;
-        width: 42px; height: 42px;
-    }
-
-    /* โครงสร้างตาราง (Grid) ให้ช่องตัวเลขพอดี และชื่อสินค้ากว้างสุด */
-    .cart-header-row, #cart-items li {
-        display: grid !important;
-        /* ซ่อน# | ชื่อ(ยืดได้) | จำนวน | ราคา | รวม | ลบ */
-        grid-template-columns: 0px 1fr 85px 95px 110px 44px !important;
-        gap: 12px;
-        align-items: center;
-    }
-
-    .cart-header-row {
-        padding: 12px 0 !important;
-        border-bottom: 1px solid var(--ios-separator) !important;
-        color: var(--ios-gray);
-        font-size: 0.95rem;
-        font-weight: 500;
-    }
-    .cart-header-row .col-seq, #cart-items .col-seq { display: none !important; }
-
-    #cart-items {
-        flex-grow: 1;
-        overflow-y: auto;
-        min-height: 0;
-        margin: 0; padding-right: 8px;
-    }
-
-    #cart-items li {
-        padding: 16px 0 !important;
-        border-bottom: 1px solid var(--ios-separator) !important;
         background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
         border-radius: 0 !important;
     }
 
-    /* ชื่อสินค้าให้ตัดบรรทัดได้ ไม่ทำตารางพัง */
-    .col-name { min-width: 0; }
-    .col-name strong {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: var(--ios-text);
-        display: block;
-        margin-bottom: 4px;
-        white-space: normal;
-        word-break: break-word;
-        line-height: 1.3;
-    }
-    .col-name .sub-text { font-size: 0.9rem; color: var(--ios-gray); }
-
-    /* Input สัมผัสบน iPad (ลดขอบกวนตา) */
-    .col-qty .item-input {
-        height: 44px;
+    /* =========================================
+       TOP BAR: AI Command Center
+       ========================================= */
+    .search-column {
         width: 100% !important;
+        height: auto !important;
+        padding: env(safe-area-inset-top) 16px 16px 16px !important;
+        background: rgba(11, 12, 16, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        z-index: 100;
+        flex-shrink: 0;
+    }
+
+    #barcode-input {
+        width: 100%;
+        height: 56px;
+        border-radius: 28px;
+        background: rgba(0, 243, 255, 0.05) !important;
+        border: 1px solid rgba(0, 243, 255, 0.3) !important;
+        color: var(--neon-cyan) !important;
+        font-size: 1.2rem;
+        padding: 0 24px;
         text-align: center;
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: var(--ios-blue);
-        background: rgba(118, 118, 128, 0.08);
-        border: none !important;
-        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 243, 255, 0.1);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
-    .col-price .item-input, .col-total .item-input {
-        height: 44px;
-        width: 100% !important;
-        text-align: right;
-        background: transparent !important;
-        border: none !important;
-        font-size: 1.15rem;
-        font-weight: 500;
+    #barcode-input:focus {
+        background: rgba(0, 243, 255, 0.1) !important;
+        border-color: var(--neon-cyan) !important;
+        box-shadow: 0 0 0 4px rgba(0, 243, 255, 0.2), 0 8px 30px rgba(0, 243, 255, 0.2) !important;
+        outline: none;
     }
-    .col-total .item-input { font-weight: 700; color: var(--ios-text); }
+    #barcode-input::placeholder { color: rgba(0, 243, 255, 0.4); }
 
-    .delete-item-btn {
-        width: 36px !important;
-        height: 36px !important;
-        border-radius: 18px !important;
-        background-color: var(--ios-light-gray) !important;
-        color: var(--ios-red) !important;
-        margin: auto;
-        border: none;
+    #search-results.has-results {
+        position: absolute;
+        top: calc(env(safe-area-inset-top) + 75px);
+        left: 16px; right: 16px;
+        background: rgba(20, 22, 30, 0.95);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        max-height: 50vh;
+        z-index: 999;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
-    .delete-item-btn:active { opacity: 0.5; }
+    .search-item {
+        padding: 16px !important;
+        border-bottom: 1px solid var(--glass-border) !important;
+        color: var(--text-main) !important;
+    }
 
     /* =========================================
-       กล่องชำระเงินด้านล่าง (Totals & Actions)
+       MIDDLE: Glassmorphism Cart Cards
        ========================================= */
-    .totals-section {
-        flex-shrink: 0;
-        background-color: #FAFAFC;
-        border-radius: 16px;
-        padding: 20px !important;
-        margin-top: 16px;
+    .cart-column {
+        width: 100% !important;
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 16px 180px 16px !important; /* เผื่อที่ให้แถบล่างลอยทับ */
+        /* ซ่อน Scrollbar ของ Safari */
+        scrollbar-width: none; 
+    }
+    .cart-column::-webkit-scrollbar { display: none; }
+
+    .cart-tabs-container { display: none !important; } /* ซ่อน Tabs บนมือถือ */
+    .cart-header-row { display: none !important; } /* ซ่อนหัวตาราง เปลี่ยนเป็น Card แทน */
+
+    #cart-items {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 0; padding: 0;
     }
 
+    /* เปลี่ยน <li> จากตารางแนวยาว เป็น Grid Card ย่อส่วน */
+    #cart-items li {
+        display: grid !important;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        grid-template-areas: 
+            "name delete"
+            "price-qty total";
+        gap: 12px;
+        background: var(--glass-bg) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 20px !important;
+        padding: 16px !important;
+        margin-bottom: 0 !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .col-seq { display: none !important; }
+    
+    .col-name { grid-area: name; }
+    .col-name strong {
+        font-size: 1.15rem;
+        color: var(--text-main);
+        display: block;
+        margin-bottom: 2px;
+    }
+    .col-name .sub-text { color: var(--text-muted); font-size: 0.9rem; }
+
+    .col-delete { grid-area: delete; justify-self: end; }
+    .delete-item-btn {
+        width: 36px !important; height: 36px !important;
+        border-radius: 12px !important;
+        background: rgba(255, 0, 85, 0.1) !important;
+        color: var(--neon-red) !important;
+        border: 1px solid rgba(255, 0, 85, 0.2) !important;
+    }
+
+    /* รวบราคาและจำนวนไว้ฝั่งซ้ายล่าง */
+    .col-qty, .col-price { display: inline-block; }
+    .col-qty { grid-area: price-qty; display: flex; align-items: center; gap: 8px; }
+    
+    .col-qty .item-input {
+        width: 60px !important;
+        height: 36px !important;
+        background: rgba(255,255,255,0.1) !important;
+        border: none !important;
+        border-radius: 10px;
+        color: var(--text-main) !important;
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+    
+    .col-price { display: none; } /* ซ่อนราคาต่อหน่วยไว้ก่อน ประหยัดที่ */
+
+    .col-total { grid-area: total; justify-self: end; align-self: end; }
+    .col-total .item-input {
+        width: auto !important;
+        background: transparent !important;
+        border: none !important;
+        color: var(--neon-cyan) !important;
+        font-size: 1.4rem;
+        font-weight: 800;
+        text-align: right;
+        padding: 0;
+    }
+
+    /* =========================================
+       BOTTOM: Floating Transaction Hub
+       ========================================= */
+    .totals-section {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        background: rgba(11, 12, 16, 0.85);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-top: 1px solid rgba(0, 255, 136, 0.3);
+        border-radius: 32px 32px 0 0;
+        padding: 20px 20px calc(20px + env(safe-area-inset-bottom)) 20px !important;
+        z-index: 200;
+        box-shadow: 0 -10px 40px rgba(0, 255, 136, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .totals-summary { width: 100% !important; }
+    
     .total-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 1.15rem;
-        margin-bottom: 12px;
-        color: var(--ios-gray);
+        margin-bottom: 0;
     }
-    .total-row span { color: var(--ios-text); font-weight: 600; }
+    .total-row label { color: var(--text-muted); font-size: 1.1rem; }
+    
+    /* ซ่อนส่วนลดชั่วคราวเพื่อให้ดูคลีน (หรือปรับให้เป็นกล่องเล็กๆ) */
+    .total-row:nth-child(1), .total-row:nth-child(2) { display: none; }
 
     #cart-total {
         font-size: 3rem !important;
-        color: var(--ios-text) !important;
-        font-weight: 700;
-        line-height: 1;
-        margin-top: 8px;
+        color: var(--neon-green) !important;
+        font-weight: 900;
+        text-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
     }
 
-    #discount-input {
-        height: 44px;
-        width: 100px !important;
-        text-align: right;
-        font-size: 1.15rem;
-        border-radius: 8px;
-        border: 1px solid var(--ios-separator);
-        background: var(--ios-card);
-    }
-
+    /* ปุ่ม Action สไตล์ AI Wallet 2026 */
     .button-group-2 {
         display: flex !important;
         gap: 12px;
-        margin-top: 24px !important;
+        margin-top: 0 !important;
     }
     .button-group-2 button {
-        height: 64px !important; /* ปุ่มขนาดใหญ่เป้าหมายนิ้ว */
-        font-size: 1.4rem !important;
-        font-weight: 600;
-        border-radius: 14px;
+        height: 60px !important;
+        border-radius: 20px;
+        font-size: 1.2rem !important;
+        font-weight: 800;
         border: none;
+        letter-spacing: 0.5px;
     }
     button.finish-sale {
-        background-color: var(--ios-green) !important;
-        color: white;
-        flex: 2.5; /* ขยายปุ่มชำระเงินให้กว้าง */
+        flex: 3;
+        background: linear-gradient(135deg, #00ff88 0%, #00b3ff 100%) !important;
+        color: #000;
+        box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
     }
-    button.finish-sale:active { opacity: 0.7; }
+    button.finish-sale:active { transform: scale(0.96); box-shadow: 0 5px 10px rgba(0, 255, 136, 0.2); }
     
     button.clear-cart {
-        background-color: var(--ios-light-gray) !important;
-        color: var(--ios-red) !important;
         flex: 1;
+        background: rgba(255, 0, 85, 0.1) !important;
+        color: var(--neon-red) !important;
+        border: 1px solid rgba(255, 0, 85, 0.3) !important;
     }
-    button.clear-cart:active { opacity: 0.7; }
+    button.clear-cart:active { transform: scale(0.96); }
 
-    /* Scrollbars แบบซ่อนรูป สไตล์ iOS */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+    /* =========================================
+       MODAL OVERRIDES (หน้าต่างจ่ายเงิน)
+       ========================================= */
+    .modal-content {
+        background: rgba(15, 16, 20, 0.95) !important;
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid var(--glass-border);
+        border-radius: 32px !important;
+        color: var(--text-main);
+    }
+    .modal-header h3 { color: var(--neon-cyan) !important; border: none !important; display: block !important;}
+    
+    #cash-received-input {
+        background: rgba(255,255,255,0.05);
+        color: var(--neon-green);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        border-radius: 20px;
+    }
+    #payment-change { color: var(--neon-cyan) !important; text-shadow: 0 0 10px rgba(0, 243, 255, 0.4); }
 </style>
 </head>
 <body class="density-compact">
