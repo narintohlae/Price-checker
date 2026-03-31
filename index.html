@@ -1070,12 +1070,234 @@ input[type="radio"].radio, .radio{ width:16px; height:16px; border:var(--border)
         display: none !important;
     }
 }
+    <style id="super-pos-theme">
+    /* =========================================================
+       ✨ SUPER POS DESIGN SYSTEM ✨
+       Ultra-modern, clean, and high-efficiency UI
+       ========================================================= */
+
+    :root {
+        /* Color Palette (Slate & Indigo based) */
+        --primary-color: #4f46e5;      /* Indigo 600 */
+        --primary-hover: #4338ca;      /* Indigo 700 */
+        --primary-light: #e0e7ff;      /* Indigo 100 */
+        --success-color: #10b981;      /* Emerald 500 */
+        --danger-color: #ef4444;       /* Red 500 */
+        --warning-color: #f59e0b;      /* Amber 500 */
+        --info-color: #0ea5e9;         /* Sky 500 */
+        
+        --bg-color: #f1f5f9;           /* Slate 100 */
+        --surface-color: #ffffff;
+        --border-color: #e2e8f0;       /* Slate 200 */
+        
+        --dark-text: #0f172a;          /* Slate 900 */
+        --secondary-color: #64748b;    /* Slate 500 */
+        
+        /* Shadows & Radii */
+        --super-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+        --float-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        --radius-lg: 24px;
+        --radius-md: 16px;
+        --radius-sm: 10px;
+        
+        --gap: 1.5rem;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--dark-text);
+        font-family: 'Sarabun', sans-serif;
+    }
+
+    /* --- App Layout & Cards --- */
+    .app-layout {
+        gap: var(--gap);
+        padding: var(--gap);
+        background: var(--bg-color);
+    }
+    .search-column, .cart-column {
+        padding: 0;
+    }
+
+    .card {
+        border-radius: var(--radius-lg);
+        box-shadow: var(--super-shadow);
+        border: 1px solid rgba(255,255,255,0.8);
+        background: var(--surface-color);
+    }
+
+    /* --- Typography & Headers --- */
+    h2, h3 {
+        border-bottom: none;
+        color: var(--dark-text);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+    h2 svg {
+        color: var(--primary-color);
+    }
+
+    /* --- Inputs & Search Bar --- */
+    input, select, .item-input {
+        border-radius: var(--radius-sm) !important;
+        border: 1.5px solid var(--border-color) !important;
+        background: #f8fafc !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        padding: 0.8rem 1rem !important;
+        font-size: 1.05em !important;
+    }
+    input:focus, select:focus {
+        background: #ffffff !important;
+        border-color: var(--primary-color) !important;
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15) !important;
+    }
+
+    /* --- Search Results --- */
+    .search-item {
+        border-radius: var(--radius-md);
+        margin-bottom: 8px;
+        border: 1px solid transparent;
+        transition: all 0.2s ease;
+    }
+    .search-item:hover, .search-item.selected {
+        background: var(--primary-light);
+        border-color: #c7d2fe;
+        color: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+    .search-item .price {
+        font-size: 1.1em;
+        color: var(--primary-color);
+    }
+
+    /* --- Cart Items (Modern Floating Rows) --- */
+    #cart-items li {
+        background: var(--surface-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        margin-bottom: 10px;
+        padding: 0.75rem 1rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #cart-items li:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+        background: #ffffff;
+    }
+    .cart-header-row {
+        border-bottom: none;
+        padding-bottom: 10px;
+        text-transform: uppercase;
+        font-size: 0.8em;
+        letter-spacing: 0.05em;
+        color: var(--secondary-color);
+    }
+
+    /* --- Buttons --- */
+    button, .btn {
+        border-radius: var(--radius-sm) !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.01em;
+        transition: all 0.2s ease !important;
+        padding: 0.6rem 1.2rem;
+    }
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    button:active {
+        transform: translateY(0);
+    }
+
+    /* Primary Action Button (Checkout) */
+    button.finish-sale {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        color: white !important;
+        border: none !important;
+        font-size: 1.15em !important;
+        padding: 1rem !important;
+        border-radius: var(--radius-md) !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3) !important;
+    }
+    button.finish-sale:hover {
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4) !important;
+    }
+
+    /* --- Totals Section --- */
+    .totals-section {
+        background: #f8fafc;
+        border-top: none;
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        margin-top: 1rem;
+        border: 1px solid var(--border-color);
+    }
+    .total-row {
+        margin-bottom: 0.5rem;
+        font-size: 1.1em;
+    }
+    #cart-total {
+        font-size: 2.2em;
+        color: var(--dark-text);
+        letter-spacing: -0.03em;
+    }
+
+    /* --- Modals (Glassmorphism Overlay) --- */
+    .modal-overlay {
+        background-color: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    .modal-content {
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(255,255,255,0.2);
+        box-shadow: var(--float-shadow);
+    }
+    .modal-header {
+        border-bottom: 1px solid var(--border-color);
+        background: #fdfdfd;
+    }
+    .modal-footer {
+        background: #fdfdfd;
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* --- Badges & Tabs --- */
+    .auth-status-badge {
+        background: #f1f5f9;
+        border: none;
+        box-shadow: none;
+        font-weight: 600;
+    }
+    .tab-button {
+        border-radius: 999px;
+        margin-right: 8px;
+        background: #f1f5f9;
+        border: none;
+        padding: 0.5rem 1.2rem;
+    }
+    .tab-button.active {
+        background: var(--dark-text);
+        color: white;
+    }
+
+    /* --- Scrollbars --- */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
 </style>
-
-
-
-
-
 <style>
 /* === Cart-aligned utility bar: app-sidebar + auth-status (Oct 18, 2025) === */
 /* Tokens */
