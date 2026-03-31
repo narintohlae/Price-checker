@@ -1070,238 +1070,261 @@ input[type="radio"].radio, .radio{ width:16px; height:16px; border:var(--border)
         display: none !important;
     }
 }
-<style id="pharmacy-supermarket-practical-theme">
+<style id="retro-90s-theme">
     /* =========================================================
-       🏪 PHARMACY + SUPERMARKET PRACTICAL UI 💊
-       Medical Colors + Ultra-Fast, High-Density Supermarket Search
+       💾 WINDOWS 95 / 90s RETRO POS UI 💾
+       Classic Bevels, MS Sans Serif, and Nostalgia
        ========================================================= */
 
     :root {
-        /* Pharmacy Palette: Teal & Soft Mint */
-        --primary-color: #0d9488;      
-        --primary-hover: #0f766e;      
-        --primary-light: #ccfbf1;      
-        
-        --success-color: #10b981;      
-        --danger-color: #ef4444;       
-        --warning-color: #f59e0b;      
-        --info-color: #0ea5e9;         
-        
-        --bg-color: #f4f7f6;           
-        --surface-color: #ffffff;      
-        --border-color: #e2e8f0;       
-        
-        --dark-text: #1e293b;          
-        --secondary-color: #64748b;    
-        
-        --radius-card: 12px;
-        --radius-pill: 999px;          
-        --radius-item: 8px;
+        /* Classic Windows 95 Color Palette */
+        --win-gray: #c0c0c0;
+        --win-dark-gray: #808080;
+        --win-light-gray: #dfdfdf;
+        --win-blue: #000080;
+        --win-teal: #008080;
+        --win-black: #000000;
+        --win-white: #ffffff;
     }
 
     body {
-        background-color: var(--bg-color);
-        color: var(--dark-text);
-        font-family: 'Sarabun', sans-serif;
+        background-color: var(--win-teal); /* Classic Desktop Background */
+        color: var(--win-black);
+        font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+        -webkit-font-smoothing: none; /* ปิดความสมูทของฟอนต์ให้ดูคลาสสิก */
     }
 
-    /* --- Layout & Basic Elements --- */
-    .app-layout { gap: 1rem; padding: 1rem; }
+    /* --- Layout & Cards (Windows) --- */
+    .app-layout { padding: 10px; gap: 10px; background-color: var(--win-teal); }
     .search-column, .cart-column { padding: 0; }
-    
+
     .card {
-        background-color: var(--surface-color);
-        border-radius: var(--radius-card);
-        border: 1px solid var(--border-color);
-        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        background-color: var(--win-gray) !important;
+        border-radius: 0 !important;
+        /* สร้างเอฟเฟกต์นูน 3 มิติ */
+        border-top: 2px solid var(--win-light-gray) !important;
+        border-left: 2px solid var(--win-light-gray) !important;
+        border-bottom: 2px solid var(--win-black) !important;
+        border-right: 2px solid var(--win-black) !important;
+        box-shadow: 1px 1px 0 var(--win-dark-gray) inset, -1px -1px 0 var(--win-dark-gray) inset !important;
+        padding: 6px;
     }
 
+    /* --- Window Title Bars --- */
     h2, h3 {
-        color: var(--primary-hover);
-        border-bottom: 2px solid var(--primary-light);
-        font-weight: 700;
-        padding-bottom: 0.6rem;
+        background-color: var(--win-blue) !important;
+        color: var(--win-white) !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        padding: 4px 6px !important;
+        margin: 0 0 10px 0 !important;
+        border-bottom: none !important;
+        display: flex;
+        align-items: center;
+        letter-spacing: 1px;
+    }
+    h2 svg, h3 svg { display: none !important; } /* ซ่อนไอคอนสมัยใหม่ */
+
+    /* --- Inputs (Sunken / บุ๋มลงไป) --- */
+    input, select, .item-input, .form-group input#barcode-input {
+        background-color: var(--win-white) !important;
+        color: var(--win-black) !important;
+        border-radius: 0 !important;
+        /* สร้างเอฟเฟกต์บุ๋มลงไป */
+        border-top: 2px solid var(--win-dark-gray) !important;
+        border-left: 2px solid var(--win-dark-gray) !important;
+        border-bottom: 2px solid var(--win-light-gray) !important;
+        border-right: 2px solid var(--win-light-gray) !important;
+        padding: 4px 6px !important;
+        font-family: "MS Sans Serif", Tahoma, sans-serif !important;
+        font-size: 14px !important;
+        font-weight: normal !important;
+        outline: none !important;
+        box-shadow: none !important;
+        text-align: left !important;
+    }
+    input:focus, select:focus {
+        background-color: var(--win-white) !important;
     }
 
-    /* --- Search Bar --- */
-    .form-group input#barcode-input {
-        border-radius: var(--radius-pill) !important;
-        border: 2px solid var(--border-color) !important;
-        padding: 0.8rem 1.5rem !important;
-        font-size: 1.15em !important;
-        background-color: #f8fafc !important;
-        text-align: center;
-        font-weight: bold;
+    /* --- Buttons (Classic Push Buttons) --- */
+    button, .btn, .tab-button, .sidebar-btn {
+        background-color: var(--win-gray) !important;
+        color: var(--win-black) !important;
+        border-radius: 0 !important;
+        border-top: 2px solid var(--win-light-gray) !important;
+        border-left: 2px solid var(--win-light-gray) !important;
+        border-bottom: 2px solid var(--win-black) !important;
+        border-right: 2px solid var(--win-black) !important;
+        box-shadow: inset -1px -1px 0 var(--win-dark-gray), inset 1px 1px 0 var(--win-white) !important;
+        font-family: "MS Sans Serif", Tahoma, sans-serif !important;
+        font-weight: bold !important;
+        padding: 4px 12px !important;
+        cursor: pointer;
+        transition: none !important; /* ปิดแอนิเมชันทั้งหมด */
+        transform: none !important;
+        background-image: none !important; /* ล้าง Gradient */
     }
-    .form-group input#barcode-input:focus {
-        border-color: var(--primary-color) !important;
-        background-color: var(--surface-color) !important;
-        box-shadow: 0 0 0 3px var(--primary-light) !important;
-        outline: none;
+    
+    /* เวลากดปุ่ม ให้สลับเส้นขอบเพื่อจำลองการยุบตัว */
+    button:active, .btn:active, .tab-button.active, .sidebar-btn.active {
+        border-top: 2px solid var(--win-black) !important;
+        border-left: 2px solid var(--win-black) !important;
+        border-bottom: 2px solid var(--win-light-gray) !important;
+        border-right: 2px solid var(--win-light-gray) !important;
+        box-shadow: inset 1px 1px 0 var(--win-dark-gray) !important;
+        padding: 5px 11px 3px 13px !important; /* ขยับข้อความลงมานิดนึงให้ดูเหมือนถูกกด */
+        background-color: var(--win-gray) !important;
+        color: var(--win-black) !important;
     }
 
-    /* --- Cart & Buttons --- */
+    /* --- Cart Items (Listbox style) --- */
     .cart-header-row {
-        background-color: #f8fafc;
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-item);
+        background-color: var(--win-gray) !important;
+        border: 1px solid var(--win-dark-gray) !important;
+        border-radius: 0 !important;
+        color: var(--win-black) !important;
+        font-weight: bold;
+        padding: 4px !important;
+    }
+    #cart-items {
+        background-color: var(--win-white) !important;
+        border-top: 2px solid var(--win-dark-gray) !important;
+        border-left: 2px solid var(--win-dark-gray) !important;
+        border-bottom: 2px solid var(--win-light-gray) !important;
+        border-right: 2px solid var(--win-light-gray) !important;
+        padding: 2px !important;
+        margin-top: 5px !important;
     }
     #cart-items li {
-        background-color: var(--surface-color);
-        border-bottom: 1px dashed var(--border-color);
-        padding: 0.5rem 0.8rem;
-    }
-    button.finish-sale {
-        background-color: var(--success-color) !important;
-        color: white !important;
-        border-radius: var(--radius-pill) !important;
-        padding: 0.8rem 2rem !important;
-        font-size: 1.2em !important;
+        background-color: transparent !important;
         border: none !important;
+        border-bottom: 1px dotted var(--win-dark-gray) !important;
+        border-radius: 0 !important;
+        padding: 4px !important;
+        color: var(--win-black) !important;
+        box-shadow: none !important;
+    }
+    
+    /* Hover Selection Style */
+    #cart-items li:hover {
+        background-color: var(--win-blue) !important;
+        color: var(--win-white) !important;
+    }
+    #cart-items li:hover .sub-text, #cart-items li:hover .col-price input {
+        color: var(--win-white) !important;
     }
 
-    /* =========================================================
-       🛒 SUPERMARKET SEARCH RESULTS (PRACTICAL & FAST)
-       ========================================================= */
-       
-    .search-column { position: relative !important; z-index: 900 !important; }
-    
-    /* กล่อง Dropdown หลัก - ทึบแสง ชัดเจน ไม่กินพื้นที่ตะกร้า */
+    /* --- Search Results --- */
     #search-results.has-results {
-        position: absolute !important; 
-        top: calc(100% + 4px) !important; 
-        left: 0 !important; 
-        width: 100% !important; 
-        
-        /* ล้างค่า 3D/Spatial เดิมทิ้งทั้งหมด */
-        padding-right: 0 !important; 
-        margin-right: 0 !important; 
-        box-sizing: border-box !important;
-        
-        max-height: 60vh; 
-        overflow-y: auto; 
-        overflow-x: hidden; 
-        z-index: 1000 !important; 
-        
-        background: #ffffff; 
-        border: 2px solid var(--primary-color);
-        border-radius: 8px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        
-        display: block; /* จัดเรียงแนวตั้งแบบปกติ */
-        pointer-events: auto; /* รับคลิกเมาส์ */
+        background: var(--win-white) !important;
+        border-top: 2px solid var(--win-dark-gray) !important;
+        border-left: 2px solid var(--win-dark-gray) !important;
+        border-bottom: 2px solid var(--win-light-gray) !important;
+        border-right: 2px solid var(--win-light-gray) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 2px !important;
     }
-
-    /* แถวสินค้า (Zebra-striping style) */
     .search-row {
-        display: flex; 
-        flex-direction: column; 
-        width: 100%; 
-        background: #ffffff;
-        border: none;
-        border-bottom: 1px solid var(--border-color);
-        border-radius: 0;
-        padding: 0;
-        margin: 0;
-        transition: none; /* ไม่มีหน่วงเวลา เน้นเร็ว */
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid var(--win-light-gray) !important;
+        border-radius: 0 !important;
     }
-    .search-row:last-child { border-bottom: none; }
+    .search-row:hover, .search-row.selected-row, .main-cell.active-unit {
+        background: var(--win-blue) !important;
+        color: var(--win-white) !important;
+    }
+    .search-row:hover *, .search-row.selected-row *, .main-cell.active-unit * {
+        color: var(--win-white) !important;
+    }
+    .main-cell { border: none !important; background: transparent !important; padding: 4px 8px !important; }
     
-    /* Hover Row แบบ Supermarket (เน้นบรรทัดให้ชัด) */
-    .search-row:hover, .search-row.selected-row { 
-        background: #f0fdfa; /* Mint อ่อนๆ */
-        transform: none; /* ปิดแอนิเมชันเด้ง */
-        box-shadow: none;
+    /* Sub Units in Search */
+    .alt-units-wrapper { padding: 4px 8px !important; background: transparent !important;}
+    .alt-cell { 
+        background: var(--win-gray) !important; 
+        border-top: 2px solid var(--win-light-gray) !important;
+        border-left: 2px solid var(--win-light-gray) !important;
+        border-bottom: 2px solid var(--win-black) !important;
+        border-right: 2px solid var(--win-black) !important;
+        border-radius: 0 !important; 
+        padding: 2px 6px !important;
+        color: var(--win-black) !important;
+        box-shadow: none !important;
     }
-
-    /* กล่องข้อมูลหลัก (Product Name & Base Price) */
-    .main-cell {
-        display: flex; 
-        align-items: center; 
-        justify-content: space-between; 
-        width: 100%;
-        padding: 10px 14px; 
-        cursor: pointer;
-        background: transparent; 
-        border: none;
-        border-left: 4px solid transparent; /* เตรียมไว้ทำ Indicator */
-    }
-
-    /* Active State (ควบคุมผ่าน Keyboard) */
-    .main-cell.active-unit {
-        background: var(--primary-light) !important;
-        border-left-color: var(--primary-color) !important; /* แถบสีด้านซ้ายให้รู้ว่าโฟกัสอยู่ */
-    }
-
-    /* กล่องรองรับหน่วยอื่นๆ (แสดงเป็น Tag เล็กๆ ใต้ชื่อ แทนที่จะป๊อปอัปบังจอ) */
-    .alt-units-wrapper {
-        display: flex !important; 
-        flex-wrap: wrap;
-        align-items: center; 
-        gap: 6px; 
-        max-width: none; 
-        opacity: 1; 
-        padding: 0 14px 10px 14px; /* เว้นระยะด้านล่าง */
-        margin: 0;
-        background: transparent; 
-        border: none;
-    }
-
-    /* ซ่อน Alt Units Wrapper ถ้าไม่มีสินค้าให้แสดง เพื่อไม่ให้เปลืองที่ */
-    .alt-units-wrapper:empty { display: none !important; }
-
-    /* ปุ่มกดหน่วยทางเลือก (Alt Unit Tag) */
-    .alt-cell {
-        background: #ffffff; 
-        border: 1px solid var(--border-color);
-        padding: 4px 10px; 
-        border-radius: 6px; 
-        display: inline-flex; 
-        align-items: center; 
-        gap: 6px;
-        cursor: pointer; 
-        box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        transition: background 0.1s; /* เปลี่ยนสีเร็วๆ */
-    }
-
-    .alt-cell:hover {
-        background: #f8fafc;
-        border-color: var(--primary-color);
-        transform: none; /* ปิดเด้ง */
-    }
-
-    /* Active State ของหน่วยย่อย */
     .alt-cell.active-unit {
-        background: var(--primary-color) !important;
-        border-color: var(--primary-color) !important;
-        color: white !important;
-    }
-    .alt-cell.active-unit .sub-text, .alt-cell.active-unit .cell-price {
-        color: white !important;
+        border-top: 2px solid var(--win-black) !important;
+        border-left: 2px solid var(--win-black) !important;
+        border-bottom: 2px solid var(--win-light-gray) !important;
+        border-right: 2px solid var(--win-light-gray) !important;
+        background-color: var(--win-gray) !important;
     }
 
-    /* Typography ภายใน Search Results */
-    .product-name-single { 
-        font-weight: 700; 
-        color: var(--dark-text); 
-        font-size: 1.1em; 
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        white-space: nowrap; 
+    /* --- Totals & Misc --- */
+    .totals-section {
+        background-color: var(--win-gray) !important;
+        border-top: 2px solid var(--win-dark-gray) !important;
+        border-left: 2px solid var(--win-dark-gray) !important;
+        border-bottom: 2px solid var(--win-light-gray) !important;
+        border-right: 2px solid var(--win-light-gray) !important;
+        border-radius: 0 !important;
+        padding: 8px !important;
+        margin-top: 10px !important;
     }
-    .cell-price { 
-        font-weight: 800; 
-        color: var(--primary-color); 
-        font-size: 1.2em; 
-    }
-    .sub-text { 
-        font-weight: 500; 
-        font-size: 0.9em; 
-        color: var(--secondary-color); 
+    #cart-total { 
+        color: var(--win-black) !important; 
+        font-family: "Courier New", Courier, monospace !important; /* อารมณ์จอ LCD เครื่องคิดเลข */
+        font-size: 28px !important; 
+        font-weight: bold !important; 
     }
     
-    /* ล้างของแถมจาก Spatial ออก */
-    .expand-indicator { display: none !important; }
+    .auth-status-badge {
+        background: var(--win-gray) !important;
+        border: 2px solid var(--win-dark-gray) !important;
+        border-radius: 0 !important;
+        color: var(--win-black) !important;
+    }
+
+    /* --- Modals --- */
+    .modal-overlay { 
+        background-color: rgba(0,0,0,0.5) !important; 
+        backdrop-filter: none !important; 
+    }
+    .modal-content {
+        background-color: var(--win-gray) !important;
+        border-top: 2px solid var(--win-light-gray) !important;
+        border-left: 2px solid var(--win-light-gray) !important;
+        border-bottom: 2px solid var(--win-black) !important;
+        border-right: 2px solid var(--win-black) !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 2px !important;
+    }
+    .modal-header { background: var(--win-blue) !important; padding: 2px !important; border-bottom: none !important;}
+    .modal-header h3 { margin: 0 !important; color: white !important;}
+    .modal-footer { background: transparent !important; border: none !important; }
+
+    /* --- Classic Blocky Scrollbars (Webkit) --- */
+    ::-webkit-scrollbar { width: 16px; height: 16px; }
+    ::-webkit-scrollbar-track { background: #dfdfdf; border-left: 1px solid #808080; }
+    ::-webkit-scrollbar-thumb { 
+        background: #c0c0c0; 
+        border-top: 1px solid #ffffff; 
+        border-left: 1px solid #ffffff; 
+        border-bottom: 1px solid #000000; 
+        border-right: 1px solid #000000; 
+        border-radius: 0 !important;
+    }
+    ::-webkit-scrollbar-button {
+        background: #c0c0c0;
+        border-top: 1px solid #ffffff; 
+        border-left: 1px solid #ffffff; 
+        border-bottom: 1px solid #000000; 
+        border-right: 1px solid #000000; 
+        display: block;
+    }
 </style>
 <style>
 /* === Cart-aligned utility bar: app-sidebar + auth-status (Oct 18, 2025) === */
