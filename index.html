@@ -5167,7 +5167,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }, 1000);
 });
 </script>
-    <script>
+<script>
 document.addEventListener("DOMContentLoaded", function() {
     // ใช้ setTimeout เพื่อรอให้ระบบหลัก (POS_APP) เรนเดอร์เสร็จก่อน
     setTimeout(function() {
@@ -5178,22 +5178,18 @@ document.addEventListener("DOMContentLoaded", function() {
                 // ดักจับเมื่อกดปุ่ม Tab (และไม่ได้กด Shift ค้างไว้)
                 if (e.key === 'Tab' && !e.shiftKey) {
                     
-                    // หาช่องกรอกจำนวน (รายการแรกสุด)
-                    const firstQtyInput = document.querySelector('#cart-items li:first-child .col-qty input');
-                    
-                    /* 💡 หมายเหตุ: หากต้องการให้กระโดดไปที่รายการ "ล่าสุด (ล่างสุด)" แทน ให้เปลี่ยนโค้ดด้านบนเป็น:
-                       const firstQtyInput = document.querySelector('#cart-items li:last-child .col-qty input');
-                    */
+                    // เปลี่ยนมาหาช่องกรอกจำนวนของ "รายการล่าสุด (ล่างสุด)" ในตะกร้า
+                    const lastQtyInput = document.querySelector('#cart-items li:last-child .col-qty input');
 
-                    if (firstQtyInput) {
-                        e.preventDefault(); // ยกเลิกการทำงานปกติของปุ่ม Tab (ที่มักจะกระโดดไปปุ่มอื่น)
-                        firstQtyInput.focus(); // โฟกัสที่ช่องจำนวน
-                        firstQtyInput.select(); // คลุมดำตัวเลขเดิม เพื่อให้พิมพ์ตัวเลขใหม่ทับได้ทันที
+                    if (lastQtyInput) {
+                        e.preventDefault(); // ยกเลิกการกระโดดไปปุ่มอื่นตามปกติของเบราว์เซอร์
+                        lastQtyInput.focus(); // โฟกัสที่ช่องจำนวนรายการล่าสุด
+                        lastQtyInput.select(); // คลุมดำตัวเลขเดิม เพื่อให้พิมพ์ตัวเลขใหม่ทับได้ทันที
                     }
                 }
             });
         }
-    }, 1500); // หน่วงเวลา 1.5 วินาที
+    }, 1500); // หน่วงเวลา 1.5 วินาทีเผื่อ UI โหลด
 });
 </script>
 </body></html>
