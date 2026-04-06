@@ -109,6 +109,36 @@ input:focus {
   box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
 }
 
+button#searchBtn:active {
+  transform: scale(0.95);
+}
+
+.secondary-btn {
+  position: absolute;
+  right: 58px; /* Offset for the main search button */
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+  background: #e2e8f0;
+  color: var(--primary-color);
+}
+
+.secondary-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
 button#searchBtn {
   position: absolute;
   right: 8px;
@@ -209,6 +239,86 @@ button#searchBtn svg {
 .unit-label {
   font-size: 1rem;
   color: var(--text-muted);
+}
+
+/* Barcode Scanner Drawer */
+.scanner-drawer {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 70%;
+    background: #fff;
+    z-index: 1000;
+    border-radius: 24px 24px 0 0;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+    transition: bottom 0.4s cubic-bezier(0.17, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.scanner-drawer.active {
+    bottom: 0;
+}
+
+.drawer-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.drawer-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+.scanner-view {
+    flex: 1;
+    background: #000;
+}
+
+.scanner-tip {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    background: #f8fafc;
+}
+
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    display: none;
+}
+
+.drawer-overlay.active {
+    display: block;
+}
+
+/* Fix for html5-qrcode UI */
+#reader__dashboard {
+    background: #fff !important;
+}
+
+#reader__status_span {
+    font-size: 0.8rem !important;
 }
 
 /* Animations */

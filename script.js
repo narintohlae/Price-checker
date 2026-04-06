@@ -1,12 +1,17 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbyPMzdWVeyKJZhr_rtSOfnSlbwlN1MZ9UhaQlykyCxpcpmAUM7w9-S3b-EFC_JdXkG5Yg/exec';
 
 let productsData = [];
+let html5QrCode;
 
 // DOM Elements
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
+const scanBtn = document.getElementById('scanBtn');
 const resultsContainer = document.getElementById('resultsContainer');
 const statusMessage = document.getElementById('statusMessage');
+const scannerDrawer = document.getElementById('scannerDrawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+const closeScanner = document.getElementById('closeScanner');
 
 // Initialize: Fetch Data
 async function init() {
@@ -18,7 +23,9 @@ async function init() {
         productsData = json.data;
         
         statusMessage.textContent = 'พร้อมตรวจสอบราคา (ค้นหาจากสินค้ากว่า ' + productsData.length + ' รายการ)';
-        console.log('Data loaded:', productsData.length, 'items');
+        
+        // Initialize Scanner Instance
+        html5QrCode = new Html5Qrcode("reader");
     } catch (error) {
         console.error('Error fetching data:', error);
         statusMessage.innerHTML = '<span style="color: #ef4444;">เกิดข้อผิดพลาดในการโหลดข้อมูล กรุณาลองใหม่อีกครั้ง</span>';
@@ -50,6 +57,8 @@ function performSearch() {
     if (product) {
         renderProduct(product);
         statusMessage.textContent = '';
+        // Scroll to result on mobile
+        window.scrollTo({ top: resultsContainer.offsetTop - 20, behavior: 'smooth' });
     } else {
         statusMessage.textContent = 'ไม่พบสินค้าที่ตรงกับ "' + query + '"';
     }
@@ -58,19 +67,14 @@ function performSearch() {
 // Helper to extract price
 function getPrice(product) {
     const unit1 = product['หน่วยนับที่ 1'];
-    // Look for price in fields like "หน่วย/กล่อง", "หน่วย/ขวด", etc.
     const priceKey = 'หน่วย/' + unit1;
     let price = product[priceKey];
 
-    // If not found, check other possible fields or levels
     if (price === undefined || price === "" || price === null || price == 0) {
-        // Fallback: check values in price 1, price 2, price 3 if exist
         price = product['ราคา 1'] || product['ราคา 2'] || product['ระดับที่ 1'] || "0.00";
     }
 
-    // Clean up price (remove non-numeric if needed, or parse)
     if (typeof price === 'string') {
-        // Handle cases like "1/55" or ranges if necessary, for now just parse float
         const match = price.match(/[0-9.]+/);
         price = match ? match[0] : "0.00";
     }
@@ -104,11 +108,52 @@ function renderProduct(product) {
     resultsContainer.appendChild(card);
 }
 
+// Scanner Functions
+async function openScanner() {
+    scannerDrawer.classList.add('active');
+    drawerOverlay.classList.add('active');
+    
+    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    
+    try {
+        // Preference for back camera
+        await html5QrCode.start(
+            { facingMode: "environment" }, 
+            config, 
+            (decodedText) => {
+                // Success
+                searchInput.value = decodedText;
+                closeScannerDrawer();
+                performSearch();
+            },
+            (errorMessage) => {
+                // Ignore small scanning errors
+            }
+        );
+    } catch (err) {
+        console.error("Scanner failed:", err);
+        statusMessage.textContent = "ไม่สามารถเปิดกล้องได้: " + err;
+        closeScannerDrawer();
+    }
+}
+
+function closeScannerDrawer() {
+    scannerDrawer.classList.remove('active');
+    drawerOverlay.classList.remove('active');
+    if (html5QrCode && html5QrCode.isScanning) {
+        html5QrCode.stop().catch(err => console.error(err));
+    }
+}
+
 // Events
 searchBtn.addEventListener('click', performSearch);
 searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') performSearch();
 });
+
+scanBtn.addEventListener('click', openScanner);
+closeScanner.addEventListener('click', closeScannerDrawer);
+drawerOverlay.addEventListener('click', closeScannerDrawer);
 
 // Auto-focus search input
 window.addEventListener('load', () => {
