@@ -1540,13 +1540,13 @@ h2 .auth-status-badge.offline .dot { background: #999; }
     } else {
         console.warn("Firebase config not found in environment. Using local fallback. PLEASE REPLACE PLACEHOLDER VALUES.");
         firebaseConfig = {
-  apiKey: "AIzaSyD-RzkBZ3lXFodonqoMFIrpuCwQ4JPr71g",
-  authDomain: "we-la-tham-ngan.firebaseapp.com",
-  projectId: "we-la-tham-ngan",
-  storageBucket: "we-la-tham-ngan.firebasestorage.app",
-  messagingSenderId: "321115203647",
-  appId: "1:321115203647:web:9d8d11ed78c4e949e3b08a",
-  measurementId: "G-71P7D9NKJK"
+  apiKey: "AIzaSyB-lheexfifXmMCaSzO6m9peh0kM5hxR1U",
+  authDomain: "pos15-3300f.firebaseapp.com",
+  projectId: "pos15-3300f",
+  storageBucket: "pos15-3300f.firebasestorage.app",
+  messagingSenderId: "488060735259",
+  appId: "1:488060735259:web:ac4d24b71e943e5e7ccdbe",
+  measurementId: "G-VHQKQ9KPW8"
 };
     }
 
@@ -1816,7 +1816,7 @@ updateAuthStatus(){
         // ✅ [MODIFIED] เพิ่ม Event Listener สำหรับ `pos:online`
         document.addEventListener('pos:online', () => this.syncOfflineSales());
 
-        document.getElementById('app-sidebar').addEventListener('click', (e) => {
+        document.getElementById('shortcut-hints').addEventListener('click', (e) => {
             const button = e.target.closest('.sidebar-btn');
             if (!button) return;
             const view = button.dataset.view;
