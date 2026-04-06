@@ -1489,13 +1489,218 @@ h2 .auth-status-badge.offline .dot { background: #999; }
     cursor: pointer;
 }
 </style>
+</style>
+<style id="ios26-theme">
+    /* iOS 26 / VisionOS Ultra-Premium Theme */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    :root {
+        --system-bg: #000000;
+        --glass-bg: rgba(20, 20, 25, 0.45);
+        --glass-border: rgba(255, 255, 255, 0.12);
+        --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.6);
+        --accent-glow: rgba(10, 132, 255, 0.4);
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Sarabun", sans-serif !important;
+        background-color: var(--system-bg) !important;
+        background-image: 
+            radial-gradient(ellipse at 10% -20%, rgba(94, 91, 142, 0.5) 0%, transparent 60%),
+            radial-gradient(ellipse at 90% 120%, rgba(45, 90, 110, 0.4) 0%, transparent 60%) !important;
+        background-attachment: fixed !important;
+        color: var(--text-primary) !important;
+        margin: 0;
+        height: 100dvh;
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h2, h3 { color: var(--text-primary) !important; }
+
+    /* Main Container Cleanup */
+    .app-layout { padding-top: calc(env(safe-area-inset-top) + 20px) !important; }
+    .search-column .card {
+        align-items: center; justify-content: flex-start; height: 100%; border: none; background: transparent; box-shadow: none; display: flex; flex-direction: column;
+    }
+    
+    .app-title { font-size: 2rem; border-bottom: none; margin-bottom: 0.5rem; justify-content: center; display: flex; gap: 0.5rem; align-items: center; }
+
+    /* Floating Pill Search Bar */
+    .input-with-icon input#barcode-input {
+        background: rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(24px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+        border: 1px solid var(--glass-border) !important;
+        color: var(--text-primary) !important;
+        font-size: 1.3rem !important;
+        border-radius: 99px !important;
+        padding: 1rem 4rem 1rem 1.5rem !important;
+        height: 60px !important;
+        text-align: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+    }
+    .input-with-icon input#barcode-input::placeholder {
+        color: rgba(255,255,255,0.4) !important;
+    }
+    .input-with-icon input#barcode-input:focus {
+        background: rgba(255, 255, 255, 0.12) !important;
+        box-shadow: 0 0 0 4px var(--accent-glow), 0 8px 32px rgba(0,0,0,0.5) !important;
+        border-color: rgba(255,255,255,0.3) !important;
+        transform: scale(1.02);
+        outline: none;
+    }
+    
+    /* Camera Button */
+    #start-camera-scan-btn {
+        position: absolute; right: 8px; top: 8px; bottom: 8px; border-radius: 50%; width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center;
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: white !important;
+        transition: all 0.2s ease !important;
+        cursor: pointer;
+    }
+    #start-camera-scan-btn:active {
+        transform: scale(0.9) !important;
+        background: rgba(255,255,255,0.3) !important;
+    }
+
+    /* Price Checker Glass Card */
+    .price-checker-card {
+        background: var(--glass-bg) !important;
+        backdrop-filter: blur(28px) saturate(200%) !important;
+        -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+        border: 1px solid var(--glass-border) !important;
+        border-radius: 36px !important;
+        box-shadow: var(--glass-shadow) !important;
+        color: var(--text-primary) !important;
+        margin-bottom: 2rem !important;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+        padding: 2.5rem !important;
+    }
+    .price-checker-card:active {
+        transform: scale(0.96) !important;
+    }
+    
+    .price-checker-card .pc-title {
+        color: #ffffff !important;
+        font-size: 2.4rem !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.5px !important;
+    }
+    
+    .price-checker-card .pc-barcode {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255,255,255,0.05) !important;
+        color: var(--text-secondary) !important;
+    }
+    
+    /* Glowing Price Box */
+    .pc-main-price-box {
+        background: radial-gradient(circle at 50% -20%, rgba(50, 200, 100, 0.15), transparent 70%), rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(100, 255, 150, 0.2) !important;
+        border-radius: 28px !important;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 8px 24px rgba(0,0,0,0.2) !important;
+    }
+    .pc-main-price-box .pc-label {
+        color: #8ce99a !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        font-size: 1rem !important;
+    }
+    .pc-main-price-box .pc-price-huge {
+        color: #ffffff !important;
+        text-shadow: 0 4px 16px rgba(50,200,100,0.4) !important;
+        letter-spacing: -2px !important;
+    }
+    .pc-main-price-box .pc-price-unit {
+        color: rgba(255,255,255,0.7) !important;
+    }
+    
+    /* Wholesale Tiers */
+    .pc-wholesale-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    .pc-wholesale-title {
+        color: var(--text-secondary) !important;
+    }
+    .pc-tier-row {
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-left: 3px solid #ffc107 !important;
+        border-radius: 12px !important;
+    }
+    .pc-tier-row .pc-qty, .pc-tier-row .pc-price {
+        color: var(--text-primary) !important;
+        background: transparent !important;
+    }
+
+    /* Floating Navigation (Bottom hints) */
+    #shortcut-hints {
+        position: fixed !important;
+        bottom: env(safe-area-inset-bottom, 20px) !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        background: rgba(20, 20, 25, 0.6) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        padding: 8px 16px !important;
+        border-radius: 99px !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        box-shadow: 0 16px 40px rgba(0,0,0,0.4) !important;
+        z-index: 1000 !important;
+        margin: 0 !important;
+        width: fit-content;
+        display: flex; gap: 4px;
+    }
+    #shortcut-hints .sidebar-btn {
+        background: transparent !important;
+        border: none !important;
+        color: var(--text-secondary) !important;
+        box-shadow: none !important;
+        padding: 8px 12px !important;
+        transition: all 0.2s !important;
+    }
+    #shortcut-hints .sidebar-btn:active {
+        background: rgba(255,255,255,0.1) !important;
+        transform: scale(0.9);
+    }
+    
+    #search-results {
+        padding-bottom: 120px !important; 
+        margin-top: 2rem !important;
+        width: 100%;
+    }
+
+    .auth-status-badge { color: rgba(255,255,255,0.4) !important; }
+
+    @media (max-width: 480px) {
+        .price-checker-card {
+            border-radius: 28px !important;
+            padding: 1.5rem !important;
+        }
+        .pc-main-price-box .pc-price-huge {
+            font-size: 3.5rem !important;
+        }
+        .price-checker-card .pc-title {
+            font-size: 1.8rem !important;
+        }
+    }
+</style>
 </head>
-<body class="density-compact">
+<body>
 
 <div class="app-layout">
     <div class="search-column">
-        <div class="card" style="align-items: center; justify-content: center; height: 100%; border: none; background: transparent; box-shadow: none; display: flex;">
-            <h2 style="font-size: 2rem; border-bottom: none; margin-bottom: 0.5rem; justify-content: center;">
+        <div class="card">
+            <h2 class="app-title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 เช็คราคาสินค้า
             </h2>
@@ -1503,8 +1708,8 @@ h2 .auth-status-badge.offline .dot { background: #999; }
             
             <div class="form-group" style="width: 100%;">
                 <div class="input-with-icon" style="position: relative; display: flex; align-items: center; width: 100%;">
-                    <input type="text" id="barcode-input" placeholder="สแกนบาร์โค้ด หรือพิมพ์ชื่อสินค้า..." data-base-placeholder="สแกนบาร์โค้ด..." style="font-size: 1.4rem; padding: 1rem 4rem 1rem 1.5rem; height: 60px; border-radius: 99px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border: 2px solid var(--primary-color); width: 100%;">
-                    <button type="button" id="start-camera-scan-btn" title="แสกนด้วยกล้องมือถือ" style="position: absolute; right: 8px; top: 8px; bottom: 8px; border-radius: 50%; width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center; background: var(--primary-color); color: white; border: none; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <input type="text" id="barcode-input" placeholder="สแกนบาร์โค้ด หรือพิมพ์ชื่อสินค้า..." data-base-placeholder="สแกนบาร์โค้ด...">
+                    <button type="button" id="start-camera-scan-btn" title="แสกนด้วยกล้องมือถือ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
                     </button>
                 </div>
@@ -1514,19 +1719,16 @@ h2 .auth-status-badge.offline .dot { background: #999; }
                 <div id="search-results" style="border: none;"></div>
             </div>
 
-            <div id="shortcut-hints" style="border: none; padding-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+            <div id="shortcut-hints">
                 <!-- Moving Action Buttons Here -->
-                <button class="sidebar-btn" type="button" id="manage-products-btn" title="จัดการสินค้า" style="border-radius: 99px; background: var(--surface); color: var(--dark-text); border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.05);"> 
+                <button class="sidebar-btn" type="button" id="manage-products-btn" title="จัดการสินค้า"> 
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> 
-                    <span>สินค้า</span> 
                 </button>
-                <button class="sidebar-btn" data-view="settings" title="ตั้งค่า" style="border-radius: 99px; background: var(--surface); color: var(--dark-text); border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <button class="sidebar-btn" data-view="settings" title="ตั้งค่า">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                    <span>ตั้งค่า</span>
                 </button>
-                <button class="sidebar-btn" data-view="logout" id="logout-btn" title="ออกจากระบบ" style="border-radius: 99px; background: var(--surface); color: var(--danger-color); border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                <button class="sidebar-btn" data-view="logout" id="logout-btn" title="ออกจากระบบ" style="color: #ff453a !important;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                    <span>ออก</span>
                 </button>
             </div>
         </div>
