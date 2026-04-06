@@ -3249,16 +3249,7 @@ results.sort((a, b) => {
             `;
 
             let tiersHtml = '';
-            if (productUnit.pricingUnit.priceTiers && productUnit.pricingUnit.priceTiers.length > 0) {
-                tiersHtml = '<div class="pc-wholesale-section"><div class="pc-wholesale-title">🔥 เรทราคาส่ง:</div><div class="pc-tiers-list">';
-                productUnit.pricingUnit.priceTiers.forEach(tier => {
-                    tiersHtml += `<div class="pc-tier-row">
-                        <span class="pc-qty">ซื้อ ${tier.quantity} ${unitName} ขึ้นไป</span>
-                        <span class="pc-price">${this.formatPrice(tier.price)} บาท / ${unitName}</span>
-                    </div>`;
-                });
-                tiersHtml += '</div></div>';
-            }
+            // Wholesale tiers removed per user request
 
             itemDiv.innerHTML = `
                 <div class="pc-header">
