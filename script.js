@@ -25,7 +25,9 @@ async function init() {
         statusMessage.textContent = 'พร้อมตรวจสอบราคา (ค้นหาจากสินค้ากว่า ' + productsData.length + ' รายการ)';
         
         // Initialize Scanner Instance
-        html5QrCode = new Html5Qrcode("reader");
+        html5QrCode = new Html5Qrcode("reader", { 
+            experimentalFeatures: { useBarCodeDetectorIfSupported: true } 
+        });
     } catch (error) {
         console.error('Error fetching data:', error);
         statusMessage.innerHTML = '<span style="color: #ef4444;">เกิดข้อผิดพลาดในการโหลดข้อมูล กรุณาลองใหม่อีกครั้ง</span>';
@@ -57,23 +59,41 @@ function performSearch() {
     if (product) {
         renderProduct(product);
         statusMessage.textContent = '';
-        // Scroll to result on mobile
         window.scrollTo({ top: resultsContainer.offsetTop - 20, behavior: 'smooth' });
     } else {
         statusMessage.textContent = 'ไม่พบสินค้าที่ตรงกับ "' + query + '"';
     }
 }
 
-// Helper to extract price
+// Advanced Price Parsing Logic
 function getPrice(product) {
-    const unit1 = product['หน่วยนับที่ 1'];
-    const priceKey = 'หน่วย/' + unit1;
-    let price = product[priceKey];
+    let price = "0";
 
-    if (price === undefined || price === "" || price === null || price == 0) {
-        price = product['ราคา 1'] || product['ราคา 2'] || product['ระดับที่ 1'] || "0.00";
+    // 1. Priority: "ระดับที่ 1" Column (Format might be "1/55")
+    const level1 = product['ระดับที่ 1'];
+    if (level1 && typeof level1 === 'string' && level1.includes('/')) {
+        const parts = level1.split('/');
+        price = parts[1]; // Get the price part
+    } 
+    // 2. Sub-Priority: "ราคา 1" Column
+    else if (product['ราคา 1'] && parseFloat(product['ราคา 1']) > 0) {
+        price = product['ราคา 1'];
+    }
+    // 3. Last Fallback: "หน่วย/X" Column
+    else {
+        const unit1 = product['หน่วยนับที่ 1'];
+        const priceKey = 'หน่วย/' + unit1;
+        const fallbackPrice = product[priceKey];
+
+        if (fallbackPrice !== undefined && fallbackPrice !== "" && fallbackPrice !== null && fallbackPrice != 0) {
+            price = fallbackPrice;
+        } else {
+            // Check any other Price Level if available
+            price = product['ระดับที่ 2'] || product['ระดับที่ 3'] || "0.00";
+        }
     }
 
+    // Clean up price (parse as number to remove extra zeros or text)
     if (typeof price === 'string') {
         const match = price.match(/[0-9.]+/);
         price = match ? match[0] : "0.00";
@@ -108,15 +128,24 @@ function renderProduct(product) {
     resultsContainer.appendChild(card);
 }
 
-// Scanner Functions
+// Optimized Scanner Functions
 async function openScanner() {
     scannerDrawer.classList.add('active');
     drawerOverlay.classList.add('active');
     
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    // Improved Configuration for Focus & Performance
+    const config = { 
+        fps: 15, // Higher frame rate for smoother detection
+        qrbox: (viewfinderWidth, viewfinderHeight) => {
+            // Dynamic square scanning area for better focus on various devices
+            const size = Math.min(viewfinderWidth, viewfinderHeight) * 0.7;
+            return { width: size, height: size };
+        },
+        aspectRatio: 1.0,
+        disableFlip: false // Usually false is better for front-facing, irrelevant for back
+    };
     
     try {
-        // Preference for back camera
         await html5QrCode.start(
             { facingMode: "environment" }, 
             config, 
@@ -127,11 +156,14 @@ async function openScanner() {
                 performSearch();
             },
             (errorMessage) => {
-                // Ignore small scanning errors
+                // Background scan errors are fine
             }
-        );
+        ).catch(err => {
+            // Handle specific camera start errors (e.g., focus constraint failure)
+            console.error("Camera fail:", err);
+        });
     } catch (err) {
-        console.error("Scanner failed:", err);
+        console.error("Scanner startup failed:", err);
         statusMessage.textContent = "ไม่สามารถเปิดกล้องได้: " + err;
         closeScannerDrawer();
     }
@@ -141,7 +173,7 @@ function closeScannerDrawer() {
     scannerDrawer.classList.remove('active');
     drawerOverlay.classList.remove('active');
     if (html5QrCode && html5QrCode.isScanning) {
-        html5QrCode.stop().catch(err => console.error(err));
+        html5QrCode.stop().catch(err => console.error("Stop failed:", err));
     }
 }
 
