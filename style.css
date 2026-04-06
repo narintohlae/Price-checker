@@ -212,33 +212,72 @@ button#searchBtn svg {
     align-self: flex-start;
 }
 
-.price-section {
+.price-section.multi-price {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border: 1px solid var(--border-color);
+}
+
+.price-tier {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin-top: 0.5rem;
-  border: 1px dashed var(--border-color);
+  width: 100%;
 }
 
-.price-label {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-bottom: 0.25rem;
-}
-
-.price-value {
+.primary-tier .price-value {
   font-size: 3rem;
   font-weight: 800;
   color: var(--primary-color);
 }
 
-.unit-label {
-  font-size: 1rem;
+.secondary-tier {
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-color);
+}
+
+.secondary-tier .price-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.highlight-tier {
+  border: 2px solid var(--primary-color) !important;
+  background: #eff6ff !important; /* Soft blue */
+  border-radius: 12px;
+  position: relative;
+}
+
+.match-badge {
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+  font-weight: 700;
+}
+
+.price-label {
   color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.unit-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
 }
 
 /* Barcode Scanner Drawer */
