@@ -251,29 +251,32 @@ async function openScanner() {
                 type: "LiveStream",
                 target: document.querySelector('#scannerView'),
                 constraints: {
-                    facingMode: "environment",
-                    aspectRatio: { min: 1, max: 2 }
+                    width: { min: 640, ideal: 1280, max: 1920 },
+                    height: { min: 480, ideal: 720, max: 1080 },
+                    facingMode: "environment"
                 },
             },
             locator: {
-                patchSize: "medium",
+                patchSize: "small", // "small" captures small/far barcodes better
                 halfSample: true
             },
-            numOfWorkers: 2,
+            numOfWorkers: navigator.hardwareConcurrency || 2,
             decoder: {
-                readers: ["ean_reader", "ean_8_reader", "code_128_reader", "code_39_reader"]
+                // Focus ONLY on common retail barcodes for maximum speed
+                readers: ["ean_reader", "ean_8_reader", "code_128_reader"]
             },
             locate: true
         }, function(err) {
             if (err) {
                 console.error(err);
-                statusMessage.textContent = "ไม่สามารถเปิดกล้องได้";
+                statusMessage.textContent = "ไม่สามารถเปิดกล้องได้ (เช็คการตั้งค่าความละเอียด)";
                 closeScannerDrawer();
                 return;
             }
             Quagga.start();
             isScannerRunning = true;
         });
+
 
         // Set up detection listener
         Quagga.onDetected(handleDetection);
