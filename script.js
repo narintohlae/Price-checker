@@ -15,6 +15,7 @@ const closeScanner = document.getElementById('closeScanner');
 const searchSuggestions = document.getElementById('searchSuggestions');
 
 let searchDebounceTimer;
+let cachedDeviceId = null;
 
 
 // Initialize: Fetch Data
@@ -246,19 +247,21 @@ async function openScanner() {
     drawerOverlay.classList.add('active');
     
     try {
-        const videoInputDevices = await codeReader.listVideoInputDevices();
-        
-        // Try to find back camera
-        let selectedDeviceId = videoInputDevices[0].deviceId;
-        for (const device of videoInputDevices) {
-            const label = device.label.toLowerCase();
-            if (label.includes('back') || label.includes('rear') || label.includes('environment')) {
-                selectedDeviceId = device.deviceId;
-                break;
+        if (!cachedDeviceId) {
+            const videoInputDevices = await codeReader.listVideoInputDevices();
+            
+            // Try to find back camera
+            cachedDeviceId = videoInputDevices[0].deviceId; // Default to first
+            for (const device of videoInputDevices) {
+                const label = device.label.toLowerCase();
+                if (label.includes('back') || label.includes('rear') || label.includes('environment')) {
+                    cachedDeviceId = device.deviceId;
+                    break;
+                }
             }
         }
 
-        await codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+        await codeReader.decodeFromVideoDevice(cachedDeviceId, 'video', (result, err) => {
             if (result) {
                 searchInput.value = result.text;
                 closeScannerDrawer();
@@ -274,6 +277,7 @@ async function openScanner() {
         closeScannerDrawer();
     }
 }
+
 
 
 function closeScannerDrawer() {
