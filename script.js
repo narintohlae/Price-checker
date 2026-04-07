@@ -38,45 +38,59 @@ function performSearch() {
     statusMessage.textContent = 'กำลังค้นหา...';
     resultsContainer.innerHTML = '';
     
-    let matchedProduct = null;
-    let matchedUnitIndex = -1; // -1: ID/Name, 0: Unit 1, 1: Unit 2, 2: Unit 3
+    let results = []; // Array of { product, matchedUnitIndex }
+    const MAX_RESULTS = 50;
 
+    // 1. Check Exact Matches (ID and Barcodes)
     for (const p of productsData) {
-        // 1. Check Product ID
+        let matchedUnitIndex = -1;
+        let isMatch = false;
+
+        // Check Product ID
         if (p['รหัสสินค้า'] && p['รหัสสินค้า'].toString().toLowerCase() === query) {
-            matchedProduct = p;
-            break;
+            isMatch = true;
         }
-        // 2. Check Barcode 1 (Column D)
-        if (p['บาร์โค้ดในหน่วยนับ 1'] && p['บาร์โค้ดในหน่วยนับ 1'].toString() === query) {
-            matchedProduct = p;
+        // Check Barcode 1
+        else if (p['บาร์โค้ดในหน่วยนับ 1'] && p['บาร์โค้ดในหน่วยนับ 1'].toString() === query) {
+            isMatch = true;
             matchedUnitIndex = 0;
-            break;
         }
-        // 3. Check Barcode 2 (Column G)
-        if (p['บาร์โค้ดในหน่วยนับ 2'] && p['บาร์โค้ดในหน่วยนับ 2'].toString() === query) {
-            matchedProduct = p;
+        // Check Barcode 2
+        else if (p['บาร์โค้ดในหน่วยนับ 2'] && p['บาร์โค้ดในหน่วยนับ 2'].toString() === query) {
+            isMatch = true;
             matchedUnitIndex = 1;
-            break;
         }
-        // 4. Check Barcode 3 (Column J)
-        if (p['บาร์โค้ดในหน่วยนับ 3'] && p['บาร์โค้ดในหน่วยนับ 3'].toString() === query) {
-            matchedProduct = p;
+        // Check Barcode 3
+        else if (p['บาร์โค้ดในหน่วยนับ 3'] && p['บาร์โค้ดในหน่วยนับ 3'].toString() === query) {
+            isMatch = true;
             matchedUnitIndex = 2;
-            break;
+        }
+
+        if (isMatch) {
+            results.push({ product: p, matchedUnitIndex });
+            // If it's an exact barcode/ID match, we might want to prioritize it and potentially stop here
+            // But for now, let's keep going to see if there are other matches (though unlikely for exact ID)
         }
     }
 
-    // 5. Partial Name Match if no exact match
-    if (!matchedProduct) {
-        matchedProduct = productsData.find(p => 
-            p['ชื่อการค้า'] && p['ชื่อการค้า'].toString().toLowerCase().includes(query)
-        );
+    // 2. Partial Name Match (only if no exact matches or if searching by name)
+    // We add these if they aren't already in the results
+    if (results.length === 0 || isNaN(query)) { 
+        for (const p of productsData) {
+            if (results.length >= MAX_RESULTS) break;
+            
+            // Avoid duplicates
+            if (results.some(r => r.product === p)) continue;
+
+            if (p['ชื่อการค้า'] && p['ชื่อการค้า'].toString().toLowerCase().includes(query)) {
+                results.push({ product: p, matchedUnitIndex: -1 });
+            }
+        }
     }
 
-    if (matchedProduct) {
-        renderProduct(matchedProduct, matchedUnitIndex);
-        statusMessage.textContent = '';
+    if (results.length > 0) {
+        statusMessage.textContent = `พบสินค้า ${results.length} รายการ ที่ตรงกับ "${query}"`;
+        results.forEach(res => renderProduct(res.product, res.matchedUnitIndex));
         window.scrollTo({ top: resultsContainer.offsetTop - 20, behavior: 'smooth' });
     } else {
         statusMessage.textContent = 'ไม่พบสินค้าที่ตรงกับ "' + query + '"';
